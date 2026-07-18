@@ -5,7 +5,7 @@
 
 
 template <typename T>
-constexpr size_t bytesof(const std::vector<T>& vec) {
+size_t bytesof(const std::vector<T>& vec) {
     return vec.size() * sizeof(T);
 }
 template <typename T>

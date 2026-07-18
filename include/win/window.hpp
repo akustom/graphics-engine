@@ -5,7 +5,7 @@ struct GLFWwindow;
 
 namespace win {
     struct Window {
-        GLFWwindow* glfw_window;
+        GLFWwindow* glfw_window = nullptr;
         void setHints(int major_version, int minor_version);
         void init(int width, int height, const char* window_name);
         void destroyself() const;
@@ -23,6 +23,7 @@ namespace win {
 
         Window(Window&& other) noexcept {
             glfw_window = other.glfw_window;
+            other.glfw_window = nullptr;
         }
         Window& operator=(Window&& other) noexcept {
             if (this == &other)

@@ -20,6 +20,7 @@
 #include "util.hpp"
 
 #include "tracy/Tracy.hpp"
+#include <tracy/TracyOpenGL.hpp>
 
 
 int main() {
@@ -30,7 +31,7 @@ int main() {
         960, 540, "gravity sim babyyyy"
     };
     window.use();
-    glfwSwapInterval(0);
+    glfwSwapInterval(1);
 
     glfwSetFramebufferSizeCallback(window.glfw_window, [](GLFWwindow* win, const int w, const int h) {
         glViewport(0, 0, w, h);
@@ -61,7 +62,9 @@ int main() {
     gfx::makePolyhedron(square, 1.0f, 64, {1.0, 1.0, 1.0});
 
     gfx::Mesh cube;
-    gfx::makePolyhedron(cube, 1.0f, 6, {1.0, 0.0, 0.0});
+    gfx::makePolyhedron(cube, 1.0f, 64, {1.0, 0.0, 0.0});
+
+    std::cout << cube.vertices.size() << std::endl;
 
 
     phy::Particles particles;
@@ -77,11 +80,11 @@ int main() {
     std::random_device rd;
     std::mt19937 gen(rd());
 
-    std::uniform_real_distribution<float> disX(-1000.0f, 1000.0f);
-    std::uniform_real_distribution<float> disY(-1000.0f, 1000.0f);
-    std::uniform_real_distribution<float> disZ(-1000.0f, 1000.0f);
+    std::uniform_real_distribution disX(-1000.0f, 1000.0f);
+    std::uniform_real_distribution disY(-1000.0f, 1000.0f);
+    std::uniform_real_distribution disZ(-1000.0f, 1000.0f);
 
-    while (particles.positions.size() < 1000000) {
+    while (particles.positions.size() < 1000) {
         particles.createParticle(0, {disX(gen), disY(gen), disZ(gen)});
     }
 
@@ -114,8 +117,8 @@ int main() {
         camera.processKeyboard(window, dt);
         camera.pushViewMatrix(cameraUBO);
 
-        //Render.Mesh(square, static_cast<int>(particles.positions.size()));
-        Render.Mesh(cube,   static_cast<int>(particles.positions.size()));
+        Render.Mesh(square, static_cast<int>(particles.positions.size()));
+        //Render.Mesh(cube,   static_cast<int>(particles.positions.size()));
 
         glfwSwapBuffers(window.glfw_window);
         glfwPollEvents();

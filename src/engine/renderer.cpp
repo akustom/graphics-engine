@@ -48,6 +48,7 @@ void Renderer::indexMesh(gfx::Mesh& mesh) {
 }
 
 void Renderer::Mesh(gfx::Mesh& mesh, const int instances) {
+    ZoneScoped;
     if (mesh.id == -1)
         indexMesh(mesh);
 
