@@ -31,8 +31,7 @@ void moveVec(std::vector<T>& dest, Args&... source) {
     (moveVecHelper(dest, source), ...);
 }
 
-template <typename T>
-requires std::is_arithmetic_v<T>
-constexpr int sc_int(T num) {
-    return static_cast<int>(num);
+template <typename T, typename Y>
+constexpr int sc(Y arg) {
+    return static_cast<T>(arg);
 }
