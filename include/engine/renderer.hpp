@@ -25,12 +25,12 @@ class Renderer {
         int capacity = 0;
     };
 
+    glw::VAO VAO;
+
     glw::VBO batchedVBO;
     glw::EBO batchedEBO;
 
 public:
-    glw::VAO VAO; // TODO: move this into private once you handle line ~75 in main.cpp
-
     std::vector<MeshIndexData> indexedMeshes;
 
     BatchStorageData verticesBatch;
@@ -49,4 +49,6 @@ public:
 
     void indexMesh(gfx::Mesh& mesh);
     void Mesh(gfx::Mesh& mesh, int instances);
+
+    glw::VAO& getVAO();
 };

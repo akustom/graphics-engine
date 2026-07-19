@@ -31,7 +31,7 @@ int main() {
         960, 540, "gravity sim babyyyy"
     };
     window.use();
-    glfwSwapInterval(1);
+    glfwSwapInterval(0);
 
     glfwSetFramebufferSizeCallback(window.glfw_window, [](GLFWwindow* win, const int w, const int h) {
         glViewport(0, 0, w, h);
@@ -62,9 +62,7 @@ int main() {
     gfx::makePolyhedron(square, 1.0f, 64, {1.0, 1.0, 1.0});
 
     gfx::Mesh cube;
-    gfx::makePolyhedron(cube, 1.0f, 64, {1.0, 0.0, 0.0});
-
-    std::cout << cube.vertices.size() << std::endl;
+    gfx::makePolyhedron(cube, 1.0f, 4, {1.0, 0.0, 0.0});
 
 
     phy::Particles particles;
@@ -84,14 +82,14 @@ int main() {
     std::uniform_real_distribution disY(-1000.0f, 1000.0f);
     std::uniform_real_distribution disZ(-1000.0f, 1000.0f);
 
-    while (particles.positions.size() < 1000) {
+    while (particles.positions.size() < 100) {
         particles.createParticle(0, {disX(gen), disY(gen), disZ(gen)});
     }
 
 
     glw::VBO instanceVBO;
     instanceVBO.allocateBuffer(particles.positions);
-    Render.VAO.attachBuffer(instanceVBO, 1, 0, bytesof<glm::vec4>());
+    Render.getVAO().attachBuffer(instanceVBO, 1, 0, bytesof<glm::vec4>());
 
 
     gfx::Camera camera;

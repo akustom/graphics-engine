@@ -61,3 +61,7 @@ void Renderer::Mesh(gfx::Mesh& mesh, const int instances) {
         indexedMeshes[mesh.id].vbo_offset
         );
 }
+
+glw::VAO& Renderer::getVAO() {
+    return VAO;
+}
