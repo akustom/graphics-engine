@@ -5,4 +5,5 @@ include/glm/**              linguist-vendored
 cmake/**                    linguist-vendored
 lib/**                      linguist-vendored
 src/glad.c                  linguist-vendored
+tracy/**                    linguist-vendored
 
