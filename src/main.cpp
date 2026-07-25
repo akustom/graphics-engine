@@ -63,7 +63,7 @@ int main() {
 
 
     gfx::Mesh square;
-    gfx::makePolyhedron(square, 1.0f, 64, {1.0, 1.0, 1.0});
+    gfx::makePolyhedron(square, 1.0f, 6, {1.0, 1.0, 1.0});
 
     gfx::Mesh cube;
     gfx::makePolyhedron(cube, 1.0f, 4, {1.0, 0.0, 0.0});
@@ -86,7 +86,7 @@ int main() {
     std::uniform_real_distribution disY(-1000.0f, 1000.0f);
     std::uniform_real_distribution disZ(-1000.0f, 1000.0f);
 
-    while (particles.positions.size() < 100) {
+    while (particles.positions.size() < 1000000) {
         particles.createParticle(0, {disX(gen), disY(gen), disZ(gen)});
     }
 
@@ -107,8 +107,9 @@ int main() {
     glDepthFunc(GL_LEQUAL);
 
     while (!glfwWindowShouldClose(window.glfw_window)) {
-        if (!FrameTimer::SetFPS(120))
+        if (FrameTimer::setFPS(144)) {
             continue;
+        }
         ZoneScopedN("Main Frame");
 
         float dt = FrameTimer::getFrameTime();
