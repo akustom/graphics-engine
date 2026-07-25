@@ -12,6 +12,8 @@ namespace engine {
     struct Renderer {
         MeshBuffer* meshBuffer;
 
+        Renderer(MeshBuffer& buffer) : meshBuffer(&buffer) {}
+
         void bindToBuffer(MeshBuffer& buffer);
         void Mesh(gfx::Mesh& mesh, int instances) const;
     };

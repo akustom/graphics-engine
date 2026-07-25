@@ -51,8 +51,7 @@ int main() {
 
     MeshBuffer meshBuffer;
 
-    Renderer renderer;
-    renderer.bindToBuffer(meshBuffer);
+    Renderer renderer = {meshBuffer};
 
 
     glw::ShaderProgram shaderProgram;
