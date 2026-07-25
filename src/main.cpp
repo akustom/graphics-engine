@@ -23,6 +23,8 @@
 #include <tracy/TracyOpenGL.hpp>
 
 
+using namespace engine;
+
 int main() {
     glfwInit();
 
@@ -47,7 +49,10 @@ int main() {
     glViewport(0, 0, 960, 540);
 
 
-    Renderer Render;
+    MeshBuffer meshBuffer;
+
+    Renderer renderer;
+    renderer.bindToBuffer(meshBuffer);
 
 
     glw::ShaderProgram shaderProgram;
@@ -89,7 +94,7 @@ int main() {
 
     glw::VBO instanceVBO;
     instanceVBO.allocateBuffer(particles.positions);
-    Render.getVAO().attachBuffer(instanceVBO, 1, 0, bytesof<glm::vec4>());
+    meshBuffer.getVAO().attachBuffer(instanceVBO, 1, 0, bytesof<glm::vec4>());
 
 
     gfx::Camera camera;
@@ -115,7 +120,7 @@ int main() {
         camera.processKeyboard(window, dt);
         camera.pushViewMatrix(cameraUBO);
 
-        Render.Mesh(square, static_cast<int>(particles.positions.size()));
+        renderer.Mesh(square, static_cast<int>(particles.positions.size()));
         //Render.Mesh(cube,   static_cast<int>(particles.positions.size()));
 
         glfwSwapBuffers(window.glfw_window);
