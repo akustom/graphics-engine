@@ -16,12 +16,12 @@ namespace engine {
 
         mesh_buffer.getVAO().bind();
 
-        MeshBuffer::IndexData meshData = mesh_buffer.getMeshData(mesh);
+        MeshBuffer::IndexData meshOffset = mesh_buffer.getMeshOffset(mesh);
         glw::drawInstancesBaseVertex(
             instances,
-            meshData.indexCount,
-            meshData.ebo_offset,
-            meshData.vbo_offset
+            meshOffset.indexCount,
+            meshOffset.ebo_offset,
+            meshOffset.vbo_offset
             );
     }
 }

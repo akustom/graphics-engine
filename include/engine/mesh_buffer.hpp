@@ -41,7 +41,7 @@ namespace engine {
         BatchStorageData verticesBatchData;
         BatchStorageData indicesBatchData;
 
-        IndexData getMeshData(gfx::Mesh& mesh) const;
+        IndexData getMeshOffset(gfx::Mesh& mesh) const;
         void addMesh(gfx::Mesh& mesh);
         void indexMesh(gfx::Mesh& mesh);
 
