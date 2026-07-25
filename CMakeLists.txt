@@ -23,6 +23,7 @@ add_executable(3grav
         src/gfx/mesh.cpp
         src/win/window.cpp
         src/engine/renderer.cpp
+        src/engine/mesh_buffer.cpp
 )
 
 target_include_directories(3grav PRIVATE ${CMAKE_SOURCE_DIR}/include)
