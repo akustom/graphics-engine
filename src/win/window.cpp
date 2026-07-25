@@ -19,7 +19,7 @@ namespace win {
         }
     }
 
-    void Window::destroyself() const {
+    void Window::destroy() const {
         glfwDestroyWindow(glfw_window);
     }
 

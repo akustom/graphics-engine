@@ -8,7 +8,7 @@ namespace win {
         GLFWwindow* glfw_window = nullptr;
         void setHints(int major_version, int minor_version);
         void init(int width, int height, const char* window_name);
-        void destroyself() const;
+        void destroy() const;
 
         Window() = default;
         Window(int major_version, int minor_version, int width, int height, const char* window_name) {
@@ -16,7 +16,7 @@ namespace win {
             init(width, height, window_name);
         }
         ~Window() {
-            destroyself();
+            destroy();
         }
         Window(const Window&) = delete;
         Window& operator=(const Window&) = delete;
@@ -29,7 +29,7 @@ namespace win {
             if (this == &other)
                 return *this;
             if (glfw_window)
-                destroyself();
+                destroy();
 
             glfw_window = other.glfw_window;
             other.glfw_window = nullptr;
