@@ -67,10 +67,6 @@ namespace glw {
         }
     };
 
-    struct VBO : Buffer {};
-
-    struct EBO : Buffer {};
-
     struct UBO : Buffer {
         void bind(const GLint binding_point) const {
             glBindBufferBase(GL_UNIFORM_BUFFER, binding_point, id);
@@ -85,4 +81,7 @@ namespace glw {
             this->pushData(byte_offset, data);
         }
     };
+
+    using VBO = Buffer;
+    using EBO = Buffer;
 }
