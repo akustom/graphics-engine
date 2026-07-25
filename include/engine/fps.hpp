@@ -1,26 +1,30 @@
 #pragma once
 
-#include "../GLFW/glfw3.h"
+#include <thread>
+#include <chrono>
+
+#include "GLFW/glfw3.h"
 
 
-class FrameTimer {
-private:
-    inline static float lastFrame = 0;
-    inline static float currentFrame = 0;
+namespace engine {
+    struct FrameTimer {
+        static float getFrameTime() {
+            static float lastFrame = 0;
+            static float currentFrame = 0;
 
-public:
-    static float getFrameTime() {
-        const float dt  = currentFrame - lastFrame;
-        lastFrame       = static_cast<float>(glfwGetTime());
-
-        return dt;
-    }
-
-    static bool SetFPS(float fps) {
-        if (static_cast<float>(glfwGetTime()) - currentFrame >= 1.0f/fps) {
-            currentFrame = static_cast<float>(glfwGetTime());
-            return true;
+            lastFrame = currentFrame;
+            currentFrame = glfwGetTime();
+            return currentFrame - lastFrame;
         }
-        return false;
-    }
-};
+
+        static bool setFPS(float fps) {
+            static float lastFrame = 0;
+
+            if (1.0f/fps - (glfwGetTime() - lastFrame) >= 0)
+                return true;
+
+            lastFrame = glfwGetTime();
+            return false;
+        }
+    };
+}
