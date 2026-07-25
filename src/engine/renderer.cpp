@@ -10,13 +10,17 @@
 
 
 namespace engine {
-    void Renderer::Mesh(gfx::Mesh& mesh, const int instances, MeshBuffer& mesh_buffer) {
+    void Renderer::bindToBuffer(MeshBuffer& buffer) {
+        meshBuffer = &buffer;
+    }
+
+    void Renderer::Mesh(gfx::Mesh& mesh, const int instances) const {
         if (mesh.id == -1)
-            mesh_buffer.indexMesh(mesh);
+            meshBuffer->indexMesh(mesh);
 
-        mesh_buffer.getVAO().bind();
+        meshBuffer->getVAO().bind();
 
-        MeshBuffer::IndexData meshOffset = mesh_buffer.getMeshOffset(mesh);
+        MeshBuffer::IndexData meshOffset = meshBuffer->getMeshOffset(mesh);
         glw::drawInstancesBaseVertex(
             instances,
             meshOffset.indexCount,

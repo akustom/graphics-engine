@@ -10,6 +10,9 @@
 
 namespace engine {
     struct Renderer {
-        static void Mesh(gfx::Mesh& mesh, int instances, MeshBuffer& mesh_buffer);
+        MeshBuffer* meshBuffer;
+
+        void bindToBuffer(MeshBuffer& buffer);
+        void Mesh(gfx::Mesh& mesh, int instances) const;
     };
 }
