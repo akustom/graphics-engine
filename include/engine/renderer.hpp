@@ -4,51 +4,12 @@
 
 #include "glm/fwd.hpp"
 
-#include "glw/buffer.hpp"
-#include "gfx/vertex.hpp"
+#include "engine/mesh_buffer.hpp"
 #include "gfx/mesh.hpp"
-#include "glw/vao.hpp"
 
 
-class Renderer {
-    struct MeshIndexData {
-        int indexCount = 0;
-
-        int ebo_offset;
-        int vbo_offset;
-
-        MeshIndexData(const int ebo_o = 0, const int vbo_o = 0) : ebo_offset(ebo_o), vbo_offset(vbo_o) {}
+namespace engine {
+    struct Renderer {
+        static void Mesh(gfx::Mesh& mesh, int instances, MeshBuffer& mesh_buffer);
     };
-
-    struct BatchStorageData {
-        int size = 0;
-        int capacity = 0;
-    };
-
-    glw::VAO VAO;
-
-    glw::VBO batchedVBO;
-    glw::EBO batchedEBO;
-
-public:
-    std::vector<MeshIndexData> indexedMeshes;
-
-    BatchStorageData verticesBatch;
-    BatchStorageData indicesBatch;
-
-    Renderer() { // TODO: refactor this to be more flexible with its formatting
-        VAO.formatAttribute(0, 0, 3, GL_FLOAT, offsetof(gfx::vertex, pos));
-        VAO.formatAttribute(1, 0, 3, GL_FLOAT, offsetof(gfx::vertex, color));
-        VAO.formatAttribute(2, 0, 3, GL_FLOAT, offsetof(gfx::vertex, normal));
-
-        VAO.formatAttribute(3, 1, 4, GL_FLOAT, 0);
-        VAO.setAttributeDivisor(1, 1);
-    }
-
-    void refreshBuffers(gfx::Mesh& mesh);
-
-    void indexMesh(gfx::Mesh& mesh);
-    void Mesh(gfx::Mesh& mesh, int instances);
-
-    glw::VAO& getVAO();
-};
+}
