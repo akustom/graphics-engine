@@ -15,6 +15,7 @@ namespace engine {
     }
 
     void Renderer::Mesh(gfx::Mesh& mesh, const int instances) const {
+        ZoneScoped;
         if (mesh.id == -1)
             meshBuffer->indexMesh(mesh);
 
