@@ -21,10 +21,10 @@ namespace engine {
             static float lastFrame = 0;
 
             if (1.0f/fps - (glfwGetTime() - lastFrame) >= 0)
-                return true;
+                return false;
 
             lastFrame = glfwGetTime();
-            return false;
+            return true;
         }
     };
 }
