@@ -17,14 +17,12 @@ namespace engine {
             return currentFrame - lastFrame;
         }
 
-        static bool setFPS(float fps) {
-            static float lastFrame = 0;
+        static void setFPS(float fps) {
+            static double lastFrame = 0;
 
-            if (1.0f/fps - (glfwGetTime() - lastFrame) >= 0)
-                return false;
+            while (1.0f/fps - (glfwGetTime() - lastFrame) >= 0) {}
 
             lastFrame = glfwGetTime();
-            return true;
         }
     };
 }

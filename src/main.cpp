@@ -107,9 +107,7 @@ int main() {
     glDepthFunc(GL_LEQUAL);
 
     while (!glfwWindowShouldClose(window.glfw_window)) {
-        if (!FrameTimer::setFPS(144)) {
-            continue;
-        }
+        FrameTimer::setFPS(144);
         ZoneScopedN("Main Frame");
 
         float dt = FrameTimer::getFrameTime();
