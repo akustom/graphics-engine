@@ -37,8 +37,6 @@ namespace gfx {
         bool firstMouse = true;
         bool isViewDirty = true;
 
-        void use(const win::Window& window, const glw::UBO& camera_ubo);
-
         void processKeyboard(const win::Window& window, float dt);
 
         void processMouse(double x_offset, double y_offset, bool constrain_pitch = true);
@@ -47,9 +45,9 @@ namespace gfx {
 
         void pushViewMatrix(const glw::UBO& ubo);
 
-        void pushProjectionMatrix(int width, int height, const glw::UBO& ubo) const;
+        void pushProjectionMatrix(int win_width, int win_height, const glw::UBO& ubo) const;
 
     private:
-        void updateCameraVectors();
+        void updateCameraDirectionVariable();
     };
 }

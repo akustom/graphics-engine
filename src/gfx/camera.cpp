@@ -19,15 +19,6 @@
 
 
 namespace gfx {
-    void Camera::use(const win::Window& window, const glw::UBO& camera_ubo) {
-        window.setUserPointer(this);
-
-        int width, height;
-        window.getWindowSize(&width, &height);
-
-        pushViewMatrix(camera_ubo);
-        pushProjectionMatrix(width, height, camera_ubo);
-    }
 
     void Camera::processKeyboard(const win::Window& window, float dt) {
         if (window.isKeyPressed(GLFW_KEY_W)) {
@@ -75,7 +66,7 @@ namespace gfx {
                 pitch = -89.0f;
         }
 
-        updateCameraVectors();
+        updateCameraDirectionVariable();
     }
 
     glm::mat4 Camera::getViewMatrix() const {
@@ -97,7 +88,7 @@ namespace gfx {
         0.1f, 1732.0f));
     }
 
-    void Camera::updateCameraVectors() {
+    void Camera::updateCameraDirectionVariable() {
         glm::vec3 newFront;
         newFront.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
         newFront.y = sin(glm::radians(pitch));

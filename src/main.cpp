@@ -15,6 +15,7 @@
 
 #include "engine/fps.hpp"
 #include "engine/renderer.hpp"
+#include "engine/camera.hpp"
 
 #include "io_utils.hpp"
 #include "util.hpp"
@@ -96,11 +97,8 @@ int main() {
     meshBuffer.getVAO().attachBuffer(instanceVBO, 1, 0, bytesof<glm::vec4>());
 
 
-    gfx::Camera camera;
-    glw::UBO cameraUBO;
-    cameraUBO.bind(0);
-    cameraUBO.allocateBuffer(2 * bytesof<glm::mat4>());
-    camera.use(window, cameraUBO);
+    Camera camera = {0};
+    camera.use(window);
 
 
     glEnable(GL_DEPTH_TEST);
@@ -116,7 +114,7 @@ int main() {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         camera.processKeyboard(window, dt);
-        camera.pushViewMatrix(cameraUBO);
+        camera.sendUpdate();
 
         renderer.Mesh(square, static_cast<int>(particles.positions.size()));
         //Render.Mesh(cube,   static_cast<int>(particles.positions.size()));
