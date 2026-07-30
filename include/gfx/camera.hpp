@@ -31,10 +31,6 @@ namespace gfx {
         float mouseSensitivity  = 0.1f;
         float fieldOfView       = 45.0f;
 
-        float lastX = 0.0f;
-        float lastY = 0.0f;
-
-        bool firstMouse = true;
         bool isViewDirty = true;
 
         void processKeyboard(const win::Window& window, float dt);
