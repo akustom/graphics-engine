@@ -5,6 +5,11 @@
 
 
 namespace win {
+    void Window::CursorContext::clearOffsets() {
+        offsetX = 0;
+        offsetY = 0;
+    }
+
     void Window::setHints(int major_version, int minor_version) {
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, major_version);
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, minor_version);
@@ -25,6 +30,7 @@ namespace win {
 
     void Window::use() const {
         glfwMakeContextCurrent(glfw_window);
+        glfwSetWindowUserPointer(glfw_window, (void*)this);
     }
 
     void Window::setInputMode(int mode, int value) const {
