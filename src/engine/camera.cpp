@@ -20,8 +20,6 @@ namespace engine {
     }
 
     void Camera::use(const win::Window& window) {
-        window.setUserPointer(&rawCamera);
-
         int width, height;
         window.getWindowSize(&width, &height);
 
@@ -32,8 +30,8 @@ namespace engine {
     void Camera::processKeyboard(const win::Window& window, float dt) {
         rawCamera.processKeyboard(window, dt);
     }
-    void Camera::processMouse(double x_offset, double y_offset, bool constrain_pitch){
-        rawCamera.processMouse(x_offset, y_offset, constrain_pitch);
+    void Camera::processMouse(const win::Window& window, bool constrain_pitch) {
+        rawCamera.processMouse(window.cursorContext.offsetX, window.cursorContext.offsetY, constrain_pitch);
     }
 
     void Camera::sendUpdate() {
