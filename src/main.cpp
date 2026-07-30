@@ -11,13 +11,13 @@
 #include "glw/glw.hpp"
 #include "gfx/gfx.hpp"
 #include "win/win.hpp"
+#include "win/winio.hpp" // todo put in umbrella
 #include "physics/phy.hpp"
 
-#include "engine/fps.hpp"
+#include "engine/fps.hpp" // todo put in umbrella
 #include "engine/renderer.hpp"
 #include "engine/camera.hpp"
 
-#include "io_utils.hpp"
 #include "util.hpp"
 
 #include "tracy/Tracy.hpp"
@@ -41,7 +41,7 @@ int main() {
     });
 
     window.setInputMode(GLFW_CURSOR, GLFW_CURSOR_NORMAL);
-    window.setCursorPosCallback(io::mouse_callback);
+    window.setCursorPosCallback(io::cursor_pos_callback);
     window.setMouseButtonCallback(io::mouse_button_callback);
 
 
@@ -113,12 +113,14 @@ int main() {
         glClearColor(0.07f, 0.07f, 0.07f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+        camera.processMouse(window);
         camera.processKeyboard(window, dt);
         camera.sendUpdate();
 
         renderer.Mesh(square, static_cast<int>(particles.positions.size()));
         //Render.Mesh(cube,   static_cast<int>(particles.positions.size()));
 
+        window.cursorContext.clearOffsets(); // idea create an end frame method in window to clear offsets, swap buffers, poll events, etc
         glfwSwapBuffers(window.glfw_window);
         glfwPollEvents();
         FrameMark;
