@@ -19,7 +19,6 @@
 
 
 namespace gfx {
-
     void Camera::processKeyboard(const win::Window& window, float dt) {
         if (window.isKeyPressed(GLFW_KEY_W)) {
             position += front * movementSpeed * dt;
