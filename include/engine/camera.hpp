@@ -24,7 +24,7 @@ namespace engine {
         void use(const win::Window& window);
 
         void processKeyboard(const win::Window& window, float dt);
-        void processMouse(double x_offset, double y_offset, bool constrain_pitch = true);
+        void processMouse(const win::Window& window, bool constrain_pitch = true);
 
         void sendUpdate();
     };
