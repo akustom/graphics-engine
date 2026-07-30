@@ -1,11 +1,25 @@
 #pragma once
 
-struct GLFWwindow;
 
+struct GLFWwindow;
 
 namespace win {
     struct Window {
+        struct CursorContext {
+            float lastX = -1;
+            float lastY = -1;
+
+            float offsetX = 0;
+            float offsetY = 0;
+
+            bool initialized = false;
+
+            void clearOffsets();
+        };
+
         GLFWwindow* glfw_window = nullptr;
+        CursorContext cursorContext;
+
         void setHints(int major_version, int minor_version);
         void init(int width, int height, const char* window_name);
         void destroy() const;
