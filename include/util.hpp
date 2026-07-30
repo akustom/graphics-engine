@@ -30,8 +30,3 @@ void moveVec(std::vector<T>& dest, Args&... source) {
 
     (moveVecHelper(dest, source), ...);
 }
-
-template <typename T, typename Y>
-constexpr int sc(Y arg) {
-    return static_cast<T>(arg);
-}
