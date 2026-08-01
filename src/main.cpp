@@ -11,12 +11,8 @@
 #include "glw/glw.hpp"
 #include "gfx/gfx.hpp"
 #include "win/win.hpp"
-#include "win/winio.hpp" // todo put in umbrella
+#include "engine/engine.hpp"
 #include "physics/phy.hpp"
-
-#include "engine/fps.hpp" // todo put in umbrella
-#include "engine/renderer.hpp"
-#include "engine/camera.hpp"
 
 #include "util.hpp"
 
@@ -64,7 +60,7 @@ int main() {
 
 
     gfx::Mesh square;
-    gfx::makePolyhedron(square, 1.0f, 6, {1.0, 1.0, 1.0});
+    gfx::makePolyhedron(square, 1.0f, 16, {1.0, 1.0, 1.0});
 
     gfx::Mesh cube;
     gfx::makePolyhedron(cube, 1.0f, 4, {1.0, 0.0, 0.0});
@@ -87,7 +83,7 @@ int main() {
     std::uniform_real_distribution disY(-1000.0f, 1000.0f);
     std::uniform_real_distribution disZ(-1000.0f, 1000.0f);
 
-    while (particles.positions.size() < 1000000) {
+    while (particles.positions.size() < 0) {
         particles.createParticle(0, {disX(gen), disY(gen), disZ(gen)});
     }
 
