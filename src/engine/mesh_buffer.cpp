@@ -11,7 +11,7 @@ namespace engine {
 
     void MeshBuffer::addMesh(gfx::Mesh& mesh) {
         // vertices
-        if (verticesBatchData.size + mesh.vertices.size() > verticesBatchData.capacity) {
+        if (verticesBatchData.size + mesh.vertices.size() > verticesBatchData.capacity && !indexedMeshes.empty()) {
             verticesBatchData.capacity = 2 * std::max(verticesBatchData.size, static_cast<int>(mesh.vertices.size()));
 
             glw::VBO tempVBO;
@@ -19,12 +19,17 @@ namespace engine {
             tempVBO.copyData<gfx::vertex>(vertexBuffer, verticesBatchData.size);
 
             vertexBuffer = std::move(tempVBO);
+            vertexBuffer.pushData(static_cast<int>(bytesof<gfx::vertex>()) * verticesBatchData.size, mesh.vertices);
+
+            vertexFormat.attachBuffer(vertexBuffer, 0, 0, bytesof<gfx::vertex>());
         }
-        vertexBuffer.pushData(static_cast<int>(bytesof<gfx::vertex>()) * verticesBatchData.size, mesh.vertices);
-        vertexFormat.attachBuffer(vertexBuffer, 0, 0, bytesof<gfx::vertex>());
+        else {
+            vertexBuffer.allocateBuffer<gfx::vertex>(mesh.vertices);
+            vertexFormat.attachBuffer(vertexBuffer, 0, 0, bytesof<gfx::vertex>());
+        }
 
         // indices
-        if (indicesBatchData.size + mesh.indices.size() > indicesBatchData.capacity) {
+        if (indicesBatchData.size + mesh.indices.size() > indicesBatchData.capacity && !indexedMeshes.empty()) {
             indicesBatchData.capacity = 2 * std::max(indicesBatchData.size, static_cast<int>(mesh.indices.size()));
 
             glw::EBO tempEBO;
@@ -32,9 +37,14 @@ namespace engine {
             tempEBO.copyData<glm::uint>(indexBuffer, indicesBatchData.size);
 
             indexBuffer = std::move(tempEBO);
+            indexBuffer.pushData(static_cast<int>(bytesof<glm::uint>()) * indicesBatchData.size, mesh.indices);
+
+            vertexFormat.attachBuffer(indexBuffer);
         }
-        indexBuffer.pushData(static_cast<int>(bytesof<glm::uint>()) * indicesBatchData.size, mesh.indices);
-        vertexFormat.attachBuffer(indexBuffer);
+        else {
+            indexBuffer.allocateBuffer<glm::uint>(mesh.indices);
+            vertexFormat.attachBuffer(indexBuffer);
+        }
     }
 
     void MeshBuffer::indexMesh(gfx::Mesh& mesh) {
