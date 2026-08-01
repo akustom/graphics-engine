@@ -8,7 +8,7 @@
 
 
 namespace engine {
-    struct MeshBuffer {
+    struct MeshBuffer { // idea, after some time, if the buffer hasnt changed, i should make it so it turns from a dynamic one into a static one
         struct IndexData {
             int indexCount = 0;
 
