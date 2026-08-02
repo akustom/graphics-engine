@@ -4,7 +4,10 @@
 #include "glw/vao.hpp"
 
 #include "gfx/vertex.hpp"
-#include "gfx/mesh.hpp"
+
+namespace gfx {
+    struct Mesh;
+}
 
 
 namespace engine {      // idea, find a way to delete meshes (current problems are indexing)
