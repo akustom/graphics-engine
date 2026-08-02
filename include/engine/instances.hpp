@@ -2,7 +2,7 @@
 
 #include <vector>
 
-#include "glm/fwd.hpp"
+#include "glm/glm.hpp"
 
 #include "gfx/mesh.hpp"
 
