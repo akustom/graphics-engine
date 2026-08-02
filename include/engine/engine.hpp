@@ -2,8 +2,6 @@
 
 #include "engine/camera.hpp"
 
-#include "fps.hpp"
-
 #include "mesh_buffer.hpp"
 #include "instances.hpp"
 
