@@ -11,9 +11,6 @@ namespace win {
 
         bool initialized = false;
 
-        void clearOffsets() {
-            offsetX = 0;
-            offsetY = 0;
-        }
+        void clearOffsets();
     };
 }
