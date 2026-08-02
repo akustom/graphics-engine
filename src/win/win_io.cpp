@@ -1,11 +1,11 @@
-#pragma once
+#include "win/win_io.hpp"
 
-#include <GLFW/glfw3.h>
-
+#include "GLFW/glfw3.h"
 #include "win/window.hpp"
 
+
 namespace io {
-    inline void cursor_pos_callback(GLFWwindow* window, const double x_pos, const double y_pos) {
+    void cursor_pos_callback(GLFWwindow* window, const double x_pos, const double y_pos) {
         if (glfwGetInputMode(window, GLFW_CURSOR) != GLFW_CURSOR_DISABLED)
             return;
 
@@ -23,7 +23,7 @@ namespace io {
         currentWindow->cursorContext.lastY = static_cast<float>(y_pos);
     }
 
-    inline void mouse_button_callback(GLFWwindow* window, const int button, const int action, const int mods) {
+    void mouse_button_callback(GLFWwindow* window, const int button, const int action, const int mods) {
         if (button == GLFW_MOUSE_BUTTON_RIGHT) {
             auto* currentWindow = static_cast<win::Window*>(glfwGetWindowUserPointer(window));
             if (action == GLFW_PRESS) {
