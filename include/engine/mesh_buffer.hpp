@@ -30,10 +30,10 @@ namespace engine {      // idea, find a way to delete meshes (current problems a
         glw::EBO indexBuffer;
         glw::VAO vertexFormat;
 
-        MeshBuffer() { // TODO: refactor this to be more flexible with its formatting (use boost)
-            vertexFormat.formatAttribute(0, 0, 3, GL_FLOAT, offsetof(gfx::vertex, pos));
-            vertexFormat.formatAttribute(1, 0, 3, GL_FLOAT, offsetof(gfx::vertex, color));
-            vertexFormat.formatAttribute(2, 0, 3, GL_FLOAT, offsetof(gfx::vertex, normal));
+        MeshBuffer(int binding_loc) { // TODO: refactor this to be more flexible with its formatting (use boost)
+            vertexFormat.formatAttribute(0, binding_loc, 3, GL_FLOAT, offsetof(gfx::vertex, pos));
+            vertexFormat.formatAttribute(1, binding_loc, 3, GL_FLOAT, offsetof(gfx::vertex, color));
+            vertexFormat.formatAttribute(2, binding_loc, 3, GL_FLOAT, offsetof(gfx::vertex, normal));
 
             vertexFormat.formatAttribute(3, 1, 4, GL_FLOAT, 0);
             vertexFormat.setAttributeDivisor(1, 1);
