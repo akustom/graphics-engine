@@ -4,7 +4,10 @@
 
 #include "glm/glm.hpp"
 
-#include "gfx/mesh.hpp"
+
+namespace gfx {
+    struct Mesh;
+}
 
 
 namespace engine {
