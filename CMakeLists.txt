@@ -25,6 +25,7 @@ add_executable(3grav
         src/engine/renderer.cpp
         src/engine/mesh_buffer.cpp
         src/engine/camera.cpp
+        src/engine/instances.cpp
 )
 
 target_include_directories(3grav PRIVATE ${CMAKE_SOURCE_DIR}/include)
