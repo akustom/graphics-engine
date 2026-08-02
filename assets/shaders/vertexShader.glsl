@@ -13,7 +13,7 @@ out vec3 vertexColor;
 out vec3 vertexNormal;
 
 void main() {
-    gl_Position = projection * view * (vec4(aPos, 0.0) + displacement);
+    gl_Position = projection * view * (vec4(aPos, 1.0) + displacement);
     vertexColor = aColor;
     vertexNormal = aNormal;
 }
