@@ -1,6 +1,5 @@
 #pragma once
 
-#include "gfx/mesh.hpp"
 #include "engine/mesh_buffer.hpp"
 #include "engine/instances.hpp"
 
