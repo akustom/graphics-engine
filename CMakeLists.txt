@@ -19,9 +19,14 @@ add_executable(3grav
         tracy/public/TracyClient.cpp
         src/main.cpp
         src/glad.c
+
         src/gfx/camera.cpp
         src/gfx/mesh.cpp
+
         src/win/window.cpp
+        src/win/fps.cpp
+        src/win/win_io.cpp
+
         src/engine/renderer.cpp
         src/engine/mesh_buffer.cpp
         src/engine/camera.cpp
