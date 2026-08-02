@@ -26,6 +26,7 @@ add_executable(3grav
         src/win/window.cpp
         src/win/fps.cpp
         src/win/win_io.cpp
+        src/win/cursor_ctx.cpp
 
         src/engine/renderer.cpp
         src/engine/mesh_buffer.cpp
