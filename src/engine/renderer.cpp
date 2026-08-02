@@ -1,8 +1,7 @@
 #include "engine/renderer.hpp"
 
-#include "gfx/vertex.hpp"
+#include "gfx/mesh.hpp"
 #include "glw/render.hpp"
-#include "util.hpp"
 
 #include "engine/mesh_buffer.hpp"
 
