@@ -5,6 +5,6 @@
 #include "fps.hpp"
 
 #include "mesh_buffer.hpp"
-#include "instance.hpp"
+#include "instances.hpp"
 
 #include "renderer.hpp"
