@@ -1,11 +1,8 @@
 #pragma once
 
-#include <vector>
-
-#include "glm/fwd.hpp"
-
-#include "engine/mesh_buffer.hpp"
 #include "gfx/mesh.hpp"
+#include "engine/mesh_buffer.hpp"
+#include "engine/instances.hpp"
 
 
 namespace engine {
@@ -15,6 +12,6 @@ namespace engine {
         Renderer(MeshBuffer& buffer) : meshBuffer(&buffer) {}
 
         void bindToBuffer(MeshBuffer& buffer);
-        void Mesh(gfx::Mesh& mesh, int instances) const;
+        void render(Instances& instances) const;
     };
 }

@@ -14,16 +14,16 @@ namespace engine {
         meshBuffer = &buffer;
     }
 
-    void Renderer::Mesh(gfx::Mesh& mesh, const int instances) const {
+    void Renderer::render(Instances& instances) const {
         ZoneScoped;
-        if (mesh.id == -1)
-            meshBuffer->indexMesh(mesh);
+        if (instances.mesh->id == -1)
+            meshBuffer->indexMesh(*instances.mesh);
 
         meshBuffer->getVAO().bind();
 
-        MeshBuffer::IndexData meshOffset = meshBuffer->getMeshOffset(mesh);
+        MeshBuffer::IndexData meshOffset = meshBuffer->getMeshOffset(*instances.mesh);
         glw::drawInstancesBaseVertex(
-            instances,
+            instances.instanceCount,
             meshOffset.indexCount,
             meshOffset.ebo_offset,
             meshOffset.vbo_offset
