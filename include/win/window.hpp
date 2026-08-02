@@ -1,23 +1,18 @@
 #pragma once
 
+#include "fps.hpp"
+#include "cursor_ctx.hpp"
+
 
 struct GLFWwindow;
 
 namespace win {
     struct Window {
-        struct CursorContext {
-            float lastX = -1;
-            float lastY = -1;
-
-            float offsetX = 0;
-            float offsetY = 0;
-
-            bool initialized = false;
-
-            void clearOffsets();
-        };
-
         GLFWwindow* glfw_window = nullptr;
+
+        float winFPS = 60;
+
+        FrameTimer frameTimer;
         CursorContext cursorContext;
 
         void setHints(int major_version, int minor_version);
@@ -61,5 +56,11 @@ namespace win {
         [[nodiscard]] bool isKeyPressed(int key) const;
 
         void getWindowSize(int* width, int* height) const;
+
+        void setFPS(float fps);
+        double getFrameTime();
+
+        void startFrame(float r, float g, float b, float a);
+        void endFrame();
     };
 }

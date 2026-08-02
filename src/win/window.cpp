@@ -5,11 +5,6 @@
 
 
 namespace win {
-    void Window::CursorContext::clearOffsets() {
-        offsetX = 0;
-        offsetY = 0;
-    }
-
     void Window::setHints(int major_version, int minor_version) {
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, major_version);
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, minor_version);
@@ -57,5 +52,27 @@ namespace win {
 
     void Window::getWindowSize(int* width, int* height) const {
         glfwGetFramebufferSize(glfw_window, width, height);
-    };
+    }
+
+    void Window::setFPS(float fps) {
+        winFPS = fps;
+    }
+
+    double Window::getFrameTime() {
+        return frameTimer.getFrameTime();
+    }
+
+    void Window::startFrame(float r, float g, float b, float a) {
+        frameTimer.setFPS(winFPS);
+
+        cursorContext.clearOffsets();
+        glfwPollEvents();
+
+        glClearColor(r, g, b, a);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    }
+
+    void Window::endFrame() {
+        glfwSwapBuffers(glfw_window);
+    }
 }
