@@ -7,7 +7,7 @@
 #include "gfx/mesh.hpp"
 
 
-namespace engine {
+namespace engine {      // idea, find a way to delete meshes (current problems are indexing)
     struct MeshBuffer { // idea, after some time, if the buffer hasnt changed, i should make it so it turns from a dynamic one into a static one
         struct IndexData {
             int indexCount = 0;
