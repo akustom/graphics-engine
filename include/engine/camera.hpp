@@ -11,6 +11,8 @@ namespace engine {
         gfx::Camera rawCamera;
         glw::UBO cameraUBO;
 
+        bool isViewDirty = true;
+
         void pushViewMatrix();
 
         void pushProjectionMatrix(int win_width, int win_height) const;
@@ -21,10 +23,10 @@ namespace engine {
             cameraUBO.allocateBuffer(2 * bytesof<glm::mat4>());
         }
 
-        void use(const win::Window& window);
+        void use(win::Window& window);
 
-        void processKeyboard(const win::Window& window, float dt);
-        void processMouse(const win::Window& window, bool constrain_pitch = true);
+        void processKeyboard(win::Window& window, float dt);
+        void processMouse(win::Window& window, bool constrain_pitch = true);
 
         void sendUpdate();
     };

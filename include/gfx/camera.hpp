@@ -27,23 +27,12 @@ namespace gfx {
         float yaw   = glm::degrees(std::atan2(front.z, front.x));
         float pitch = glm::degrees(std::asin(front.y));
 
-        float movementSpeed     = 5.0f;
+        float movementSpeed     = 5.0f; // todo create a method to modify these variables,
         float mouseSensitivity  = 0.1f;
         float fieldOfView       = 45.0f;
 
-        bool isViewDirty = true;
-
-        void processKeyboard(const win::Window& window, float dt);
-
-        void processMouse(double x_offset, double y_offset, bool constrain_pitch = true);
-
         [[nodiscard]] glm::mat4 getViewMatrix() const;
 
-        void pushViewMatrix(const glw::UBO& ubo);
-
-        void pushProjectionMatrix(int win_width, int win_height, const glw::UBO& ubo) const;
-
-    private:
         void updateCameraDirectionVariable();
     };
 }
