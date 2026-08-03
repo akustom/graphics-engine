@@ -58,7 +58,7 @@ int main() {
     shaderProgram.use();
 
     gfx::Mesh square;
-    gfx::makePolyhedron(square, 1.0f, 16, {1.0, 1.0, 1.0});
+    gfx::makePolyhedron(square, 1.0f, 256, {1.0, 1.0, 1.0});
 
     gfx::Mesh cube;
     gfx::makePolyhedron(cube, 1.0f, 6, {1.0, 0.0, 0.0});
@@ -72,34 +72,36 @@ int main() {
     particles.createInstance({0, 0, 2});
     particles.createInstance({0, 0, -2});
 
-    while (particles.positions.size() < 50000) {
+    while (particles.positions.size() < 31) {
         particles.createInstance({
-            random(-1000.0f, 1000.0f),
-            random(-1000.0f, 1000.0f),
-            random(-1000.0f, 1000.0f)}
+            util::random(-10.0f, 10.0f),
+            util::random(-10.0f, 10.0f),
+            util::random(-10.0f, 10.0f)}
             );
     }
 
 
     glw::VBO instanceVBO;
     instanceVBO.allocateBuffer(particles.positions);
-    meshBuffer.getVAO().attachBuffer(instanceVBO, 1, 0, bytesof<glm::vec4>());
+    meshBuffer.getVAO().attachBuffer(instanceVBO, 1, 0, util::bytesof<glm::vec4>());
 
 
     Camera camera = {0};
     camera.use(window);
 
-
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LEQUAL);
 
-    window.setFPS(144);
+    util::print(2, 3, 4);
+    util::print(4);
+
+    window.setFPS(5000);
 
     while (!glfwWindowShouldClose(window.glfw_window)) {
         ZoneScopedN("Main Frame");
         window.startFrame(0.07f, 0.07f, 0.07f, 1.0f);
 
-        float dt = window.getFrameTime();
+        auto dt = static_cast<float>(window.getFrameTime());
 
         camera.processMouse(window);
         camera.processKeyboard(window, dt);
@@ -107,8 +109,8 @@ int main() {
 
         particles.bindToMesh(square);
         renderer.render(particles);
-        particles.bindToMesh(cube);
-        renderer.render(particles);
+        //particles.bindToMesh(cube);
+        //renderer.render(particles);
 
         window.endFrame();
         FrameMark;

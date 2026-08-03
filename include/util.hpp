@@ -4,41 +4,47 @@
 #include <vector>
 #include <random>
 
-// todo, add to own namespace
 
-template <typename T>
-size_t bytesof(const std::vector<T>& vec) {
-    return vec.size() * sizeof(T);
-}
-template <typename T>
-constexpr size_t bytesof() {
-    return sizeof(T);
-}
+namespace util {
+    template <typename T>
+    size_t bytesof(const std::vector<T>& vec) {
+        return vec.size() * sizeof(T);
+    }
+    template <typename T>
+    constexpr size_t bytesof() {
+        return sizeof(T);
+    }
 
-template <typename T>
-void moveVecHelper(std::vector<T>& dest, std::vector<T>& source) {
-    dest.insert(
-    dest.end(),
-    std::make_move_iterator(source.begin()),
-    std::make_move_iterator(source.end()));
+    template <typename T>
+    void moveVecHelper(std::vector<T>& dest, std::vector<T>& source) {
+        dest.insert(
+        dest.end(),
+        std::make_move_iterator(source.begin()),
+        std::make_move_iterator(source.end()));
 
-    source.clear();
-}
+        source.clear();
+    }
 
-template <typename T, typename... Args>
-void moveVec(std::vector<T>& dest, Args&... source) {
-    size_t size = (source.size() + ...);
-    dest.reserve(size);
+    template <typename T, typename... Args>
+    void moveVec(std::vector<T>& dest, Args&... source) {
+        size_t size = (... + source.size());
+        dest.reserve(size);
 
-    (moveVecHelper(dest, source), ...);
-}
+        (moveVecHelper(dest, source), ...);
+    }
 
-template <typename T>
-requires std::is_arithmetic_v<T>
-T random(T min, T max) {
-    std::random_device rd;
-    std::mt19937 gen(rd());
+    template <typename T>
+    requires std::is_arithmetic_v<T>
+    T random(T min, T max) {
+        std::random_device rd;
+        std::mt19937 gen(rd());
 
-    std::uniform_real_distribution dis(min, max);
-    return dis(gen);
+        std::uniform_real_distribution dis(min, max);
+        return dis(gen);
+    }
+
+    template <typename... T>
+    void print(const T&... data) {
+        ((std::cout << data), ...) << '\n';
+    }
 }

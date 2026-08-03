@@ -20,7 +20,7 @@ namespace engine {
     public:
         Camera(int binding_point) {
             cameraUBO.bind(binding_point);
-            cameraUBO.allocateBuffer(2 * bytesof<glm::mat4>());
+            cameraUBO.allocateBuffer(2 * util::bytesof<glm::mat4>());
         }
 
         void use(win::Window& window);

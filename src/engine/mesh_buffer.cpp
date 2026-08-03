@@ -20,16 +20,16 @@ namespace engine {
                 tempVBO.copyData<gfx::vertex>(vertexBuffer, verticesBatchData.size);
 
                 vertexBuffer = std::move(tempVBO);
-                vertexFormat.attachBuffer(vertexBuffer, 0, 0, bytesof<gfx::vertex>());
+                vertexFormat.attachBuffer(vertexBuffer, 0, 0, util::bytesof<gfx::vertex>());
             }
-            vertexBuffer.pushData(static_cast<int>(bytesof<gfx::vertex>()) * verticesBatchData.size, mesh.vertices);
+            vertexBuffer.pushData(static_cast<int>(util::bytesof<gfx::vertex>()) * verticesBatchData.size, mesh.vertices);
 
         } else {
             vertexBuffer.allocateBuffer(mesh.vertices);
             vertexFormat.attachBuffer(
                 vertexBuffer,
                 0, 0,
-                bytesof<gfx::vertex>()
+                util::bytesof<gfx::vertex>()
                 );
         }
 
@@ -45,7 +45,7 @@ namespace engine {
                 indexBuffer = std::move(tempEBO);
                 vertexFormat.attachBuffer(indexBuffer);
             }
-            indexBuffer.pushData(static_cast<int>(bytesof<glm::uint>()) * indicesBatchData.size, mesh.indices);
+            indexBuffer.pushData(static_cast<int>(util::bytesof<glm::uint>()) * indicesBatchData.size, mesh.indices);
 
         } else {
             indexBuffer.allocateBuffer(mesh.indices);
