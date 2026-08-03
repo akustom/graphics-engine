@@ -10,10 +10,10 @@ namespace win {
     struct Window {
         GLFWwindow* glfw_window = nullptr;
 
-        float winFPS = 60;
-
         FrameTimer frameTimer;
         CursorContext cursorContext;
+
+        float winFPS = 60;
 
         void setHints(int major_version, int minor_version);
         void init(int width, int height, const char* window_name);
