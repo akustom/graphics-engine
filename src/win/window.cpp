@@ -63,7 +63,8 @@ namespace win {
     }
 
     void Window::startFrame(float r, float g, float b, float a) {
-        frameTimer.setFPS(winFPS);
+        if (winFPS > 0)
+            frameTimer.setFPS(winFPS);
 
         cursorContext.clearOffsets();
         glfwPollEvents();
