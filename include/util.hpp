@@ -2,7 +2,9 @@
 
 #include <algorithm>
 #include <vector>
+#include <random>
 
+// todo, add to own namespace
 
 template <typename T>
 size_t bytesof(const std::vector<T>& vec) {
@@ -29,4 +31,14 @@ void moveVec(std::vector<T>& dest, Args&... source) {
     dest.reserve(size);
 
     (moveVecHelper(dest, source), ...);
+}
+
+template <typename T>
+requires std::is_arithmetic_v<T>
+T random(T min, T max) {
+    std::random_device rd;
+    std::mt19937 gen(rd());
+
+    std::uniform_real_distribution dis(min, max);
+    return dis(gen);
 }

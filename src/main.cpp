@@ -1,12 +1,11 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include <random>
 // opengl
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
+#include "glad/glad.h"
+#include "GLFW/glfw3.h"
 // glm
-#include <glm/gtc/type_ptr.hpp>
+#include "glm/gtc/type_ptr.hpp"
 // just my libs
 #include "glw/glw.hpp"
 #include "gfx/gfx.hpp"
@@ -46,7 +45,7 @@ int main() {
     glViewport(0, 0, 960, 540);
 
 
-    MeshBuffer meshBuffer;
+    MeshBuffer meshBuffer = {0};
 
     Renderer renderer = {meshBuffer};
 
@@ -58,33 +57,27 @@ int main() {
     );
     shaderProgram.use();
 
-
     gfx::Mesh square;
     gfx::makePolyhedron(square, 1.0f, 16, {1.0, 1.0, 1.0});
 
     gfx::Mesh cube;
-    gfx::makePolyhedron(cube, 1.0f, 4, {1.0, 0.0, 0.0});
+    gfx::makePolyhedron(cube, 1.0f, 6, {1.0, 0.0, 0.0});
 
 
-    phy::Particles particles;
-    particles.createParticle(0, {0, 0, 0});
-    particles.createParticle(0, {2, 0, 0});
-    particles.createParticle(0, {-2, 0, 0});
-    particles.createParticle(0, {0, 2, 0});
-    particles.createParticle(0, {0, -2, 0});
-    particles.createParticle(0, {0, 0, 2});
-    particles.createParticle(0, {0, 0, -2});
+    Instances particles{cube};
+    particles.createInstance({2, 0, 0});
+    particles.createInstance({-2, 0, 0});
+    particles.createInstance({0, 2, 0});
+    particles.createInstance({0, -2, 0});
+    particles.createInstance({0, 0, 2});
+    particles.createInstance({0, 0, -2});
 
-
-    std::random_device rd;
-    std::mt19937 gen(rd());
-
-    std::uniform_real_distribution disX(-1000.0f, 1000.0f);
-    std::uniform_real_distribution disY(-1000.0f, 1000.0f);
-    std::uniform_real_distribution disZ(-1000.0f, 1000.0f);
-
-    while (particles.positions.size() < 0) {
-        particles.createParticle(0, {disX(gen), disY(gen), disZ(gen)});
+    while (particles.positions.size() < 50000) {
+        particles.createInstance({
+            random(-1000.0f, 1000.0f),
+            random(-1000.0f, 1000.0f),
+            random(-1000.0f, 1000.0f)}
+            );
     }
 
 
@@ -100,28 +93,26 @@ int main() {
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LEQUAL);
 
+    window.setFPS(144);
+
     while (!glfwWindowShouldClose(window.glfw_window)) {
-        FrameTimer::setFPS(144);
         ZoneScopedN("Main Frame");
+        window.startFrame(0.07f, 0.07f, 0.07f, 1.0f);
 
-        float dt = FrameTimer::getFrameTime();
-
-        glClearColor(0.07f, 0.07f, 0.07f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        float dt = window.getFrameTime();
 
         camera.processMouse(window);
         camera.processKeyboard(window, dt);
         camera.sendUpdate();
 
-        renderer.Mesh(square, static_cast<int>(particles.positions.size()));
-        //Render.Mesh(cube,   static_cast<int>(particles.positions.size()));
+        particles.bindToMesh(square);
+        renderer.render(particles);
+        particles.bindToMesh(cube);
+        renderer.render(particles);
 
-        window.cursorContext.clearOffsets(); // idea create an end frame method in window to clear offsets, swap buffers, poll events, etc
-        glfwSwapBuffers(window.glfw_window);
-        glfwPollEvents();
+        window.endFrame();
         FrameMark;
     }
 
-    glfwTerminate();
     return 0;
 }
