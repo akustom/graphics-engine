@@ -26,19 +26,19 @@ namespace engine {
         std::vector<glm::vec4> velocities;
         std::vector<glm::vec4> accelerations;
 
-        void createInstance(
-            const glm::vec3& position = {0, 0, 0},
-            const glm::vec3& velocity = {0, 0, 0},
-            const glm::vec3& acceleration = {0, 0, 0}
-            );
-
-        Instance getInstance(size_t index) {
+        Instance operator[](size_t index) { // getting an instance
             return Instance{
                 positions[index],
                 velocities[index],
                 accelerations[index]
             };
         }
+
+        void createInstance(
+            const glm::vec3& position = {0, 0, 0},
+            const glm::vec3& velocity = {0, 0, 0},
+            const glm::vec3& acceleration = {0, 0, 0}
+            );
 
     };
 }
