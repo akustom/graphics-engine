@@ -12,12 +12,12 @@ namespace gfx {
 
 namespace engine {
     struct Instances {
-        struct Instance {
+        struct InstanceRef {
             glm::vec4& position;
             glm::vec4& velocity;
             glm::vec4& acceleration;
 
-            Instance(glm::vec4& pos, glm::vec4& vel, glm::vec4& accel) : position(pos), velocity(vel), acceleration(accel) {}
+            InstanceRef(glm::vec4& pos, glm::vec4& vel, glm::vec4& accel) : position(pos), velocity(vel), acceleration(accel) {}
         };
 
         int instanceCount = 0;
@@ -26,8 +26,8 @@ namespace engine {
         std::vector<glm::vec4> velocities;
         std::vector<glm::vec4> accelerations;
 
-        Instance operator[](size_t index) { // getting an instance
-            return Instance{
+        InstanceRef operator[](size_t index) { // getting an instance
+            return InstanceRef{
                 positions[index],
                 velocities[index],
                 accelerations[index]
