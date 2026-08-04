@@ -18,12 +18,6 @@ namespace engine {
         std::vector<glm::vec4> velocities;
         std::vector<glm::vec4> accelerations;
 
-        gfx::Mesh* mesh;
-
-        Instances(gfx::Mesh& instance_mesh) : mesh(&instance_mesh) {}
-
-        void bindToMesh(gfx::Mesh& l_mesh);
-
         void createInstance(
             const glm::vec3& position = {0, 0, 0},
             const glm::vec3& velocity = {0, 0, 0},

@@ -11,6 +11,6 @@ namespace engine {
         Renderer(MeshBuffer& buffer) : meshBuffer(&buffer) {}
 
         void bindToBuffer(MeshBuffer& buffer);
-        void render(Instances& instances) const;
+        void render(gfx::Mesh& mesh, Instances& instances) const;
     };
 }

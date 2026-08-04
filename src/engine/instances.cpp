@@ -4,10 +4,6 @@
 
 
 namespace engine {
-    void Instances::bindToMesh(gfx::Mesh& l_mesh) {
-        mesh = &l_mesh;
-    }
-
     void Instances::createInstance(const glm::vec3& position, const glm::vec3& velocity, const glm::vec3& acceleration) {
         instanceCount++;
 
