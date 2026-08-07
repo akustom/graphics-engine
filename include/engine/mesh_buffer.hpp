@@ -18,10 +18,10 @@ namespace engine {      // idea, find a way to delete meshes (current problems a
             int ebo_offset;
             int vbo_offset;
 
-            IndexData(const int ebo_o = 0, const int vbo_o = 0) : ebo_offset(ebo_o), vbo_offset(vbo_o) {}
+            IndexData(const int index_count = 0, const int ebo_o = 0, const int vbo_o = 0) : indexCount(index_count), ebo_offset(ebo_o), vbo_offset(vbo_o) {}
         };
 
-        struct BatchStorageData {
+        struct BatchHeader {
             int size = 0;
             int capacity = 0;
         };
@@ -33,8 +33,8 @@ namespace engine {      // idea, find a way to delete meshes (current problems a
         glw::VBO vertexBuffer;
         glw::EBO indexBuffer;
 
-        BatchStorageData verticesBatchData;
-        BatchStorageData indicesBatchData;
+        BatchHeader verticesBatchHeader;
+        BatchHeader indicesBatchHeader;
 
         int bindingLocation;
 
