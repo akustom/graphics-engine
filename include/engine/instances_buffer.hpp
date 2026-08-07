@@ -9,7 +9,7 @@
 namespace engine {
     struct Instances;
 
-    struct InstancesBuffer { // wip
+    struct InstancesBuffer { // todo wip, make the push instances more flexible, supporting more instances, etc
         struct IndexData {
             int instances_count = 0;
             int buffer_offset = 0;
