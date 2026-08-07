@@ -40,6 +40,6 @@ namespace engine {
 
         void push(Instances& instances);
 
-        void indexInstances(Instances& instances);
+        void index(Instances& instances);
     };
 }

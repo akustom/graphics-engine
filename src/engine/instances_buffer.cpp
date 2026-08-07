@@ -14,7 +14,7 @@ namespace engine {
         vertexFormat.attachBuffer(instancesBuffer, bindingLocation, 0, util::bytesof<glm::vec4>());
     }
 
-    void InstancesBuffer::indexInstances(Instances& instances) {
+    void InstancesBuffer::index(Instances& instances) {
         push(instances);
 
         instances.id = static_cast<int>(indexedInstances.size());
