@@ -26,10 +26,16 @@ namespace engine {      // idea, find a way to delete meshes (current problems a
             int capacity = 0;
         };
 
+        std::vector<IndexData> indexedMeshes;
+
+        glw::VAO& vertexFormat;
+
         glw::VBO vertexBuffer;
         glw::EBO indexBuffer;
 
-        glw::VAO& vertexFormat;
+        BatchStorageData verticesBatchData;
+        BatchStorageData indicesBatchData;
+
         int bindingLocation;
 
         MeshBuffer(glw::VAO& vertex_format, int binding_loc) : vertexFormat(vertex_format), bindingLocation(binding_loc) { // TODO: refactor this to be more flexible with its formatting (use boost)
@@ -40,11 +46,6 @@ namespace engine {      // idea, find a way to delete meshes (current problems a
             vertexFormat.formatAttribute(3, 1, 4, GL_FLOAT, 0);
             vertexFormat.setAttributeDivisor(1, 1);
         }
-
-        std::vector<IndexData> indexedMeshes;
-
-        BatchStorageData verticesBatchData;
-        BatchStorageData indicesBatchData;
 
         IndexData getMeshOffset(gfx::Mesh& mesh) const;
 
