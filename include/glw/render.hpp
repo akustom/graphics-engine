@@ -22,5 +22,16 @@ namespace glw {
         instance_count,
         vbo_offset);
     }
+
+    inline void drawInstancesBaseVertexBaseInstances(int instance_count, const int indices_count, const int ebo_offset, const int vbo_offset, const int instance_offset) {
+        glDrawElementsInstancedBaseVertexBaseInstance(
+            GL_TRIANGLES,
+            indices_count,
+            GL_UNSIGNED_INT,
+            reinterpret_cast<void*>(ebo_offset * sizeof(unsigned int)),
+            instance_count,
+            vbo_offset,
+            instance_offset);
+    }
 }
 
