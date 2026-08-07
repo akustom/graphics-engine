@@ -53,7 +53,7 @@ namespace engine {      // idea, find a way to delete meshes (current problems a
         void pushIndices(std::vector<glm::uint>& indices);
         void push(gfx::Mesh& mesh);
 
-        void indexMesh(gfx::Mesh& mesh);
+        void index(gfx::Mesh& mesh);
 
         glw::VAO& getVAO();
     };

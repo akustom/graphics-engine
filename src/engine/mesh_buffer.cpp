@@ -58,7 +58,7 @@ namespace engine {
         pushIndices(mesh.indices);
     }
 
-    void MeshBuffer::indexMesh(gfx::Mesh& mesh) {
+    void MeshBuffer::index(gfx::Mesh& mesh) {
         push(mesh);
 
         mesh.id = static_cast<int>(indexedMeshes.size());
