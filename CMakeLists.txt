@@ -30,6 +30,7 @@ add_executable(3grav
 
         src/engine/renderer.cpp
         src/engine/mesh_buffer.cpp
+        src/engine/instances_buffer.cpp
         src/engine/camera.cpp
         src/engine/instances.cpp
 )
