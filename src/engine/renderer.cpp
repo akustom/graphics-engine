@@ -1,31 +1,26 @@
 #include "engine/renderer.hpp"
 
 #include "gfx/mesh.hpp"
+#include "engine/instances.hpp"
 #include "glw/render.hpp"
 
 #include "engine/mesh_buffer.hpp"
+#include "engine/instances_buffer.hpp"
 
 #include "tracy/Tracy.hpp"
 
 
 namespace engine {
-    void Renderer::bindToBuffer(MeshBuffer& buffer) {
-        meshBuffer = &buffer;
-    }
-
     void Renderer::render(gfx::Mesh& mesh, Instances& instances) const {
         ZoneScoped;
-        if (mesh.id == -1)
-            meshBuffer->indexMesh(mesh);
+        MeshBuffer::IndexData meshOffset = meshBuffer.getMeshOffset(mesh);
+        InstancesBuffer::IndexData instancesOffset = instancesBuffer.getInstancesOffset(instances);
 
-        meshBuffer->getVAO().bind();
-
-        MeshBuffer::IndexData meshOffset = meshBuffer->getMeshOffset(mesh);
-        glw::drawInstancesBaseVertex(
-            instances.instanceCount,
+        glw::drawInstancesBaseVertexBaseInstances(
+            instancesOffset.instances_count,
             meshOffset.indexCount,
             meshOffset.ebo_offset,
-            meshOffset.vbo_offset
-            );
+            meshOffset.vbo_offset,
+            instancesOffset.buffer_offset);
     }
 }

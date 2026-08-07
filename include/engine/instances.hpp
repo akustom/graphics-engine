@@ -20,11 +20,14 @@ namespace engine {
             InstanceRef(glm::vec4& pos, glm::vec4& vel, glm::vec4& accel) : position(pos), velocity(vel), acceleration(accel) {}
         };
 
-        int instanceCount = 0;
-
         std::vector<glm::vec4> positions;
+
         std::vector<glm::vec4> velocities;
         std::vector<glm::vec4> accelerations;
+
+        int instanceCount = 0;
+
+        int id = -1;
 
         InstanceRef operator[](size_t index) { // getting an instance
             return InstanceRef{
