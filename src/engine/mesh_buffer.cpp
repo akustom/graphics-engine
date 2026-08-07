@@ -9,34 +9,34 @@ namespace engine {
         return indexedMeshes[mesh.id];
     }
 
-    void MeshBuffer::addMesh(gfx::Mesh& mesh) {
-        // vertices
+    void MeshBuffer::pushVertices(std::vector<gfx::vertex>& vertices) {
         if (!indexedMeshes.empty()) {
-            if (verticesBatchData.size + mesh.vertices.size() > verticesBatchData.capacity) {
-                verticesBatchData.capacity = 2 * std::max(verticesBatchData.size, static_cast<int>(mesh.vertices.size()));
+            if (verticesBatchData.size + vertices.size() > verticesBatchData.capacity) {
+                verticesBatchData.capacity = 2 * std::max(verticesBatchData.size, static_cast<int>(vertices.size()));
 
                 glw::VBO tempVBO;
                 tempVBO.allocateBuffer<gfx::vertex>(verticesBatchData.capacity, GL_DYNAMIC_STORAGE_BIT);
                 tempVBO.copyData<gfx::vertex>(vertexBuffer, verticesBatchData.size);
 
                 vertexBuffer = std::move(tempVBO);
-                vertexFormat.attachBuffer(vertexBuffer, 0, 0, util::bytesof<gfx::vertex>());
+                vertexFormat.attachBuffer(vertexBuffer, bindingLocation, 0, util::bytesof<gfx::vertex>());
             }
-            vertexBuffer.pushData(static_cast<int>(util::bytesof<gfx::vertex>()) * verticesBatchData.size, mesh.vertices);
+            vertexBuffer.pushData(static_cast<int>(util::bytesof<gfx::vertex>()) * verticesBatchData.size, vertices);
 
         } else {
-            vertexBuffer.allocateBuffer(mesh.vertices);
+            vertexBuffer.allocateBuffer(vertices);
             vertexFormat.attachBuffer(
                 vertexBuffer,
-                0, 0,
+                bindingLocation, 0,
                 util::bytesof<gfx::vertex>()
                 );
         }
+    }
 
-        // indices
+    void MeshBuffer::pushIndices(std::vector<glm::uint>& indices) {
         if (!indexedMeshes.empty()) {
-            if (indicesBatchData.size + mesh.indices.size() > indicesBatchData.capacity) {
-                indicesBatchData.capacity = 2 * std::max(indicesBatchData.size, static_cast<int>(mesh.indices.size()));
+            if (indicesBatchData.size + indices.size() > indicesBatchData.capacity) {
+                indicesBatchData.capacity = 2 * std::max(indicesBatchData.size, static_cast<int>(indices.size()));
 
                 glw::EBO tempEBO;
                 tempEBO.allocateBuffer<glm::uint>(indicesBatchData.capacity, GL_DYNAMIC_STORAGE_BIT);
@@ -45,17 +45,21 @@ namespace engine {
                 indexBuffer = std::move(tempEBO);
                 vertexFormat.attachBuffer(indexBuffer);
             }
-            indexBuffer.pushData(static_cast<int>(util::bytesof<glm::uint>()) * indicesBatchData.size, mesh.indices);
+            indexBuffer.pushData(static_cast<int>(util::bytesof<glm::uint>()) * indicesBatchData.size, indices);
 
         } else {
-            indexBuffer.allocateBuffer(mesh.indices);
+            indexBuffer.allocateBuffer(indices);
             vertexFormat.attachBuffer(indexBuffer);
         }
+    }
 
+    void MeshBuffer::push(gfx::Mesh& mesh) {
+        pushVertices(mesh.vertices);
+        pushIndices(mesh.indices);
     }
 
     void MeshBuffer::indexMesh(gfx::Mesh& mesh) {
-        addMesh(mesh);
+        push(mesh);
 
         mesh.id = static_cast<int>(indexedMeshes.size());
         indexedMeshes.emplace_back(indicesBatchData.size, verticesBatchData.size);

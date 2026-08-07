@@ -28,9 +28,11 @@ namespace engine {      // idea, find a way to delete meshes (current problems a
 
         glw::VBO vertexBuffer;
         glw::EBO indexBuffer;
-        glw::VAO vertexFormat;
 
-        MeshBuffer(int binding_loc) { // TODO: refactor this to be more flexible with its formatting (use boost)
+        glw::VAO& vertexFormat;
+        int bindingLocation;
+
+        MeshBuffer(glw::VAO& vertex_format, int binding_loc) : vertexFormat(vertex_format), bindingLocation(binding_loc) { // TODO: refactor this to be more flexible with its formatting (use boost)
             vertexFormat.formatAttribute(0, binding_loc, 3, GL_FLOAT, offsetof(gfx::vertex, pos));
             vertexFormat.formatAttribute(1, binding_loc, 3, GL_FLOAT, offsetof(gfx::vertex, color));
             vertexFormat.formatAttribute(2, binding_loc, 3, GL_FLOAT, offsetof(gfx::vertex, normal));
@@ -45,7 +47,11 @@ namespace engine {      // idea, find a way to delete meshes (current problems a
         BatchStorageData indicesBatchData;
 
         IndexData getMeshOffset(gfx::Mesh& mesh) const;
-        void addMesh(gfx::Mesh& mesh);
+
+        void pushVertices(std::vector<gfx::vertex>& vertices);
+        void pushIndices(std::vector<glm::uint>& indices);
+        void push(gfx::Mesh& mesh);
+
         void indexMesh(gfx::Mesh& mesh);
 
         glw::VAO& getVAO();
