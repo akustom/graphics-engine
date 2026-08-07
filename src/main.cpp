@@ -45,9 +45,11 @@ int main() {
     glViewport(0, 0, 960, 540);
 
 
-    MeshBuffer meshBuffer = {0};
+    glw::VAO test;
+    MeshBuffer meshBuffer = {test, 0};
+    InstancesBuffer instancesBuffer = {test, 1};
 
-    Renderer renderer = {meshBuffer};
+    Renderer renderer = {meshBuffer, instancesBuffer};
 
 
     glw::ShaderProgram shaderProgram;
@@ -58,13 +60,13 @@ int main() {
     shaderProgram.use();
 
     gfx::Mesh square;
-    gfx::makePolyhedron(square, 1.0f, 256, {1.0, 1.0, 1.0});
+    gfx::makePolyhedron(square, 1.0f, 16, {1.0, 1.0, 1.0});
 
     gfx::Mesh cube;
     gfx::makePolyhedron(cube, 1.0f, 6, {1.0, 0.0, 0.0});
 
 
-    Instances particles{cube};
+    Instances particles;
     particles.createInstance({2, 0, 0});
     particles.createInstance({-2, 0, 0});
     particles.createInstance({0, 2, 0});
@@ -72,7 +74,7 @@ int main() {
     particles.createInstance({0, 0, 2});
     particles.createInstance({0, 0, -2});
 
-    while (particles.positions.size() < 31) {
+    while (particles.positions.size() < 50) {
         particles.createInstance({
             util::random(-10.0f, 10.0f),
             util::random(-10.0f, 10.0f),
@@ -81,21 +83,20 @@ int main() {
     }
 
 
-    glw::VBO instanceVBO;
-    instanceVBO.allocateBuffer(particles.positions);
-    meshBuffer.getVAO().attachBuffer(instanceVBO, 1, 0, util::bytesof<glm::vec4>());
-
-
     Camera camera = {0};
     camera.use(window);
 
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LEQUAL);
 
-    util::print(2, 3, 4);
-    util::print(4);
 
-    window.setFPS(5000);
+    meshBuffer.index(square);
+    meshBuffer.index(cube);
+    instancesBuffer.index(particles);
+
+    test.bind();
+
+    window.setFPS(144);
 
     while (!glfwWindowShouldClose(window.glfw_window)) {
         ZoneScopedN("Main Frame");
@@ -107,8 +108,8 @@ int main() {
         camera.processKeyboard(window, dt);
         camera.sendUpdate();
 
-        particles.bindToMesh(square);
-        renderer.render(particles);
+        renderer.render(cube, particles);
+        renderer.render(square, particles);
         //particles.bindToMesh(cube);
         //renderer.render(particles);
 
