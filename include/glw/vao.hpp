@@ -43,19 +43,19 @@ namespace glw {
         }
 
         /**use offsetof(struct, member) to calculate byte_offset*/
-        void formatAttribute(const int attrib_loc, const int binding_loc, const int size, const GLenum type, const int byte_offset) const {
+        void formatAttribute(const int attrib_loc, const int binding_point, const int size, const GLenum type, const int byte_offset) const {
             glEnableVertexArrayAttrib(id, attrib_loc);
             glVertexArrayAttribFormat(id, attrib_loc, size, type, GL_FALSE, byte_offset);
-            glVertexArrayAttribBinding(id, attrib_loc, binding_loc);
+            glVertexArrayAttribBinding(id, attrib_loc, binding_point);
         }
 
-        void setAttributeDivisor(const int binding_loc, const int divisor) const {
-            glVertexArrayBindingDivisor(id, binding_loc, divisor);
+        void setAttributeDivisor(const int binding_point, const int divisor) const {
+            glVertexArrayBindingDivisor(id, binding_point, divisor);
         }
 
         /**use offsetof(struct, member) to calculate byte_offset,*/
-        void attachBuffer(const VBO& vbo, const int binding_loc, const int byte_offset, const int byte_stride) const {
-            glVertexArrayVertexBuffer(id, binding_loc, vbo.id, byte_offset, byte_stride);
+        void attachBuffer(const VBO& vbo, const int binding_point, const int byte_offset, const int byte_stride) const {
+            glVertexArrayVertexBuffer(id, binding_point, vbo.id, byte_offset, byte_stride);
         }
         void attachBuffer(const EBO& ebo) const {
             glVertexArrayElementBuffer(id, ebo.id);

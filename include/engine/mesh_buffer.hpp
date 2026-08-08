@@ -38,10 +38,10 @@ namespace engine {      // idea, find a way to delete meshes (current problems a
 
         int bindingLocation;
 
-        MeshBuffer(glw::VAO& vertex_format, int binding_loc) : vertexFormat(vertex_format), bindingLocation(binding_loc) { // TODO: refactor this to be more flexible with its formatting (use boost)
-            vertexFormat.formatAttribute(0, binding_loc, 3, GL_FLOAT, offsetof(gfx::vertex, pos));
-            vertexFormat.formatAttribute(1, binding_loc, 3, GL_FLOAT, offsetof(gfx::vertex, color));
-            vertexFormat.formatAttribute(2, binding_loc, 3, GL_FLOAT, offsetof(gfx::vertex, normal));
+        MeshBuffer(glw::VAO& vertex_format, int binding_point) : vertexFormat(vertex_format), bindingLocation(binding_point) { // TODO: refactor this to be more flexible with its formatting (use boost)
+            vertexFormat.formatAttribute(0, binding_point, 3, GL_FLOAT, offsetof(gfx::vertex, pos));
+            vertexFormat.formatAttribute(1, binding_point, 3, GL_FLOAT, offsetof(gfx::vertex, color));
+            vertexFormat.formatAttribute(2, binding_point, 3, GL_FLOAT, offsetof(gfx::vertex, normal));
 
             vertexFormat.formatAttribute(3, 1, 4, GL_FLOAT, 0);
             vertexFormat.setAttributeDivisor(1, 1);

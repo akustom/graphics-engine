@@ -31,9 +31,9 @@ namespace engine {
 
         int bindingLocation;
 
-        InstancesBuffer(glw::VAO& vertex_format, int binding_loc) : vertexFormat(vertex_format), bindingLocation(binding_loc) {
-            vertexFormat.formatAttribute(3, binding_loc, 4, GL_FLOAT, 0);
-            vertexFormat.setAttributeDivisor(binding_loc, 1);
+        InstancesBuffer(glw::VAO& vertex_format, int binding_point) : vertexFormat(vertex_format), bindingLocation(binding_point) {
+            vertexFormat.formatAttribute(3, binding_point, 4, GL_FLOAT, 0);
+            vertexFormat.setAttributeDivisor(binding_point, 1);
         }
 
         IndexData getInstancesOffset(Instances& instances);

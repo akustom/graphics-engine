@@ -68,8 +68,8 @@ namespace glw {
     };
 
     struct UBO : Buffer {
-        void bind(const GLint binding_point) const {
-            glBindBufferBase(GL_UNIFORM_BUFFER, binding_point, id);
+        void bind(const GLint binding_loc) const {
+            glBindBufferBase(GL_UNIFORM_BUFFER, binding_loc, id);
         }
 
         void allocateBuffer(const GLintptr byte_offset) const {

@@ -18,8 +18,8 @@ namespace engine {
         void pushProjectionMatrix(int win_width, int win_height) const;
 
     public:
-        Camera(int binding_point) {
-            cameraUBO.bind(binding_point);
+        Camera(int binding_loc) {
+            cameraUBO.bind(binding_loc);
             cameraUBO.allocateBuffer(2 * util::bytesof<glm::mat4>());
         }
 
