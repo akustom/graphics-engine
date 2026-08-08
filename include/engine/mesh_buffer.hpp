@@ -36,9 +36,9 @@ namespace engine {      // idea, find a way to delete meshes (current problems a
         BatchHeader verticesBatchHeader;
         BatchHeader indicesBatchHeader;
 
-        int bindingLocation;
+        int bindingPoint;
 
-        MeshBuffer(glw::VAO& vertex_format, int binding_point) : vertexFormat(vertex_format), bindingLocation(binding_point) { // TODO: refactor this to be more flexible with its formatting (use boost)
+        MeshBuffer(glw::VAO& vertex_format, int binding_point) : vertexFormat(vertex_format), bindingPoint(binding_point) { // TODO: refactor this to be more flexible with its formatting (use boost)
             vertexFormat.formatAttribute(0, binding_point, 3, GL_FLOAT, offsetof(gfx::vertex, pos));
             vertexFormat.formatAttribute(1, binding_point, 3, GL_FLOAT, offsetof(gfx::vertex, color));
             vertexFormat.formatAttribute(2, binding_point, 3, GL_FLOAT, offsetof(gfx::vertex, normal));

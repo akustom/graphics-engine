@@ -11,7 +11,7 @@ namespace engine {
 
     void InstancesBuffer::push(Instances& instances) {
         instancesBuffer.allocateBuffer(instances.positions, GL_DYNAMIC_STORAGE_BIT);
-        vertexFormat.attachBuffer(instancesBuffer, bindingLocation, 0, util::bytesof<glm::vec4>());
+        vertexFormat.attachBuffer(instancesBuffer, bindingPoint, 0, util::bytesof<glm::vec4>());
     }
 
     void InstancesBuffer::index(Instances& instances) {

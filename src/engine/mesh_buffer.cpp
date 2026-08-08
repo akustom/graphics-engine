@@ -19,7 +19,7 @@ namespace engine {
                 tempVBO.copyData<gfx::vertex>(vertexBuffer, verticesBatchHeader.size);
 
                 vertexBuffer = std::move(tempVBO);
-                vertexFormat.attachBuffer(vertexBuffer, bindingLocation, 0, util::bytesof<gfx::vertex>());
+                vertexFormat.attachBuffer(vertexBuffer, bindingPoint, 0, util::bytesof<gfx::vertex>());
             }
             vertexBuffer.pushData(static_cast<int>(util::bytesof<gfx::vertex>()) * verticesBatchHeader.size, vertices);
 
@@ -27,7 +27,7 @@ namespace engine {
             vertexBuffer.allocateBuffer(vertices);
             vertexFormat.attachBuffer(
                 vertexBuffer,
-                bindingLocation, 0,
+                bindingPoint, 0,
                 util::bytesof<gfx::vertex>()
                 );
         }

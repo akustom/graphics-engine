@@ -29,9 +29,9 @@ namespace engine {
 
         BatchHeader batchHeader;
 
-        int bindingLocation;
+        int bindingPoint;
 
-        InstancesBuffer(glw::VAO& vertex_format, int binding_point) : vertexFormat(vertex_format), bindingLocation(binding_point) {
+        InstancesBuffer(glw::VAO& vertex_format, int binding_point) : vertexFormat(vertex_format), bindingPoint(binding_point) {
             vertexFormat.formatAttribute(3, binding_point, 4, GL_FLOAT, 0);
             vertexFormat.setAttributeDivisor(binding_point, 1);
         }
