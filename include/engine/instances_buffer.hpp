@@ -27,7 +27,7 @@ namespace engine {
         glw::VAO& vertexFormat;
         glw::Buffer instancesBuffer;
 
-        BatchHeader batchData;
+        BatchHeader batchHeader;
 
         int bindingLocation;
 

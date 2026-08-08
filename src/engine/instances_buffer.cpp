@@ -20,8 +20,8 @@ namespace engine {
         instances.id = static_cast<int>(indexedInstances.size());
         indexedInstances.emplace_back(
             instances.instanceCount,
-            batchData.size);
+            batchHeader.size);
 
-        batchData.size += instances.instanceCount;
+        batchHeader.size += instances.instanceCount;
     }
 }
