@@ -14,9 +14,10 @@
 
 
 namespace gfx {
-    glm::mat4 Camera::getViewMatrix() const {
-        return glm::lookAt(position, position + front, up);
-    }
+    glm::mat4 Camera::getViewMatrix() const {return glm::lookAt(position, position + front, up);}
+    void Camera::updateSpeed(float speed)           {movementSpeed = speed;}
+    void Camera::updateMouseSensitivity(float sens) {mouseSensitivity = sens;}
+    void Camera::updateFieldOfView(float fov)       {fieldOfView = fov;}
 
     void Camera::updateCameraDirectionVariable() {
         glm::vec3 newFront;
