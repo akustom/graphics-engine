@@ -10,7 +10,7 @@ namespace engine {
     }
 
     void MeshBuffer::pushVertices(std::vector<gfx::vertex>& vertices) {
-        if (!indexedMeshes.empty()) {
+        if (!indicesBatchHeader.size) {
             if (verticesBatchHeader.size + vertices.size() > verticesBatchHeader.capacity) {
                 verticesBatchHeader.capacity = 2 * std::max(verticesBatchHeader.size, static_cast<int>(vertices.size()));
 
@@ -34,7 +34,7 @@ namespace engine {
     }
 
     void MeshBuffer::pushIndices(std::vector<glm::uint>& indices) {
-        if (!indexedMeshes.empty()) {
+        if (!indicesBatchHeader.size) {
             if (indicesBatchHeader.size + indices.size() > indicesBatchHeader.capacity) {
                 indicesBatchHeader.capacity = 2 * std::max(indicesBatchHeader.size, static_cast<int>(indices.size()));
 
