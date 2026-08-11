@@ -18,8 +18,8 @@ namespace engine {
         };
 
         struct BatchHeader {
-            unsigned int size = 0;
-            unsigned int capacity = 0;
+            int size = 0;
+            int capacity = 0;
         };
 
         std::vector<IndexData> indexedInstances;
@@ -38,7 +38,7 @@ namespace engine {
 
         IndexData getInstancesOffset(Instances& instances);
 
-        void push(Instances& instances);
+        void push(std::vector<glm::vec4>& instances);
 
         void index(Instances& instances);
     };
