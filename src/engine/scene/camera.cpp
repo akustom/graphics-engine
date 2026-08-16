@@ -86,9 +86,9 @@ namespace engine::scene {
     void Camera::sendUpdate(win::Window& window) {
         pushViewMatrix();
 
-        /*int width, height;
+        int width, height;
         window.getWindowSize(&width, &height);
 
-        pushProjectionMatrix(width, height);*/
+        pushProjectionMatrix(width, height);
     }
 }
