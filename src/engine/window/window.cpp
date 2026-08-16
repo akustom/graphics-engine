@@ -11,10 +11,6 @@ namespace engine::win {
         glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     }
 
-    void Window::setVSync(bool enabled) {
-        glfwSwapInterval(enabled ? 1 : 0);
-    }
-
     void Window::init(int width, int height, const char* window_name) {
         glfw_window = glfwCreateWindow(width, height, window_name, nullptr, nullptr);
         if (glfw_window == nullptr) {
@@ -31,6 +27,10 @@ namespace engine::win {
         glfwMakeContextCurrent(glfw_window);
         this->setUserPointer((void*)this);
         this->setSetFramebufferSizeCallback();
+    }
+
+    void Window::setVSync(bool enabled) {
+        glfwSwapInterval(enabled ? 1 : 0);
     }
 
     void Window::setInputMode(int mode, int value) const {
@@ -74,7 +74,7 @@ namespace engine::win {
     }
 
     void Window::startFrame(float r, float g, float b, float a) {
-        if (winFPS > 0)
+        if (winFPS >= 0)
             frameTimer.setFPS(winFPS);
 
         cursorContext.clearOffsets();

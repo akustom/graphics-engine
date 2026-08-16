@@ -16,7 +16,6 @@ namespace engine::win {
         float winFPS = 60;
 
         static void setHints(int major_version, int minor_version);
-        static void setVSync(bool enabled);
         void init(int width, int height, const char* window_name);
         void destroy() const;
 
@@ -47,6 +46,7 @@ namespace engine::win {
         }
 
         void use() const;
+        void setVSync(bool enabled);
 
         void setInputMode(int mode, int value) const;
         void setSetFramebufferSizeCallback() const;
