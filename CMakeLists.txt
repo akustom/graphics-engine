@@ -20,19 +20,21 @@ add_executable(3grav
         src/main.cpp
         src/glad.c
 
-        src/gfx/camera.cpp
-        src/gfx/mesh.cpp
+        src/engine/window/window.cpp
+        src/engine/window/fps.cpp
+        src/engine/window/win_io.cpp
+        src/engine/window/cursor_ctx.cpp
 
-        src/win/window.cpp
-        src/win/fps.cpp
-        src/win/win_io.cpp
-        src/win/cursor_ctx.cpp
+        src/engine/gfx/renderer.cpp
 
-        src/engine/renderer.cpp
-        src/engine/mesh_buffer.cpp
-        src/engine/instances_buffer.cpp
-        src/engine/camera.cpp
-        src/engine/instances.cpp
+        src/engine/gfx/buffer/mesh_buffer.cpp
+        src/engine/gfx/buffer/instances_buffer.cpp
+
+        src/engine/geometry/camera.cpp
+        src/engine/geometry/mesh.cpp
+
+        src/engine/scene/camera.cpp
+        src/engine/scene/instances.cpp
 )
 
 target_include_directories(3grav PRIVATE ${CMAKE_SOURCE_DIR}/include)

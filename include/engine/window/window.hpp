@@ -6,7 +6,7 @@
 
 struct GLFWwindow;
 
-namespace win {
+namespace engine::win {
     struct Window {
         GLFWwindow* glfw_window = nullptr;
 

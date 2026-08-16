@@ -1,9 +1,9 @@
-#include "win/fps.hpp"
+#include "engine/window/fps.hpp"
 
 #include "GLFW/glfw3.h"
 
 
-namespace win {
+namespace engine::win {
     void FrameTimer::setFPS(float fps) {
         while (1.0f/fps - (glfwGetTime() - fpsLastFrame) >= 0) {}
 

@@ -9,7 +9,7 @@
 #include <glm/fwd.hpp>
 
 
-namespace gfx {
+namespace engine::geo {
     struct Camera {
         glm::vec3 position  = {0.0f, 0.0f, 5.0f};
 

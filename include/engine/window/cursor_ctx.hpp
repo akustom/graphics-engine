@@ -1,7 +1,7 @@
 #pragma once
 
 
-namespace win {
+namespace engine::win {
     struct CursorContext {
         float lastX = 0;
         float lastY = 0;

@@ -1,10 +1,10 @@
-#include "win/win_io.hpp"
+#include "engine/window/win_io.hpp"
 
 #include "GLFW/glfw3.h"
-#include "win/window.hpp"
+#include "engine/window/window.hpp"
 
 
-namespace io {
+namespace engine::win {
     void cursor_pos_callback(GLFWwindow* window, const double x_pos, const double y_pos) {
         if (glfwGetInputMode(window, GLFW_CURSOR) != GLFW_CURSOR_DISABLED)
             return;

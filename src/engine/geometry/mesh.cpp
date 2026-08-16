@@ -1,4 +1,4 @@
-#include "gfx/mesh.hpp"
+#include "engine/geometry/mesh.hpp"
 
 #include <vector>
 #include <cmath>
@@ -8,10 +8,10 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/constants.hpp>
 
-#include "gfx/vertex.hpp"
+#include "engine/geometry/vertex.hpp"
 
 
-namespace gfx {
+namespace engine::geo {
     /**turns your Mesh into a regular polygon of n-sides*/
     void makePolygon(Mesh& mesh, float radius, int sides) {
         if (sides < 3) return;

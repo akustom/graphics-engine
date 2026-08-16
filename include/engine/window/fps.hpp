@@ -1,7 +1,7 @@
 #pragma once
 
 
-namespace win {
+namespace engine::win {
     struct FrameTimer {
         double fpsLastFrame = 0;
 

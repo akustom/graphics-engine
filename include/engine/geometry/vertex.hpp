@@ -3,7 +3,7 @@
 #include <glm/vec3.hpp>
 
 
-namespace gfx {
+namespace engine::geo {
     struct vertex {
         glm::vec3 pos;
         glm::vec3 color;

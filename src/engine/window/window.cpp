@@ -1,10 +1,10 @@
-#include "win/window.hpp"
+#include "engine/window/window.hpp"
 
 #include <iostream>
 #include <GLFW/glfw3.h>
 
 
-namespace win {
+namespace engine::win {
     void Window::setHints(int major_version, int minor_version) {
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, major_version);
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, minor_version);

@@ -1,10 +1,17 @@
 #pragma once
 
-#include "engine/camera.hpp"
+#include "window/fps.hpp"
+#include "window/cursor_ctx.hpp"
+#include "window/window.hpp"
+#include "window/win_io.hpp"
 
-#include "mesh_buffer.hpp"
-#include "instances_buffer.hpp"
+#include "scene/camera.hpp"
+#include "scene/instances.hpp"
 
-#include "instances.hpp"
+#include "gfx/renderer.hpp"
+#include "gfx/buffer/mesh_buffer.hpp"
+#include "gfx/buffer/instances_buffer.hpp"
 
-#include "renderer.hpp"
+#include "geometry/camera.hpp"
+#include "geometry/mesh.hpp"
+#include "geometry/vertex.hpp"

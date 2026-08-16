@@ -1,4 +1,4 @@
-#include "gfx/camera.hpp"
+#include "engine/geometry/camera.hpp"
 
 #include <cmath>
 
@@ -10,7 +10,7 @@
 #include "glw/buffer.hpp"
 
 
-namespace gfx {
+namespace engine::geo {
     glm::mat4 Camera::getViewMatrix() const {return glm::lookAt(position, position + front, up);}
     void Camera::updateSpeed(float speed)           {movementSpeed = speed;}
     void Camera::updateMouseSensitivity(float sens) {mouseSensitivity = sens;}

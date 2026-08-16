@@ -4,7 +4,7 @@
 #include <glm/fwd.hpp>
 
 
-namespace gfx {
+namespace engine::geo {
     struct vertex;
 
     struct Mesh {

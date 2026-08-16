@@ -8,10 +8,7 @@
 #include "glm/gtc/type_ptr.hpp"
 // just my libs
 #include "glw/glw.hpp"
-#include "gfx/gfx.hpp"
-#include "win/win.hpp"
 #include "engine/engine.hpp"
-#include "physics/phy.hpp"
 
 #include "util.hpp"
 
@@ -36,8 +33,8 @@ int main() {
     });
 
     window.setInputMode(GLFW_CURSOR, GLFW_CURSOR_NORMAL);
-    window.setCursorPosCallback(io::cursor_pos_callback);
-    window.setMouseButtonCallback(io::mouse_button_callback);
+    window.setCursorPosCallback(win::cursor_pos_callback);
+    window.setMouseButtonCallback(win::mouse_button_callback);
 
 
     gladLoadGL();
@@ -46,10 +43,10 @@ int main() {
 
 
     glw::VAO test;
-    MeshBuffer meshBuffer = {test, 0};
-    InstancesBuffer instancesBuffer = {test, 1};
+    gfx::MeshBuffer meshBuffer = {test, 0};
+    gfx::InstancesBuffer instancesBuffer = {test, 1};
 
-    Renderer renderer = {meshBuffer, instancesBuffer};
+    gfx::Renderer renderer = {meshBuffer, instancesBuffer};
 
 
     glw::ShaderProgram shaderProgram;
@@ -59,14 +56,13 @@ int main() {
     );
     shaderProgram.use();
 
-    gfx::Mesh square;
-    gfx::makePolyhedron(square, 1.0f, 16, {1.0, 1.0, 1.0});
+    geo::Mesh square;
+    geo::makePolyhedron(square, 1.0f, 16, {1.0, 1.0, 1.0});
 
-    gfx::Mesh cube;
-    gfx::makePolyhedron(cube, 1.0f, 6, {1.0, 0.0, 0.0});
+    geo::Mesh cube;
+    geo::makePolyhedron(cube, 1.0f, 6, {1.0, 0.0, 0.0});
 
-
-    Instances particles;
+    scene::Instances particles;
     particles.createInstance({2, 0, 0});
     particles.createInstance({-2, 0, 0});
     particles.createInstance({0, 2, 0});
@@ -74,16 +70,29 @@ int main() {
     particles.createInstance({0, 0, 2});
     particles.createInstance({0, 0, -2});
 
-    while (particles.positions.size() < 50) {
+    while (particles.positions.size() < 100000) {
         particles.createInstance({
-            util::random(-10.0f, 10.0f),
-            util::random(-10.0f, 10.0f),
-            util::random(-10.0f, 10.0f)}
+            util::random(-1000.0f, 1000.0f),
+            util::random(-1000.0f, 1000.0f),
+            util::random(-1000.0f, 1000.0f)}
             );
     }
 
 
-    Camera camera = {0};
+    geo::Mesh platform;
+    platform.vertices = {
+            {{10, 0, 10}, {1, 0, 0}},
+            {{10, 0, -10}, {0, 1, 0}},
+            {{-10, 0, 10}, {0, 0, 1}},
+            {{-10, 0, -10}, {1, 1, 1}}
+    };
+    platform.indices = {2, 0, 1, 2, 3, 1};
+
+    scene::Instances platformPlace;
+    platformPlace.createInstance({0, 10, 0});
+
+
+    scene::Camera camera = {0};
     camera.use(window);
 
     glEnable(GL_DEPTH_TEST);
@@ -92,7 +101,9 @@ int main() {
 
     meshBuffer.index(square);
     meshBuffer.index(cube);
+    meshBuffer.index(platform);
     instancesBuffer.index(particles);
+    instancesBuffer.index(platformPlace);
 
     test.bind();
 
@@ -108,10 +119,9 @@ int main() {
         camera.processKeyboard(window, dt);
         camera.sendUpdate();
 
-        renderer.render(cube, particles);
         renderer.render(square, particles);
-        //particles.bindToMesh(cube);
-        //renderer.render(particles);
+        renderer.render(cube, particles);
+        renderer.render(platform, platformPlace);
 
         window.endFrame();
         FrameMark;
