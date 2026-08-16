@@ -11,6 +11,10 @@ namespace engine::win {
         glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     }
 
+    void Window::setVSync(bool enabled) {
+        glfwSwapInterval(enabled ? 1 : 0);
+    }
+
     void Window::init(int width, int height, const char* window_name) {
         glfw_window = glfwCreateWindow(width, height, window_name, nullptr, nullptr);
         if (glfw_window == nullptr) {
@@ -25,11 +29,18 @@ namespace engine::win {
 
     void Window::use() const {
         glfwMakeContextCurrent(glfw_window);
-        glfwSetWindowUserPointer(glfw_window, (void*)this);
+        this->setUserPointer((void*)this);
+        this->setSetFramebufferSizeCallback();
     }
 
     void Window::setInputMode(int mode, int value) const {
         glfwSetInputMode(glfw_window, mode, value);
+    }
+
+    void Window::setSetFramebufferSizeCallback() const {
+        glfwSetFramebufferSizeCallback(glfw_window, [](GLFWwindow* win, const int w, const int h) {
+            glViewport(0, 0, w, h);
+        });
     }
 
     void Window::setCursorPosCallback(void(*cursor_callback)(GLFWwindow* window, double x_pos, double y_pos)) const {
