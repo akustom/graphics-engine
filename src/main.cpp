@@ -21,32 +21,26 @@ using namespace engine;
 int main() {
     glfwInit();
 
-    win::Window window{
-        4, 6,
+    win::Window::setHints(4, 6);
+
+    win::Window window = {
         960, 540, "gravity sim babyyyy"
     };
-    window.use();
-    glfwSwapInterval(0);
 
-    glfwSetFramebufferSizeCallback(window.glfw_window, [](GLFWwindow* win, const int w, const int h) {
-        glViewport(0, 0, w, h);
-    });
+    window.use();
+    window.setVSync(false);
 
     window.setInputMode(GLFW_CURSOR, GLFW_CURSOR_NORMAL);
     window.setCursorPosCallback(win::cursor_pos_callback);
     window.setMouseButtonCallback(win::mouse_button_callback);
-
 
     gladLoadGL();
 
     glViewport(0, 0, 960, 540);
 
 
-    glw::VAO test;
-    gfx::MeshBuffer meshBuffer = {test, 0};
-    gfx::InstancesBuffer instancesBuffer = {test, 1};
-
-    gfx::Renderer renderer = {meshBuffer, instancesBuffer};
+    gfx::RenderBatch renderBatch = {0, 1};
+    gfx::Renderer renderer = {renderBatch};
 
 
     glw::ShaderProgram shaderProgram;
@@ -56,11 +50,23 @@ int main() {
     );
     shaderProgram.use();
 
+
     geo::Mesh square;
-    geo::makePolyhedron(square, 1.0f, 16, {1.0, 1.0, 1.0});
+    geo::makePolyhedron(square, 1.0f, 8, {1.0, 1.0, 1.0});
+    util::print(square.vertices.size());
 
     geo::Mesh cube;
     geo::makePolyhedron(cube, 1.0f, 6, {1.0, 0.0, 0.0});
+
+    geo::Mesh platform;
+    platform.vertices = {
+                {{10, 0, 10}, {1, 0, 0}},
+                {{10, 0, -10}, {0, 1, 0}},
+                {{-10, 0, 10}, {0, 0, 1}},
+                {{-10, 0, -10}, {1, 1, 1}}
+    };
+    platform.indices = {2, 0, 1, 2, 3, 1};
+
 
     scene::Instances particles;
     particles.createInstance({2, 0, 0});
@@ -78,36 +84,27 @@ int main() {
             );
     }
 
-
-    geo::Mesh platform;
-    platform.vertices = {
-            {{10, 0, 10}, {1, 0, 0}},
-            {{10, 0, -10}, {0, 1, 0}},
-            {{-10, 0, 10}, {0, 0, 1}},
-            {{-10, 0, -10}, {1, 1, 1}}
-    };
-    platform.indices = {2, 0, 1, 2, 3, 1};
-
     scene::Instances platformPlace;
-    platformPlace.createInstance({0, 10, 0});
+    platformPlace.createInstance({0, -5, 0});
+
+
+    renderBatch.index(square);
+    renderBatch.index(cube);
+    renderBatch.index(platform);
+
+    renderBatch.index(particles);
+    renderBatch.index(platformPlace);
 
 
     scene::Camera camera = {0};
     camera.use(window);
+    camera.setSpeed(100);
+
+    window.setFPS(-1);
+
 
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LEQUAL);
-
-
-    meshBuffer.index(square);
-    meshBuffer.index(cube);
-    meshBuffer.index(platform);
-    instancesBuffer.index(particles);
-    instancesBuffer.index(platformPlace);
-
-    test.bind();
-
-    window.setFPS(144);
 
     while (!glfwWindowShouldClose(window.glfw_window)) {
         ZoneScopedN("Main Frame");
@@ -117,11 +114,11 @@ int main() {
 
         camera.processMouse(window);
         camera.processKeyboard(window, dt);
-        camera.sendUpdate();
+        camera.sendUpdate(window);
 
         renderer.render(square, particles);
         renderer.render(cube, particles);
-        renderer.render(platform, platformPlace);
+        renderer.render(platform, particles);
 
         window.endFrame();
         FrameMark;
