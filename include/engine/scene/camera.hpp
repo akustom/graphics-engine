@@ -30,6 +30,6 @@ namespace engine::scene {
         void processKeyboard(win::Window& window, float dt);
         void processMouse(win::Window& window, bool constrain_pitch = true);
 
-        void sendUpdate();
+        void sendUpdate(win::Window& window);
     };
 }

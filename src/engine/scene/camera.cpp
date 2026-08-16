@@ -79,7 +79,12 @@ namespace engine::scene {
         rawCamera.updateCameraDirectionVariable();
     }
 
-    void Camera::sendUpdate() {
+    void Camera::sendUpdate(win::Window& window) {
         pushViewMatrix();
+
+        int width, height;
+        window.getWindowSize(&width, &height);
+
+        pushProjectionMatrix(width, height);
     }
 }
