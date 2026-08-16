@@ -1,16 +1,16 @@
-#include "engine/instances_buffer.hpp"
+#include "engine/gfx/buffer/instances_buffer.hpp"
 
 #include "util.hpp"
-#include "engine/instances.hpp"
+#include "engine/scene/instances.hpp"
 
 
-namespace engine {
-    InstancesBuffer::IndexData InstancesBuffer::getInstancesOffset(Instances& instances) {
+namespace engine::gfx {
+    InstancesBuffer::IndexData InstancesBuffer::getInstancesOffset(scene::Instances& instances) {
         return indexedInstances[instances.id];
     }
 
     void InstancesBuffer::push(std::vector<glm::vec4>& instancesComponent) {
-        if (!batchHeader.size) {
+        if (batchHeader.size) {
             if (batchHeader.size + instancesComponent.size() > batchHeader.capacity) {
                 batchHeader.capacity = 2 * std::max(batchHeader.size, static_cast<int>(instancesComponent.size()));
 
@@ -33,7 +33,7 @@ namespace engine {
         }
     }
 
-    void InstancesBuffer::index(Instances& instances) {
+    void InstancesBuffer::index(scene::Instances& instances) {
         push(instances.positions);
 
         instances.id = static_cast<int>(indexedInstances.size());

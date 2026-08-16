@@ -1,40 +1,40 @@
-#include "engine/mesh_buffer.hpp"
+#include "engine/gfx/buffer/mesh_buffer.hpp"
 
-#include "gfx/mesh.hpp"
-#include "gfx/vertex.hpp"
+#include "engine/geometry/mesh.hpp"
+#include "engine/geometry/vertex.hpp"
 
 
-namespace engine {
-    MeshBuffer::IndexData MeshBuffer::getMeshOffset(gfx::Mesh& mesh) const {
+namespace engine::gfx {
+    MeshBuffer::IndexData MeshBuffer::getMeshOffset(geo::Mesh& mesh) const {
         return indexedMeshes[mesh.id];
     }
 
-    void MeshBuffer::pushVertices(std::vector<gfx::vertex>& vertices) {
-        if (!indicesBatchHeader.size) {
+    void MeshBuffer::pushVertices(std::vector<geo::vertex>& vertices) {
+        if (indicesBatchHeader.size) {
             if (verticesBatchHeader.size + vertices.size() > verticesBatchHeader.capacity) {
                 verticesBatchHeader.capacity = 2 * std::max(verticesBatchHeader.size, static_cast<int>(vertices.size()));
 
                 glw::VBO tempVBO;
-                tempVBO.allocateBuffer<gfx::vertex>(verticesBatchHeader.capacity, GL_DYNAMIC_STORAGE_BIT);
-                tempVBO.copyData<gfx::vertex>(vertexBuffer, verticesBatchHeader.size);
+                tempVBO.allocateBuffer<geo::vertex>(verticesBatchHeader.capacity, GL_DYNAMIC_STORAGE_BIT);
+                tempVBO.copyData<geo::vertex>(vertexBuffer, verticesBatchHeader.size);
 
                 vertexBuffer = std::move(tempVBO);
-                vertexFormat.attachBuffer(vertexBuffer, bindingPoint, 0, util::bytesof<gfx::vertex>());
+                vertexFormat.attachBuffer(vertexBuffer, bindingPoint, 0, util::bytesof<geo::vertex>());
             }
-            vertexBuffer.pushData(static_cast<int>(util::bytesof<gfx::vertex>()) * verticesBatchHeader.size, vertices);
+            vertexBuffer.pushData(static_cast<int>(util::bytesof<geo::vertex>()) * verticesBatchHeader.size, vertices);
 
         } else {
             vertexBuffer.allocateBuffer(vertices);
             vertexFormat.attachBuffer(
                 vertexBuffer,
                 bindingPoint, 0,
-                util::bytesof<gfx::vertex>()
+                util::bytesof<geo::vertex>()
                 );
         }
     }
 
     void MeshBuffer::pushIndices(std::vector<glm::uint>& indices) {
-        if (!indicesBatchHeader.size) {
+        if (indicesBatchHeader.size) {
             if (indicesBatchHeader.size + indices.size() > indicesBatchHeader.capacity) {
                 indicesBatchHeader.capacity = 2 * std::max(indicesBatchHeader.size, static_cast<int>(indices.size()));
 
@@ -53,12 +53,12 @@ namespace engine {
         }
     }
 
-    void MeshBuffer::push(gfx::Mesh& mesh) {
+    void MeshBuffer::push(geo::Mesh& mesh) {
         pushVertices(mesh.vertices);
         pushIndices(mesh.indices);
     }
 
-    void MeshBuffer::index(gfx::Mesh& mesh) {
+    void MeshBuffer::index(geo::Mesh& mesh) {
         push(mesh);
 
         mesh.id = static_cast<int>(indexedMeshes.size());
