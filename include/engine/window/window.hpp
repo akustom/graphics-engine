@@ -32,6 +32,15 @@ namespace engine::win {
         Window(Window&& other) noexcept {
             glfw_window = other.glfw_window;
             other.glfw_window = nullptr;
+
+            frameTimer = other.frameTimer;
+            other.frameTimer = {};
+
+            cursorContext = other.cursorContext;
+            other.cursorContext = {};
+
+            winFPS = other.winFPS;
+            other.winFPS = 60;
         }
         Window& operator=(Window&& other) noexcept {
             if (this == &other)
@@ -41,6 +50,12 @@ namespace engine::win {
 
             glfw_window = other.glfw_window;
             other.glfw_window = nullptr;
+
+            frameTimer = other.frameTimer;
+            other.frameTimer = {};
+
+            cursorContext = other.cursorContext;
+            other.cursorContext = {};
 
             return *this;
         }
