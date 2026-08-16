@@ -21,15 +21,7 @@ namespace engine::geo {
         float yaw   = glm::degrees(std::atan2(front.z, front.x));
         float pitch = glm::degrees(std::asin(front.y));
 
-        float movementSpeed     = 5.0f;
-        float mouseSensitivity  = 0.1f;
-        float fieldOfView       = 45.0f;
-
         [[nodiscard]] glm::mat4 getViewMatrix() const;
-
-        void updateSpeed(float speed);
-        void updateMouseSensitivity(float sens);
-        void updateFieldOfView(float fov);
 
         void updateCameraDirectionVariable();
     };

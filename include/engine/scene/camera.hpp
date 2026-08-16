@@ -11,6 +11,11 @@ namespace engine::win {
 namespace engine::scene {
     class Camera {
         geo::Camera rawCamera;
+
+        float movementSpeed     = 5.0f;
+        float mouseSensitivity  = 0.1f;
+        float fieldOfView       = 45.0f;
+
         glw::UBO cameraUBO;
 
         bool isViewDirty = true;
@@ -24,6 +29,10 @@ namespace engine::scene {
             cameraUBO.bind(binding_loc);
             cameraUBO.allocateBuffer(2 * util::bytesof<glm::mat4>());
         }
+
+        void setSpeed(float speed = 5.0f);
+        void setMouseSensitivity(float sens = 0.1f);
+        void setFieldOfView(float fov = 45.0f);
 
         void use(win::Window& window);
 
