@@ -13,8 +13,10 @@
 namespace engine::gfx {
     void Renderer::render(geo::Mesh& mesh, scene::Instances& instances) const {
         ZoneScoped;
-        MeshBuffer::IndexData meshOffset = meshBuffer.getMeshOffset(mesh);
-        InstancesBuffer::IndexData instancesOffset = instancesBuffer.getInstancesOffset(instances);
+        renderBatch.renderFormat.bind();
+
+        MeshBuffer::IndexData meshOffset = renderBatch.meshBuffer.getMeshOffset(mesh);
+        InstancesBuffer::IndexData instancesOffset = renderBatch.instancesBuffer.getInstancesOffset(instances);
 
         glw::drawInstancesBaseVertexBaseInstances(
             instancesOffset.instances_count,
