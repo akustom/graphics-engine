@@ -7,16 +7,28 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 find_package(OpenGL REQUIRED)
 find_package(GLFW3 REQUIRED)
 
-include_directories(
-        include
-        tracy/public
+include(FetchContent)
+
+FetchContent_Declare(
+        boost
+        URL https://archives.boost.io/release/1.92.0/source/boost_1_92_0.tar.gz
 )
 
+FetchContent_MakeAvailable(boost)
+
+
 option( TRACY_ENABLE "" ON)
-add_subdirectory(tracy)
+
+FetchContent_Declare(
+        tracy
+        GIT_REPOSITORY https://github.com/wolfpld/tracy.git
+        GIT_TAG v0.13.1
+)
+
+FetchContent_MakeAvailable(tracy)
+
 
 add_executable(3grav
-        tracy/public/TracyClient.cpp
         src/main.cpp
         src/glad.c
 
@@ -38,7 +50,14 @@ add_executable(3grav
         src/engine/scene/instances.cpp
 )
 
-target_include_directories(3grav PRIVATE ${CMAKE_SOURCE_DIR}/include)
+
+include_directories(
+        include
+)
+
+target_include_directories(3grav PRIVATE
+        ${CMAKE_SOURCE_DIR}/include
+        ${boost_SOURCE_DIR})
 
 target_link_libraries(3grav
         Tracy::TracyClient
