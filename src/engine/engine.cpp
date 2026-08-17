@@ -10,13 +10,12 @@ namespace engine {
 
         glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
 
-        win::Window window = {
-            1, 1, "dummy"
-        };
-        window.use();
-
-        glfwWindowHint(GLFW_VISIBLE, GLFW_TRUE);
+        GLFWwindow* dummy = glfwCreateWindow(1, 1, "dummy", nullptr, nullptr);
+        glfwMakeContextCurrent(dummy);
 
         gladLoadGL();
+
+        glfwDestroyWindow(dummy);
+        glfwWindowHint(GLFW_VISIBLE, GLFW_TRUE);
     }
 }
