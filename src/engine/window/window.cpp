@@ -1,7 +1,6 @@
 #include "engine/window/window.hpp"
 
 #include <iostream>
-#include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
 
@@ -28,11 +27,6 @@ namespace engine::win {
         glfwMakeContextCurrent(glfw_window);
         this->setUserPointer((void*)this);
         this->setSetFramebufferSizeCallback();
-
-        int width, height;
-        getWindowSize(&width, &height);
-
-        glViewport(0, 0, width, height);
     }
 
     void Window::setVSync(bool enabled) {
