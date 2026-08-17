@@ -4,6 +4,9 @@
 #include <vector>
 #include <random>
 #include <iostream>
+#include <boost/pfr.hpp>
+#include <array>
+#include <cstddef>
 
 
 namespace util {
@@ -45,5 +48,45 @@ namespace util {
     template <typename... T>
     void print(const T&... data) {
         ((std::cout << data), ...) << '\n';
+    }
+
+    template <typename T, std::size_t I>
+    std::size_t getOffset() {
+        const T dummy{};
+
+        const auto* field =
+            reinterpret_cast<const std::byte*>(
+                std::addressof(boost::pfr::get<I>(dummy))
+            );
+
+        const auto* base = reinterpret_cast<const std::byte*>(std::addressof(dummy));
+
+        return static_cast<std::size_t>(field - base);
+    }
+
+    template <typename T, std::size_t... I>
+    constexpr auto getOffsetsImpl(std::index_sequence<I...>) {
+        return std::array<std::size_t, sizeof...(I)>{
+            getOffset<T, I>()...
+        };
+    }
+
+    template <typename T>
+    constexpr auto getOffsets() {
+        constexpr std::size_t N = boost::pfr::tuple_size_v<T>;
+        return getOffsetsImpl<T>(std::make_index_sequence<N>{});
+    }
+
+    template <typename T, std::size_t... I>
+    constexpr auto getSizesImpl(std::index_sequence<I...>) {
+        return std::array<std::size_t, sizeof...(I)>{
+            sizeof(boost::pfr::tuple_element_t<I, T>)...
+        };
+    }
+
+    template <typename T>
+    constexpr auto getSizes() {
+        constexpr std::size_t N = boost::pfr::tuple_size_v<T>;
+        return getSizesImpl<T>(std::make_index_sequence<N>{});
     }
 }
