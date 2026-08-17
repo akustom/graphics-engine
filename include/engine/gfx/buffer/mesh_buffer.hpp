@@ -37,14 +37,7 @@ namespace engine::gfx {      // idea, find a way to delete meshes (current probl
 
         int bindingPoint;
 
-        MeshBuffer(glw::VAO& vertex_format, int binding_point) : vertexFormat(vertex_format), bindingPoint(binding_point) { // TODO: refactor this to be more flexible with its formatting (use boost)
-            vertexFormat.formatAttribute(0, binding_point, 3, GL_FLOAT, offsetof(geo::vertex, pos));
-            vertexFormat.formatAttribute(1, binding_point, 3, GL_FLOAT, offsetof(geo::vertex, color));
-            vertexFormat.formatAttribute(2, binding_point, 3, GL_FLOAT, offsetof(geo::vertex, normal));
-
-            vertexFormat.formatAttribute(3, 1, 4, GL_FLOAT, 0);
-            vertexFormat.setAttributeDivisor(1, 1);
-        }
+        MeshBuffer(glw::VAO& vertex_format, int binding_point) : vertexFormat(vertex_format), bindingPoint(binding_point) {}
 
         IndexData getMeshOffset(geo::Mesh& mesh) const;
 
