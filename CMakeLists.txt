@@ -5,7 +5,6 @@ set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
 find_package(OpenGL REQUIRED)
-find_package(GLFW3 REQUIRED)
 
 include(FetchContent)
 
@@ -13,7 +12,6 @@ FetchContent_Declare(
         boost
         URL https://archives.boost.io/release/1.92.0/source/boost_1_92_0.tar.gz
 )
-
 FetchContent_MakeAvailable(boost)
 
 
@@ -24,8 +22,15 @@ FetchContent_Declare(
         GIT_REPOSITORY https://github.com/wolfpld/tracy.git
         GIT_TAG v0.13.1
 )
-
 FetchContent_MakeAvailable(tracy)
+
+
+FetchContent_Declare(
+        glfw
+        GIT_REPOSITORY https://github.com/glfw/glfw.git
+        GIT_TAG 3.5.1
+)
+FetchContent_MakeAvailable(glfw)
 
 
 add_executable(3grav
@@ -51,17 +56,16 @@ add_executable(3grav
 )
 
 
-include_directories(
-        include
-)
+include_directories(include)
 
 target_include_directories(3grav PRIVATE
         ${CMAKE_SOURCE_DIR}/include
         ${boost_SOURCE_DIR})
 
 target_link_libraries(3grav
+        glfw
         Tracy::TracyClient
-        ${GLFW3_LIBRARY} OpenGL::GL
+        OpenGL::GL
 )
 
 target_compile_definitions(3grav PRIVATE
