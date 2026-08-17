@@ -42,11 +42,8 @@ add_executable(3grav
         src/engine/window/win_io.cpp
         src/engine/window/cursor_ctx.cpp
 
-        src/engine/gfx/renderer.cpp
-
         src/engine/gfx/buffer/mesh_buffer.cpp
         src/engine/gfx/buffer/instances_buffer.cpp
-        src/engine/gfx/buffer/render_batch.cpp
 
         src/engine/geometry/camera.cpp
         src/engine/geometry/mesh.cpp
