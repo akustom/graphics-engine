@@ -19,16 +19,6 @@
 
 namespace engine {
     struct Engine {
-        static void Init() { // ive got a feeling that this isnt the best away to go by things, but it works for now HACK?
-            glfwInit();
-
-            win::Window window = {
-                1, 1, "dummy"
-            };
-            window.use();
-
-            gladLoadGL();
-
-        }
+        static void Init();
     };
 }

@@ -37,6 +37,8 @@ add_executable(3grav
         src/main.cpp
         src/glad.c
 
+        src/engine/engine.cpp
+
         src/engine/window/window.cpp
         src/engine/window/fps.cpp
         src/engine/window/win_io.cpp
