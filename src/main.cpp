@@ -19,7 +19,7 @@
 using namespace engine;
 
 int main() {
-    glfwInit();
+    Engine::Init();
 
     win::Window::setHints(4, 6);
 
@@ -34,12 +34,10 @@ int main() {
     window.setCursorPosCallback(win::cursor_pos_callback);
     window.setMouseButtonCallback(win::mouse_button_callback);
 
-    gladLoadGL();
+    gfx::setViewport(window);
+    gfx::enableDepthTest(true);
 
-    glViewport(0, 0, 960, 540);
-
-
-    gfx::RenderBatch renderBatch = {0, 1};
+    gfx::RenderBatch<geo::vertex> renderBatch = {0, 1};
     gfx::Renderer renderer = {renderBatch};
 
 
@@ -53,7 +51,6 @@ int main() {
 
     geo::Mesh square;
     geo::makePolyhedron(square, 1.0f, 8, {1.0, 1.0, 1.0});
-    util::print(square.vertices.size());
 
     geo::Mesh cube;
     geo::makePolyhedron(cube, 1.0f, 6, {1.0, 0.0, 0.0});
@@ -87,6 +84,14 @@ int main() {
     scene::Instances platformPlace;
     platformPlace.createInstance({0, -5, 0});
 
+    while (platformPlace.positions.size() < 10000) {
+        platformPlace.createInstance({
+            util::random(-1000.0f, 1000.0f),
+            util::random(-1000.0f, 1000.0f),
+            util::random(-1000.0f, 1000.0f)}
+            );
+    }
+
 
     renderBatch.index(square);
     renderBatch.index(cube);
@@ -100,11 +105,7 @@ int main() {
     camera.use(window);
     camera.setSpeed(100);
 
-    window.setFPS(-1);
-
-
-    glEnable(GL_DEPTH_TEST);
-    glDepthFunc(GL_LEQUAL);
+    window.setFPS(144);
 
     while (!glfwWindowShouldClose(window.glfw_window)) {
         ZoneScopedN("Main Frame");
@@ -118,7 +119,7 @@ int main() {
 
         renderer.render(square, particles);
         renderer.render(cube, particles);
-        renderer.render(platform, particles);
+        renderer.render(platform, platformPlace);
 
         window.endFrame();
         FrameMark;
