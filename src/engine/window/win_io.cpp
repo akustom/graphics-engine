@@ -1,6 +1,6 @@
 #include "engine/window/win_io.hpp"
 
-#include "GLFW/glfw3.h"
+#include <GLFW/glfw3.h>
 #include "engine/window/window.hpp"
 
 

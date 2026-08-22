@@ -1,6 +1,6 @@
 #include "engine/window/fps.hpp"
 
-#include "GLFW/glfw3.h"
+#include <GLFW/glfw3.h>
 
 
 namespace engine::win {

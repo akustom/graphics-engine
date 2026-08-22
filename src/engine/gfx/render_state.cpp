@@ -1,7 +1,7 @@
 #include "engine/gfx/render_state.hpp"
 
 #include "engine/window/window.hpp"
-#include "glad/glad.h"
+#include <glad/glad.h>
 
 
 namespace engine::gfx {

@@ -1,6 +1,6 @@
 #include "engine/scene/instances.hpp"
 
-#include "glm/glm.hpp"
+#include <glm/glm.hpp>
 
 
 namespace engine::scene {

@@ -1,6 +1,6 @@
 #include "engine/scene/camera.hpp"
 
-#include "GLFW/glfw3.h"
+#include <GLFW/glfw3.h>
 #include "engine/window/window.hpp"
 
 namespace engine::scene {
