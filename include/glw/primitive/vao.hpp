@@ -3,7 +3,7 @@
 #include <vector>
 #include <glad/glad.h>
 #include "gl_utils.hpp"
-#include "glw/buffer.hpp"
+#include "glw/primitive/buffer.hpp"
 
 
 namespace glw {

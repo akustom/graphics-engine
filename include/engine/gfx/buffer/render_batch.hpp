@@ -1,6 +1,6 @@
 #pragma once
 
-#include "glw/vao.hpp"
+#include "glw/primitive/vao.hpp"
 #include "engine/gfx/buffer/mesh_buffer.hpp"
 #include "engine/gfx/buffer/instances_buffer.hpp"
 

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "engine/geometry/camera.hpp"
-#include "glw/buffer.hpp"
+#include "glw/primitive/buffer.hpp"
 
 
 namespace engine::win {
