@@ -1,9 +1,10 @@
 #pragma once
 
-#include "glw/render.hpp"
+#include "glw/primitive/render.hpp"
+#include "engine/geometry/mesh.hpp"
 
 #include "engine/gfx/buffer/render_batch.hpp"
-#include "tracy/Tracy.hpp"
+#include <tracy/Tracy.hpp>
 
 namespace engine::geo {
     struct Mesh;
@@ -24,15 +25,16 @@ namespace engine::gfx {
             ZoneScoped;
             renderBatch.renderFormat.bind();
 
-            auto meshOffset = renderBatch.meshBuffer.getMeshOffset(mesh);
-            auto instancesOffset = renderBatch.instancesBuffer.getInstancesOffset(instances);
+            auto vertexHandle = renderBatch.meshBuffer.vertexHandles[mesh.id];
+            auto indexHandle = renderBatch.meshBuffer.indexHandles[mesh.id];
+            auto instancesHandle = renderBatch.instancesBuffer.instancesHandles[instances.id];
 
             glw::drawInstancesBaseVertexBaseInstances(
-                instancesOffset.instances_count,
-                meshOffset.indexCount,
-                meshOffset.ebo_offset,
-                meshOffset.vbo_offset,
-                instancesOffset.buffer_offset);
+                instancesHandle.count,
+                indexHandle.count,
+                indexHandle.bufferOffset,
+                vertexHandle.bufferOffset,
+                instancesHandle.bufferOffset);
         }
     };
 }
