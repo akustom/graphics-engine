@@ -6,19 +6,14 @@
 
 namespace engine::gfx {
     void MeshBuffer::pushVertices(std::vector<geo::vertex>& vertices) {
-        vertexHandles.push_back(vertices, [this] {
-            vertexFormat.attachBuffer(
-                vertexHandles.getBuffer(),
-                bindingPoint, 0,
-                util::bytesof<geo::vertex>()
-                );
-        });
+        vertexHandles.push_back(vertices, vertexFormat,
+            vertexHandles.getBuffer(),
+            bindingPoint, 0,
+            util::bytesof<geo::vertex>());
     }
 
     void MeshBuffer::pushIndices(std::vector<glm::uint>& indices) {
-        indexHandles.push_back(indices, [this] {
-            vertexFormat.attachBuffer(indexHandles.getBuffer());
-        });
+        indexHandles.push_back(indices, vertexFormat, indexHandles.getBuffer());
     }
 
     void MeshBuffer::push(geo::Mesh& mesh) {

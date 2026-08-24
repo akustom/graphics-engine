@@ -46,17 +46,18 @@ namespace glw {
             buffer = std::move(temp);
         }
 
-        void push_back(std::vector<T>& obj, auto attachFormat) {
+        template <typename... Args>
+        void push_back(std::vector<T>& obj, VAO& format, Args&&... args) {
             if (size) {
                 if (size + obj.size() > capacity) {
                     reserve_more(obj.size());
-                    attachFormat();
+                    format.attachBuffer(std::forward<Args>(args)...);
                 }
                 push(obj);
 
             } else {
                 buffer.allocateBuffer(obj);
-                attachFormat();
+                format.attachBuffer(std::forward<Args>(args)...);
             }
 
             indexed.emplace_back(

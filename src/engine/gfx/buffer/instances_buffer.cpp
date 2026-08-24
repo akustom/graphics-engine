@@ -6,12 +6,11 @@
 
 namespace engine::gfx {
     void InstancesBuffer::push(std::vector<glm::vec4>& instancesComponent) {
-        instancesHandles.push_back(instancesComponent, [this] {
-            vertexFormat.attachBuffer(
-                instancesHandles.getBuffer(),
-                bindingPoint, 0,
-                util::bytesof<glm::vec4>());
-        });
+        instancesHandles.push_back(instancesComponent, vertexFormat,
+            instancesHandles.getBuffer(),
+            bindingPoint, 0,
+            util::bytesof<glm::vec4>()
+        );
     }
 
     void InstancesBuffer::index(scene::Instances& instances) {
