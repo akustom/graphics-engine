@@ -23,6 +23,7 @@ namespace engine::gfx {
 
     void MeshBuffer::index(geo::Mesh& mesh) {
         push(mesh);
+
         mesh.id = nextFreeIndex;
         nextFreeIndex++;
     }
