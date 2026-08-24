@@ -48,16 +48,17 @@ namespace glw {
 
         template <typename... Args>
         void push_back(std::vector<T>& obj, VAO& format, Args&&... args) {
-            if (size) {
+            if (size == 0) {
+                capacity = obj.size();
+                buffer.allocateBuffer(obj);
+                format.attachBuffer(std::forward<Args>(args)...);
+
+            } else {
                 if (size + obj.size() > capacity) {
                     reserve_more(obj.size());
                     format.attachBuffer(std::forward<Args>(args)...);
                 }
                 push(obj);
-
-            } else {
-                buffer.allocateBuffer(obj);
-                format.attachBuffer(std::forward<Args>(args)...);
             }
 
             indexed.emplace_back(
