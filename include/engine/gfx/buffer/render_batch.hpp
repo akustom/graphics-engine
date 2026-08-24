@@ -4,6 +4,8 @@
 #include "engine/gfx/buffer/mesh_buffer.hpp"
 #include "engine/gfx/buffer/instances_buffer.hpp"
 
+#include <tracy/Tracy.hpp>
+
 
 namespace engine::gfx {
     template <typename T>
@@ -23,9 +25,11 @@ namespace engine::gfx {
         }
 
         void index(geo::Mesh& mesh) {
+            ZoneScoped;
             meshBuffer.index(mesh);
         }
         void index(scene::Instances& instances) {
+            ZoneScoped;
             instancesBuffer.index(instances);
         }
     };
