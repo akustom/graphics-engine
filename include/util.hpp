@@ -40,8 +40,8 @@ namespace util {
     template <typename T>
     requires std::is_arithmetic_v<T>
     T random(T min, T max) {
-        static std::random_device rd;
-        static std::mt19937 mt = std::mt19937(rd());
+        thread_local std::random_device rd;
+        thread_local std::mt19937 mt(rd());
 
         std::uniform_real_distribution dis(min, max);
         return dis(mt);
