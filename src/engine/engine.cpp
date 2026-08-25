@@ -9,13 +9,14 @@ namespace engine {
         glfwInit();
 
         glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
+            win::Window::setHints(4, 6);
 
-        GLFWwindow* dummy = glfwCreateWindow(1, 1, "dummy", nullptr, nullptr);
-        glfwMakeContextCurrent(dummy);
+            GLFWwindow* dummy = glfwCreateWindow(1, 1, "dummy", nullptr, nullptr);
+            glfwMakeContextCurrent(dummy);
 
-        gladLoadGL();
+            gladLoadGL();
 
-        glfwDestroyWindow(dummy);
+            glfwDestroyWindow(dummy);
         glfwWindowHint(GLFW_VISIBLE, GLFW_TRUE);
     }
 }
