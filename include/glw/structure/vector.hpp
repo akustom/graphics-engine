@@ -3,7 +3,6 @@
 #include <vector>
 
 #include "glw/primitive/buffer.hpp"
-#include "util.hpp"
 
 
 namespace glw {
@@ -53,7 +52,7 @@ namespace glw {
                     reserve(2 * std::max(size, static_cast<int>(obj.size())));
                     format.attachBuffer(std::forward<Args>(args)...);
                 }
-                buffer.pushData(static_cast<int>(util::bytesof<T>()) * size, obj);
+                buffer.pushData(sizeof(T) * size, obj);
             }
         }
 
