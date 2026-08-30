@@ -17,7 +17,6 @@ namespace engine::gfx {
         glw::vector<glm::uint> indexHeaders;
 
         int bindingPoint;
-        int nextFreeIndex = 0;
 
         MeshBuffer(glw::VAO& vertex_format, int binding_point) : vertexFormat(vertex_format), bindingPoint(binding_point) {}
 
