@@ -1,18 +1,9 @@
 #pragma once
 
 #include "glw/primitive/render.hpp"
-#include "engine/geometry/mesh.hpp"
 
 #include "engine/gfx/buffer/render_batch.hpp"
 #include <tracy/Tracy.hpp>
-
-namespace engine::geo {
-    struct Mesh;
-}
-
-namespace engine::scene {
-    struct Instances;
-}
 
 namespace engine::gfx {
     template <typename T>
@@ -21,20 +12,20 @@ namespace engine::gfx {
 
         Renderer(RenderBatch<T>& render_batch) : renderBatch(render_batch) {}
 
-        void render(geo::Mesh& mesh, scene::Instances& instances) const {
+        void render(int meshHandle, int instancesHandle) const {
             ZoneScoped;
             renderBatch.renderFormat.bind();
 
-            auto vertexHandle = renderBatch.meshBuffer.vertexHandles[mesh.id];
-            auto indexHandle = renderBatch.meshBuffer.indexHandles[mesh.id];
-            auto instancesHandle = renderBatch.instancesBuffer.instancesHandles[instances.id];
+            auto vertexHeader = renderBatch.meshBuffer.vertexHeaders[meshHandle];
+            auto indexHeader  = renderBatch.meshBuffer.indexHeaders[meshHandle];
+            auto instancesHeader = renderBatch.instancesBuffer.instancesHeaders[instancesHandle];
 
             glw::drawInstancesBaseVertexBaseInstances(
-                instancesHandle.count,
-                indexHandle.count,
-                indexHandle.bufferOffset,
-                vertexHandle.bufferOffset,
-                instancesHandle.bufferOffset);
+                instancesHeader.count,
+                indexHeader.count,
+                indexHeader.bufferOffset,
+                vertexHeader.bufferOffset,
+                instancesHeader.bufferOffset);
         }
     };
 }
