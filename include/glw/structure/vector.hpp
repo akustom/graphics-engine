@@ -31,12 +31,8 @@ namespace glw {
             return indexed[i];
         }
 
-        void push(std::vector<T>& obj) {
-            buffer.pushData(static_cast<int>(util::bytesof<T>()) * size, obj);
-        }
-
-        void reserve_more(int obj_size) {
-            capacity = 2 * std::max(size, obj_size);
+        void reserve(int capacity) {
+            this->capacity = capacity;
 
             Buffer temp;
 
@@ -47,26 +43,29 @@ namespace glw {
         }
 
         template <typename... Args>
-        void push_back(std::vector<T>& obj, VAO& format, Args&&... args) {
+        void push_buffer(std::vector<T>& obj, VAO& format, Args&&... args) {
             if (size == 0) {
                 capacity = obj.size();
                 buffer.allocateBuffer(obj);
                 format.attachBuffer(std::forward<Args>(args)...);
-
-            } else {
+            }
+            else {
                 if (size + obj.size() > capacity) {
-                    reserve_more(obj.size());
+                    reserve(2 * std::max(size, static_cast<int>(obj.size())));
                     format.attachBuffer(std::forward<Args>(args)...);
                 }
-                push(obj);
+                buffer.pushData(static_cast<int>(util::bytesof<T>()) * size, obj);
             }
+        }
 
-            indexed.emplace_back(
-                obj.size(),
-                size
-            );
+        template <typename... Args>
+        int push_back(std::vector<T>& obj, VAO& format, Args&&... args) {
+            push_buffer(obj, format, std::forward<Args>(args)...);
 
+            indexed.emplace_back(obj.size(), size);
             size += obj.size();
+
+            return indexed.size() - 1;
         }
     };
 }
