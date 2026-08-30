@@ -16,19 +16,19 @@ namespace glw {
             IndexHeader(int count, int buffer_offset) : count(count), bufferOffset(buffer_offset) {}
         };
 
-        std::vector<IndexHeader> indexed;
 
-        int size = 0;
+        std::vector<IndexHeader> indexed;
+        Buffer buffer;
+        int size     = 0;
         int capacity = 0;
 
-        Buffer buffer;
-
-        Buffer& getBuffer() {
-            return buffer;
-        }
 
         IndexHeader operator[](int i) const {
             return indexed[i];
+        }
+
+        Buffer& getBuffer() {
+            return buffer;
         }
 
         void reserve(int capacity) {
@@ -43,7 +43,7 @@ namespace glw {
         }
 
         template <typename... Args>
-        void push_buffer(std::vector<T>& obj, VAO& format, Args&&... args) {
+        void buffer_push(std::vector<T>& obj, VAO& format, Args&&... args) {
             if (size == 0) {
                 capacity = obj.size();
                 buffer.allocateBuffer(obj);
@@ -60,7 +60,7 @@ namespace glw {
 
         template <typename... Args>
         int push_back(std::vector<T>& obj, VAO& format, Args&&... args) {
-            push_buffer(obj, format, std::forward<Args>(args)...);
+            buffer_push(obj, format, std::forward<Args>(args)...);
 
             indexed.emplace_back(obj.size(), size);
             size += obj.size();
