@@ -13,18 +13,18 @@ namespace engine::gfx {
     struct MeshBuffer {
         glw::VAO& vertexFormat;
 
-        glw::vector<geo::vertex> vertexHandles;
-        glw::vector<glm::uint> indexHandles;
+        glw::vector<geo::vertex> vertexHeaders;
+        glw::vector<glm::uint> indexHeaders;
 
         int bindingPoint;
         int nextFreeIndex = 0;
 
         MeshBuffer(glw::VAO& vertex_format, int binding_point) : vertexFormat(vertex_format), bindingPoint(binding_point) {}
 
-        void pushVertices(std::vector<geo::vertex>& vertices);
-        void pushIndices(std::vector<glm::uint>& indices);
-        void push(geo::Mesh& mesh);
+        int pushVertices(std::vector<geo::vertex>& vertices);
+        int pushIndices(std::vector<glm::uint>& indices);
+        int push(geo::Mesh& mesh);
 
-        void index(geo::Mesh& mesh);
+        int index(geo::Mesh& mesh);
     };
 }

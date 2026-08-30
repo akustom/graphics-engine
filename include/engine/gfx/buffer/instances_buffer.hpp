@@ -14,15 +14,14 @@ namespace engine::gfx {
     struct InstancesBuffer {
         glw::VAO& vertexFormat;
 
-        glw::vector<glm::vec4> instancesHandles;
+        glw::vector<glm::vec4> instancesHeaders;
 
         int bindingPoint;
-        int nextFreeIndex = 0;
 
         InstancesBuffer(glw::VAO& vertex_format, int binding_point) : vertexFormat(vertex_format), bindingPoint(binding_point) {}
 
-        void push(std::vector<glm::vec4>& instances);
+        int push(std::vector<glm::vec4>& instances);
 
-        void index(scene::Instances& instances);
+        int index(scene::Instances& instances);
     };
 }

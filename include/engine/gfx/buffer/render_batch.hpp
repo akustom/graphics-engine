@@ -24,13 +24,13 @@ namespace engine::gfx {
             renderFormat.setAttributeDivisor(instance_loc, 1);
         }
 
-        void index(geo::Mesh& mesh) {
-            ZoneScoped;
-            meshBuffer.index(mesh);
+        int index(geo::Mesh& mesh) {
+            ZoneScopedN("RenderBatch::index, mesh");
+            return meshBuffer.index(mesh);
         }
-        void index(scene::Instances& instances) {
-            ZoneScoped;
-            instancesBuffer.index(instances);
+        int index(scene::Instances& instances) {
+            ZoneScopedN("RenderBatch::index, instances");
+            return instancesBuffer.index(instances);
         }
     };
 }

@@ -5,26 +5,26 @@
 
 
 namespace engine::gfx {
-    void MeshBuffer::pushVertices(std::vector<geo::vertex>& vertices) {
-        vertexHandles.push_back(vertices, vertexFormat,
-            vertexHandles.getBuffer(),
+    int MeshBuffer::pushVertices(std::vector<geo::vertex>& vertices) {
+        return vertexHeaders.push_back(vertices, vertexFormat,
+            vertexHeaders.getBuffer(),
             bindingPoint, 0,
             util::bytesof<geo::vertex>());
     }
 
-    void MeshBuffer::pushIndices(std::vector<glm::uint>& indices) {
-        indexHandles.push_back(indices, vertexFormat, indexHandles.getBuffer());
+    int MeshBuffer::pushIndices(std::vector<glm::uint>& indices) {
+        return indexHeaders.push_back(indices, vertexFormat, indexHeaders.getBuffer());
     }
 
-    void MeshBuffer::push(geo::Mesh& mesh) {
-        pushVertices(mesh.vertices);
-        pushIndices(mesh.indices);
+    int MeshBuffer::push(geo::Mesh& mesh) {
+        int ver = pushVertices(mesh.vertices);
+        int ind = pushIndices(mesh.indices);
+
+        // do something like notify a synchronization mismatch
+        return ver;
     }
 
-    void MeshBuffer::index(geo::Mesh& mesh) {
-        push(mesh);
-
-        mesh.id = nextFreeIndex;
-        nextFreeIndex++;
+    int MeshBuffer::index(geo::Mesh& mesh) {
+        return push(mesh);
     }
 }
