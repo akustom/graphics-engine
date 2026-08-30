@@ -22,8 +22,6 @@ namespace engine::scene {
 
         int instanceCount = 0;
 
-        int id = -1;
-
         InstanceRef operator[](size_t index) { // getting an instance
             return InstanceRef{
                 positions[index],

@@ -11,8 +11,6 @@ namespace engine::geo {
         std::vector<vertex>     vertices;
         std::vector<glm::uint>  indices;
 
-        int id = -1;
-
         void loadModel();
     };
 
