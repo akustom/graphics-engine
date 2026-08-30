@@ -48,8 +48,7 @@ namespace glw {
                 capacity = obj.size();
                 buffer.allocateBuffer(obj);
                 format.attachBuffer(std::forward<Args>(args)...);
-            }
-            else {
+            } else {
                 if (size + obj.size() > capacity) {
                     reserve(2 * std::max(size, static_cast<int>(obj.size())));
                     format.attachBuffer(std::forward<Args>(args)...);
