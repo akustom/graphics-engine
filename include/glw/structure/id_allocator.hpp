@@ -48,7 +48,7 @@ namespace glw {
             }
 
             nextFreeHandle++;
-            return Handle{*this, nextFreeHandle--};
+            return Handle{*this, nextFreeHandle - 1};
         }
     };
 }
