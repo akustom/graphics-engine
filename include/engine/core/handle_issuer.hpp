@@ -28,4 +28,6 @@ namespace engine::core {
 
         Handle getUniqueHandle();
     };
+
+    using Handle = HandleIssuer::Handle;
 }
