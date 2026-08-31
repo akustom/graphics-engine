@@ -3,52 +3,29 @@
 #include <vector>
 
 
-namespace glw {
+namespace engine::core {
     struct HandleIssuer {
         struct Handle {
             HandleIssuer* parent;
             int id = -1;
 
-            Handle(HandleIssuer& parent_alloc, int id) : parent(&parent_alloc), id(id) {}
-            ~Handle() {parent->free(*this);}
+            Handle(HandleIssuer& parent_alloc, int id);
+            ~Handle();
 
             Handle(const Handle&) = delete;
             Handle& operator=(const Handle&) = delete;
 
-            Handle(Handle&& other) noexcept : parent(other.parent), id(other.id) {
-                other.id = -1;
-            }
+            Handle(Handle&& other) noexcept;
 
-            Handle& operator=(Handle&& other) noexcept {
-                if (this != &other) {
-                    std::swap(parent, other.parent);
-                    std::swap(id, other.id);
-                }
-                return *this;
-            }
+            Handle& operator=(Handle&& other) noexcept;
         };
 
 
         std::vector<int> oldFreeHandles;
         int nextFreeHandle = 0;
 
-        void free(const Handle& handle) {
-            if (handle.id == -1)
-                return;
+        void free(const Handle& handle);
 
-            oldFreeHandles.push_back(handle.id);
-        }
-
-        Handle getUniqueHandle() {
-            if (!oldFreeHandles.empty()) {
-                int id = oldFreeHandles.back();
-                oldFreeHandles.pop_back();
-
-                return Handle{*this, id};
-            }
-
-            nextFreeHandle++;
-            return Handle{*this, nextFreeHandle - 1};
-        }
+        Handle getUniqueHandle();
     };
 }
