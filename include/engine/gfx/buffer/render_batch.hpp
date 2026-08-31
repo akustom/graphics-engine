@@ -1,6 +1,7 @@
 #pragma once
 
 #include "glw/core/vao.hpp"
+#include "engine/core/handle_issuer.hpp"
 #include "engine/gfx/buffer/mesh_buffer.hpp"
 #include "engine/gfx/buffer/instances_buffer.hpp"
 
@@ -24,11 +25,11 @@ namespace engine::gfx {
             renderFormat.setAttributeDivisor(instance_loc, 1);
         }
 
-        int index(geo::Mesh& mesh) {
+        const core::Handle& index(geo::Mesh& mesh) {
             ZoneScopedN("RenderBatch::index, mesh");
             return meshBuffer.index(mesh);
         }
-        int index(scene::Instances& instances) {
+        const core::Handle& index(scene::Instances& instances) {
             ZoneScopedN("RenderBatch::index, instances");
             return instancesBuffer.index(instances);
         }
