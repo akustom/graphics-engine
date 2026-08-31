@@ -6,16 +6,15 @@
 
 
 namespace glw {
+    struct IndexHeader {
+        int count;
+        int bufferOffset;
+
+        IndexHeader(int count, int buffer_offset) : count(count), bufferOffset(buffer_offset) {}
+    };
+
     template <typename T>
     struct vector {
-        struct IndexHeader {
-            int count;
-            int bufferOffset;
-
-            IndexHeader(int count, int buffer_offset) : count(count), bufferOffset(buffer_offset) {}
-        };
-
-
         std::vector<IndexHeader> indexed;
         Buffer buffer;
         int size     = 0;
@@ -24,6 +23,10 @@ namespace glw {
 
         IndexHeader operator[](int i) const {
             return indexed[i];
+        }
+
+        IndexHeader back() {
+            return indexed.back();
         }
 
         Buffer& getBuffer() {
@@ -57,13 +60,11 @@ namespace glw {
         }
 
         template <typename... Args>
-        int push_back(std::vector<T>& obj, VAO& format, Args&&... args) {
+        void push_back(std::vector<T>& obj, VAO& format, Args&&... args) {
             buffer_push(obj, format, std::forward<Args>(args)...);
 
             indexed.emplace_back(obj.size(), size);
             size += obj.size();
-
-            return indexed.size() - 1;
         }
     };
 }
