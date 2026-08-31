@@ -1,12 +1,16 @@
 #include "engine/core/handle_issuer.hpp"
 
+#include <boost/container_hash/hash.hpp>
+#include "util.hpp"
+
 
 namespace engine::core {
-    Handle::Handle(HandleIssuer& parent_alloc, int id) : parent(&parent_alloc), id(id) {}
+    Handle::Handle(HandleIssuer* parent_alloc, int id) : parent(parent_alloc), id(id) {}
     Handle::~Handle() {parent->free(*this);}
 
     Handle::Handle(Handle&& other) noexcept : parent(other.parent), id(other.id) {
         other.id = -1;
+        other.parent = nullptr;
     }
 
     Handle& Handle::operator=(Handle&& other) noexcept {
@@ -30,7 +34,7 @@ namespace engine::core {
 
 
     void HandleIssuer::free(const Handle& handle) {
-        if (handle.id == -1)
+        if (handle.parent == nullptr || handle.id == -1)
             return;
 
         oldFreeHandles.push_back(handle.id);
@@ -41,10 +45,10 @@ namespace engine::core {
             int id = oldFreeHandles.back();
             oldFreeHandles.pop_back();
 
-            return Handle{*this, id};
+            return Handle{this, id};
         }
 
         nextFreeHandle++;
-        return Handle{*this, nextFreeHandle - 1};
+        return Handle{this, nextFreeHandle - 1};
     }
 }
