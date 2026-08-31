@@ -2,7 +2,7 @@
 
 #include <vector>
 
-#include "glw/primitive/vao.hpp"
+#include "glw/core/vao.hpp"
 #include "glw/structure/vector.hpp"
 
 

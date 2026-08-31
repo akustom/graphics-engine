@@ -1,5 +1,7 @@
 #pragma once
 
+#include "core/handle_issuer.hpp"
+
 #include "window/fps.hpp"
 #include "window/cursor_ctx.hpp"
 #include "window/window.hpp"

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "glw/primitive/render.hpp"
+#include "glw/core/render.hpp"
 
 #include "engine/gfx/buffer/render_batch.hpp"
 #include <tracy/Tracy.hpp>

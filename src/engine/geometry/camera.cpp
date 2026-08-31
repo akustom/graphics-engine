@@ -7,7 +7,7 @@
 #include <glm/mat4x4.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
-#include "glw/primitive/buffer.hpp"
+#include "glw/core/buffer.hpp"
 
 
 namespace engine::geo {

@@ -2,7 +2,7 @@
 
 #include <vector>
 
-#include "glw/primitive/buffer.hpp"
+#include "glw/core/buffer.hpp"
 
 
 namespace glw {

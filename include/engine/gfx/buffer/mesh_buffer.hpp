@@ -1,6 +1,6 @@
 #pragma once
 
-#include "glw/primitive/vao.hpp"
+#include "glw/core/vao.hpp"
 #include "glw/structure/vector.hpp"
 
 #include "engine/geometry/vertex.hpp"
