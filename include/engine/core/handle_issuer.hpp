@@ -2,6 +2,8 @@
 
 #include <vector>
 
+#include <boost/container_hash/hash.hpp>
+
 
 namespace engine::core {
     struct HandleIssuer {
@@ -18,6 +20,10 @@ namespace engine::core {
             Handle(Handle&& other) noexcept;
 
             Handle& operator=(Handle&& other) noexcept;
+
+            bool operator==(const Handle& other) const;
+
+            friend std::size_t hash_value(const Handle& p);
         };
 
 
@@ -26,7 +32,7 @@ namespace engine::core {
 
         void free(const Handle& handle);
 
-        Handle getUniqueHandle();
+        Handle getUnique();
     };
 
     using Handle = HandleIssuer::Handle;
