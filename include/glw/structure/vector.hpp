@@ -2,6 +2,7 @@
 
 #include <vector>
 
+#include "glw/core/vao.hpp"
 #include "glw/core/buffer.hpp"
 
 
@@ -12,6 +13,10 @@ namespace glw {
 
         IndexHeader(int count, int buffer_offset) : count(count), bufferOffset(buffer_offset) {}
     };
+
+    template <int size>
+    using HeaderPair = std::array<IndexHeader, size>;
+
 
     template <typename T>
     struct vector {
