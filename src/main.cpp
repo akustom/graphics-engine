@@ -45,18 +45,6 @@ int main() {
     );
     shaderProgram.use();
 
-    glw::HandleIssuer registry;
-    for (int i = 0; i < 5; i++) {
-        auto* foo = new auto(registry.getUniqueHandle());
-        util::print(foo->id);
-    }
-
-    util::print("----------");
-    for (const auto& i : registry.oldFreeHandles) {
-        util::print(i);
-    }
-
-
 
     geo::Mesh square;
     geo::makePolyhedron(square, 1.0f, 32, {1.0, 1.0, 1.0});
@@ -103,13 +91,13 @@ int main() {
     }
 
 
-    int squareHandle = renderBatch.index(square);
-    int cubeHandle   = renderBatch.index(cube);
-    int platformHandle = renderBatch.index(platform);
+    const auto& squareHandle = renderBatch.index(square);
+    const auto& cubeHandle   = renderBatch.index(cube);
+    const auto& platformHandle = renderBatch.index(platform);
 
-    int sqrInstancesHandle  = renderBatch.index(squareParticles);
-    int cubeInstancesHandle = renderBatch.index(cubeParticles);
-    int platformInstancesHandle = renderBatch.index(platformPlace);
+    const auto& sqrInstancesHandle  = renderBatch.index(squareParticles);
+    const auto& cubeInstancesHandle = renderBatch.index(cubeParticles);
+    const auto& platformInstancesHandle = renderBatch.index(platformPlace);
 
 
     scene::Camera camera = {0};
