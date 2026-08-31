@@ -2,16 +2,14 @@
 
 #include <vector>
 
-#include <boost/container_hash/hash.hpp>
-
 
 namespace engine::core {
     struct HandleIssuer {
         struct Handle {
-            HandleIssuer* parent;
+            HandleIssuer* parent = nullptr;
             int id = -1;
 
-            Handle(HandleIssuer& parent_alloc, int id);
+            Handle(HandleIssuer* parent_alloc, int id);
             ~Handle();
 
             Handle(const Handle&) = delete;
@@ -33,6 +31,7 @@ namespace engine::core {
         void free(const Handle& handle);
 
         Handle getUnique();
+
     };
 
     using Handle = HandleIssuer::Handle;
