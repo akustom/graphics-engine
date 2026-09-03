@@ -46,7 +46,7 @@ namespace engine::core {
             free_list.push_back(handle.sparse_index);
 
             auto& entry = sparse[handle.sparse_index];
-            entry.generation++;
+            ++entry.generation;
 
             if (entry.dense_index < static_cast<int>(dense.size())) {
                 modify_dense(entry.dense_index,
