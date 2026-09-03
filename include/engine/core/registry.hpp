@@ -59,7 +59,7 @@ namespace engine::core {
             pop_dense();
         }
 
-        void modify(rHandle handle, const T& data) {
+        void modify(rHandle handle, T data) {
             auto& entry = sparse[handle.sparse_index];
             dense[entry.dense_index] = std::move(data);
         }
@@ -86,7 +86,7 @@ namespace engine::core {
             dense.pop_back();
         }
 
-        void modify_dense(int dense_index, int tsp_sparse_i, const T& dense_data) {
+        void modify_dense(int dense_index, int tsp_sparse_i, T dense_data) {
             dense_tsp[dense_index] = tsp_sparse_i;
             dense[dense_index] = std::move(dense_data);
         }
