@@ -6,7 +6,7 @@
 #include "glw/core/vao.hpp"
 #include "glw/structure/vector.hpp"
 
-#include "engine/core/handle_issuer.hpp"
+#include "engine/core/registry.hpp"
 
 
 namespace engine::scene {
@@ -19,18 +19,16 @@ namespace engine::gfx {
 
         glw::vector<glm::vec4> instancesHeaders;
 
-        core::HandleIssuer issuer;
-
-        boost::unordered_flat_map<core::Handle, glw::HeaderPair<1>> registry;
+        core::registry<glw::HeaderPair<1>> registry;
 
         int bindingPoint;
 
         InstancesBuffer(glw::VAO& vertex_format, int binding_point) : vertexFormat(vertex_format), bindingPoint(binding_point) {}
 
-        const glw::HeaderPair<1>& operator[](const core::Handle& handle) const;
+        const glw::HeaderPair<1>& operator[](core::rHandle handle) const;
 
         void push(std::vector<glm::vec4>& instances);
 
-        const core::Handle& index(scene::Instances& instances);
+        core::rHandle index(scene::Instances& instances);
     };
 }

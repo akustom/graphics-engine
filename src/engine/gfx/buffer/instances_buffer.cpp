@@ -6,7 +6,7 @@
 
 
 namespace engine::gfx {
-    const glw::HeaderPair<1>& InstancesBuffer::operator[](const core::Handle& handle) const {
+    const glw::HeaderPair<1>& InstancesBuffer::operator[](core::rHandle handle) const {
         return registry.at(handle);
     }
 
@@ -18,14 +18,11 @@ namespace engine::gfx {
         );
     }
 
-    const core::Handle& InstancesBuffer::index(scene::Instances& instances) {
+    core::rHandle InstancesBuffer::index(scene::Instances& instances) {
         push(instances.positions);
 
-        auto [it, inserted] = registry.emplace(
-            issuer.getUnique(),
-            glw::HeaderPair{instancesHeaders.back()}
-        );
+        auto issued = registry.create(glw::HeaderPair{instancesHeaders.back()});
 
-        return it->first;
+        return issued;
     }
 }

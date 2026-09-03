@@ -4,7 +4,7 @@
 
 #include "glw/core/render.hpp"
 
-#include "engine/core/handle_issuer.hpp"
+#include "engine/core/registry.hpp"
 #include "engine/gfx/buffer/render_batch.hpp"
 
 
@@ -15,7 +15,7 @@ namespace engine::gfx {
 
         Renderer(RenderBatch<T>& render_batch) : renderBatch(render_batch) {}
 
-        void render(const core::Handle& meshHandle, const core::Handle& instancesHandle) const {
+        void render(core::rHandle meshHandle, core::rHandle instancesHandle) const {
             ZoneScoped;
             renderBatch.renderFormat.bind();
 
