@@ -12,7 +12,7 @@ namespace engine::core {
     template <typename T>
     class registry {
     public:
-        [[nodiscard]] T& at(rHandle handle) const {
+        [[nodiscard]] const T& at(rHandle handle) const {
             auto [sparse_index, handle_gen] = handle;
             auto [dense_index, sparse_gen] = sparse[sparse_index];
 
@@ -72,7 +72,7 @@ namespace engine::core {
 
         std::vector<SparseEntry> sparse;
         std::vector<int> dense_tsp;
-        std::vector<int> dense;
+        std::vector<T> dense;
 
         std::vector<int> free_list;
 
