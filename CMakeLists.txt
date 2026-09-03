@@ -39,8 +39,6 @@ add_executable(3grav
 
         src/engine/engine.cpp
 
-        src/engine/core/handle_issuer.cpp
-
         src/engine/window/window.cpp
         src/engine/window/fps.cpp
         src/engine/window/win_io.cpp

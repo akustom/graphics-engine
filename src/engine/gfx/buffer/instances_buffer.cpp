@@ -1,7 +1,6 @@
 #include "engine/gfx/buffer/instances_buffer.hpp"
 
 #include "util.hpp"
-#include "engine/core/handle_issuer.hpp"
 #include "engine/scene/instances.hpp"
 
 
