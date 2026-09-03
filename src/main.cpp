@@ -9,6 +9,7 @@
 // just my libs
 #include "glw/core/glw.hpp"
 #include "engine/engine.hpp"
+#include "engine/core/registry.hpp"
 
 #include "util.hpp"
 
@@ -17,6 +18,8 @@
 
 
 using namespace engine;
+
+int main_test() { return 0; }
 
 int main() {
     Engine::Init();
@@ -82,7 +85,7 @@ int main() {
     scene::Instances platformPlace;
     platformPlace.createInstance({0, -5, 0});
 
-    while (platformPlace.positions.size() < 0) {
+    while (platformPlace.positions.size() < 20000) {
         platformPlace.createInstance({
             util::random(-1000.0f, 1000.0f),
             util::random(-1000.0f, 1000.0f),
@@ -91,13 +94,13 @@ int main() {
     }
 
 
-    const auto& squareHandle = renderBatch.index(square);
-    const auto& cubeHandle   = renderBatch.index(cube);
-    const auto& platformHandle = renderBatch.index(platform);
+    auto squareHandle = renderBatch.index(square);
+    auto cubeHandle   = renderBatch.index(cube);
+    auto platformHandle = renderBatch.index(platform);
 
-    const auto& sqrInstancesHandle  = renderBatch.index(squareParticles);
-    const auto& cubeInstancesHandle = renderBatch.index(cubeParticles);
-    const auto& platformInstancesHandle = renderBatch.index(platformPlace);
+    auto sqrInstancesHandle  = renderBatch.index(squareParticles);
+    auto cubeInstancesHandle = renderBatch.index(cubeParticles);
+    auto platformInstancesHandle = renderBatch.index(platformPlace);
 
 
     scene::Camera camera = {0};
