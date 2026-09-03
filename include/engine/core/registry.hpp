@@ -10,9 +10,9 @@ namespace engine::core {
     };
 
     template <typename T>
-    class Registry {
+    class registry {
     public:
-        [[nodiscard]] int at(rHandle handle) const {
+        [[nodiscard]] T& at(rHandle handle) const {
             auto [sparse_index, handle_gen] = handle;
             auto [dense_index, sparse_gen] = sparse[sparse_index];
 
