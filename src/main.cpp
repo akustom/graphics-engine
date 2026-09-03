@@ -9,7 +9,6 @@
 // just my libs
 #include "glw/core/glw.hpp"
 #include "engine/engine.hpp"
-#include "engine/core/registry.hpp"
 
 #include "util.hpp"
 
