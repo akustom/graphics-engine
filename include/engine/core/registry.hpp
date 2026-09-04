@@ -49,7 +49,7 @@ namespace engine::core {
 
             ++entry.generation;
 
-            if (entry.dense_index < dense.size()) {
+            if (entry.dense_index < dense.size() - 1) {
                 modify_dense(entry.dense_index,
                 dense_to_sparse.back(),
                 dense.back());
