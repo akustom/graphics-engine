@@ -5,7 +5,7 @@
 
 namespace engine::core {
     struct rHandle {
-        int sparse_index;
+        size_t sparse_index;
         int generation;
     };
 
@@ -23,12 +23,12 @@ namespace engine::core {
 
         rHandle create(T data) {
             if (!free_list.empty()) {
-                int free_id = free_list.back();
+                size_t free_id = free_list.back();
                 free_list.pop_back();
 
-                sparse[free_id].dense_index = static_cast<int>(dense.size());
+                sparse[free_id].dense_index = dense.size();
 
-                dense_tsp.push_back(free_id);
+                dense_to_sparse.push_back(free_id);
                 dense.push_back(std::move(data));
 
                 return rHandle{free_id, sparse[free_id].generation};
@@ -36,10 +36,10 @@ namespace engine::core {
 
             sparse.emplace_back(dense.size(), 0);
 
-            dense_tsp.push_back(static_cast<int>(sparse.size()) - 1);
+            dense_to_sparse.push_back(sparse.size() - 1);
             dense.push_back(std::move(data));
 
-            return rHandle{static_cast<int>(sparse.size()) - 1, 0};
+            return rHandle{sparse.size() - 1, 0};
         }
 
         void free(rHandle handle) {
@@ -49,12 +49,12 @@ namespace engine::core {
 
             ++entry.generation;
 
-            if (entry.dense_index < static_cast<int>(dense.size())) {
+            if (entry.dense_index < dense.size()) {
                 modify_dense(entry.dense_index,
-                dense_tsp.back(),
+                dense_to_sparse.back(),
                 dense.back());
 
-                sparse[dense_tsp[entry.dense_index]].dense_index = entry.dense_index;
+                sparse[dense_to_sparse[entry.dense_index]].dense_index = entry.dense_index;
             }
 
             pop_dense();
@@ -68,28 +68,28 @@ namespace engine::core {
 
     private:
         struct SparseEntry {
-            int dense_index;
+            size_t dense_index;
             int generation;
         };
 
         std::vector<SparseEntry> sparse;
-        std::vector<int> dense_tsp;
+        std::vector<size_t> dense_to_sparse;
         std::vector<T> dense;
 
-        std::vector<int> free_list;
+        std::vector<size_t> free_list;
 
-        void push_dense(int sparse_index, T data) {
-            dense_tsp.push_back(sparse_index);
+        void push_dense(size_t sparse_index, T data) {
+            dense_to_sparse.push_back(sparse_index);
             dense.push_back(std::move(data));
         }
 
         void pop_dense() {
-            dense_tsp.pop_back();
+            dense_to_sparse.pop_back();
             dense.pop_back();
         }
 
-        void modify_dense(int dense_index, int tsp_sparse_i, T dense_data) {
-            dense_tsp[dense_index] = tsp_sparse_i;
+        void modify_dense(size_t dense_index, size_t to_sparse_i, T dense_data) {
+            dense_to_sparse[dense_index] = to_sparse_i;
             dense[dense_index] = std::move(dense_data);
         }
     };
