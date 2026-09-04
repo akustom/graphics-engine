@@ -21,7 +21,7 @@ namespace engine::core {
             return dense[dense_index];
         }
 
-        rHandle create(const T& data) {
+        rHandle create(T data) {
             if (!free_list.empty()) {
                 int free_id = free_list.back();
                 free_list.pop_back();
@@ -29,7 +29,7 @@ namespace engine::core {
                 sparse[free_id].dense_index = static_cast<int>(dense.size());
 
                 dense_tsp.push_back(free_id);
-                dense.push_back(data);
+                dense.push_back(std::move(data));
 
                 return rHandle{free_id, sparse[free_id].generation};
             }
@@ -37,15 +37,16 @@ namespace engine::core {
             sparse.emplace_back(dense.size(), 0);
 
             dense_tsp.push_back(static_cast<int>(sparse.size()) - 1);
-            dense.push_back(data);
+            dense.push_back(std::move(data));
 
             return rHandle{static_cast<int>(sparse.size()) - 1, 0};
         }
 
         void free(rHandle handle) {
-            free_list.push_back(handle.sparse_index);
-
             auto& entry = sparse[handle.sparse_index];
+
+            assert(handle.generation == entry.generation && "Undefined handle used!");
+
             ++entry.generation;
 
             if (entry.dense_index < static_cast<int>(dense.size())) {
@@ -57,6 +58,7 @@ namespace engine::core {
             }
 
             pop_dense();
+            free_list.push_back(handle.sparse_index);
         }
 
         void modify(rHandle handle, T data) {
@@ -76,9 +78,9 @@ namespace engine::core {
 
         std::vector<int> free_list;
 
-        void push_dense(int sparse_index, const T& data) {
+        void push_dense(int sparse_index, T data) {
             dense_tsp.push_back(sparse_index);
-            dense.push_back(data);
+            dense.push_back(std::move(data));
         }
 
         void pop_dense() {
