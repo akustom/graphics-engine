@@ -19,9 +19,10 @@ namespace engine::gfx {
             ZoneScoped;
             renderBatch.renderFormat.bind();
 
-            const glw::IndexHeader vertexHeader = renderBatch.meshBuffer[meshHandle].at(0);
-            const glw::IndexHeader indexHeader  = renderBatch.meshBuffer[meshHandle].at(1);
-            const glw::IndexHeader instancesHeader = renderBatch.instancesBuffer[instancesHandle].at(0);
+            const glw::IndexHeader vertexHeader = renderBatch.meshBuffer[meshHandle][0];
+            const glw::IndexHeader indexHeader  = renderBatch.meshBuffer[meshHandle][1];
+
+            const glw::IndexHeader instancesHeader = renderBatch.instancesBuffer[instancesHandle][0];
 
             glw::drawInstancesBaseVertexBaseInstances(
                 instancesHeader.count,
