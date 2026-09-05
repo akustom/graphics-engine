@@ -1,6 +1,7 @@
 #pragma once
 
 #include "glw/core/vao.hpp"
+#include "glw/core/render.hpp"
 #include "engine/core/registry.hpp"
 #include "engine/gfx/buffer/mesh_buffer.hpp"
 #include "engine/gfx/buffer/instances_buffer.hpp"
@@ -32,6 +33,23 @@ namespace engine::gfx {
         core::rHandle index(scene::Instances& instances) {
             ZoneScopedN("RenderBatch::index, instances");
             return instancesBuffer.index(instances);
+        }
+
+        void render(core::rHandle meshHandle, core::rHandle instancesHandle) const {
+            ZoneScoped;
+            renderFormat.bind();
+
+            const glw::IndexHeader vertexHeader = meshBuffer[meshHandle][0];
+            const glw::IndexHeader indexHeader  = meshBuffer[meshHandle][1];
+
+            const glw::IndexHeader instancesHeader = instancesBuffer[instancesHandle][0];
+
+            glw::drawInstancesBaseVertexBaseInstances(
+                instancesHeader.count,
+                indexHeader.count,
+                indexHeader.bufferOffset,
+                vertexHeader.bufferOffset,
+                instancesHeader.bufferOffset);
         }
     };
 }

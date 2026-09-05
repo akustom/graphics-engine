@@ -10,7 +10,7 @@
 #include "scene/camera.hpp"
 #include "scene/instances.hpp"
 
-#include "gfx/renderer.hpp"
+#include "gfx/buffer/render_batch.hpp"
 #include "gfx/render_state.hpp"
 #include "gfx/buffer/mesh_buffer.hpp"
 #include "gfx/buffer/instances_buffer.hpp"
