@@ -1,5 +1,7 @@
 #pragma once
 
+#include <glm/fwd.hpp>
+
 #include "glw/core/vao.hpp"
 #include "glw/structure/vector.hpp"
 
