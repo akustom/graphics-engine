@@ -19,9 +19,9 @@ namespace engine::gfx {
 
         core::registry<glw::HeaderPair<2>> registry;
 
-        int bindingPoint;
+        unsigned int bindingPoint;
 
-        MeshBuffer(glw::VAO& vertex_format, int binding_point) : vertexFormat(vertex_format), bindingPoint(binding_point) {}
+        MeshBuffer(glw::VAO& vertex_format, unsigned int binding_point) : vertexFormat(vertex_format), bindingPoint(binding_point) {}
 
         const glw::HeaderPair<2>& operator[](core::rHandle handle) const;
 

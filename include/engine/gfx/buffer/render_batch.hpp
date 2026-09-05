@@ -16,7 +16,7 @@ namespace engine::gfx {
         MeshBuffer meshBuffer;
         InstancesBuffer instancesBuffer;
 
-        RenderBatch(int vertex_loc,  int instance_loc) :
+        RenderBatch(unsigned int vertex_loc, unsigned int instance_loc) :
             meshBuffer(renderFormat, vertex_loc),
             instancesBuffer(renderFormat, instance_loc) {
 

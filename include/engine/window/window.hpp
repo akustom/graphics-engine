@@ -20,7 +20,7 @@ namespace engine::win {
         void destroy() const;
 
         Window() = default;
-        Window(int width, int height, const char* window_name) {
+        Window(unsigned int width, unsigned int height, const char* window_name) {
             init(width, height, window_name);
         }
         ~Window() {

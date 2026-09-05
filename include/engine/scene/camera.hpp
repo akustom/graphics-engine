@@ -22,10 +22,10 @@ namespace engine::scene {
 
         void pushViewMatrix();
 
-        void pushProjectionMatrix(int win_width, int win_height) const;
+        void pushProjectionMatrix(unsigned int win_width, unsigned int win_height) const;
 
     public:
-        Camera(int binding_loc) {
+        Camera(unsigned int binding_loc) {
             cameraUBO.bind(binding_loc);
             cameraUBO.allocateBuffer(2 * util::bytesof<glm::mat4>());
         }

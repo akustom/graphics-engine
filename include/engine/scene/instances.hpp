@@ -20,9 +20,9 @@ namespace engine::scene {
         std::vector<glm::vec4> velocities;
         std::vector<glm::vec4> accelerations;
 
-        int instanceCount = 0;
+        std::size_t instanceCount = 0;
 
-        InstanceRef operator[](size_t index) { // getting an instance
+        InstanceRef operator[](std::size_t index) { // getting an instance
             return InstanceRef{
                 positions[index],
                 velocities[index],

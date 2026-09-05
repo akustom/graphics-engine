@@ -15,13 +15,13 @@ namespace engine::geo {
     };
 
     /**turns your Mesh into a regular polygon of n-sides*/
-    void makePolygon(Mesh& mesh, float radius, int sides);
+    void makePolygon(Mesh& mesh, float radius, unsigned int sides);
 
-    std::vector<vertex> getPolyhedronVertices(float radius, int sides, const glm::vec3& color);
+    std::vector<vertex> getPolyhedronVertices(float radius, unsigned int sides, const glm::vec3& color);
 
-    std::vector<glm::uint> getPolyhedronIndices(int sides);
+    std::vector<glm::uint> getPolyhedronIndices(unsigned int sides);
 
     void getPolyhedronNormals(std::vector<vertex>& vertices);
 
-    void makePolyhedron(Mesh& mesh, float radius, int sides, const glm::vec3& color);
+    void makePolyhedron(Mesh& mesh, float radius, unsigned int sides, const glm::vec3& color);
 }

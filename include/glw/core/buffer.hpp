@@ -48,36 +48,36 @@ namespace glw {
         }
 
         template <trivially_copyable T>
-        void allocateBuffer(int size, const GLenum flag = 0) const {
+        void allocateBuffer(std::size_t size, const GLenum flag = 0) const {
             glNamedBufferStorage(id, util::bytesof<T>() * size, nullptr, flag);
         }
 
         template <trivially_copyable T>
-        void pushData(const int byte_offset, std::vector<T>& data) const {
+        void pushData(const std::size_t byte_offset, std::vector<T>& data) const {
             glNamedBufferSubData(id, byte_offset, util::bytesof(data), data.data());
         }
         template <trivially_copyable T>
-        void pushData(const int byte_offset, T& data) const {
+        void pushData(const std::size_t byte_offset, T& data) const {
             glNamedBufferSubData(id, byte_offset, util::bytesof<T>(), getPtr(data));
         }
 
         template <trivially_copyable T>
-        void copyData(Buffer& srcBuffer, int size) const {
+        void copyData(Buffer& srcBuffer, std::size_t size) const {
             glCopyNamedBufferSubData(srcBuffer.id, id, 0, 0, size * util::bytesof<T>());
         }
     };
 
     struct UBO : Buffer {
-        void bind(const GLint binding_loc) const {
+        void bind(const GLuint binding_loc) const {
             glBindBufferBase(GL_UNIFORM_BUFFER, binding_loc, id);
         }
 
-        void allocateBuffer(const GLintptr byte_offset) const {
+        void allocateBuffer(const std::size_t byte_offset) const {
             glNamedBufferStorage(id, byte_offset, nullptr, GL_DYNAMIC_STORAGE_BIT);
         }
 
         template <trivially_copyable D>
-        void pushUniform(const GLintptr byte_offset, const D& data) const {
+        void pushUniform(const std::size_t byte_offset, const D& data) const {
             this->pushData(byte_offset, data);
         }
     };

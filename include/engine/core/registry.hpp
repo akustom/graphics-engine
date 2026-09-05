@@ -5,8 +5,8 @@
 
 namespace engine::core {
     struct rHandle {
-        size_t sparse_index;
-        int generation;
+        std::size_t sparse_index;
+        std::size_t generation;
     };
 
     template <typename T>
@@ -23,7 +23,7 @@ namespace engine::core {
 
         rHandle create(T data) {
             if (!free_list.empty()) {
-                size_t free_id = free_list.back();
+                std::size_t free_id = free_list.back();
                 free_list.pop_back();
 
                 sparse[free_id].dense_index = dense.size();
@@ -68,17 +68,17 @@ namespace engine::core {
 
     private:
         struct SparseEntry {
-            size_t dense_index;
-            int generation;
+            std::size_t dense_index;
+            std::size_t generation;
         };
 
         std::vector<SparseEntry> sparse;
-        std::vector<size_t> dense_to_sparse;
+        std::vector<std::size_t> dense_to_sparse;
         std::vector<T> dense;
 
-        std::vector<size_t> free_list;
+        std::vector<std::size_t> free_list;
 
-        void push_dense(size_t sparse_index, T data) {
+        void push_dense(std::size_t sparse_index, T data) {
             dense_to_sparse.push_back(sparse_index);
             dense.push_back(std::move(data));
         }
@@ -88,7 +88,7 @@ namespace engine::core {
             dense.pop_back();
         }
 
-        void modify_dense(size_t dense_index, size_t to_sparse_i, T dense_data) {
+        void modify_dense(std::size_t dense_index, size_t to_sparse_i, T dense_data) {
             dense_to_sparse[dense_index] = to_sparse_i;
             dense[dense_index] = std::move(dense_data);
         }

@@ -8,7 +8,6 @@
 namespace glw {
     struct Shader {
         GLuint id = 0;
-        int bufferIndex = -1;
 
         Shader(const std::string& file_path, const GLenum shader_type) {
             compile(file_path, shader_type);
@@ -34,7 +33,7 @@ namespace glw {
         }
 
         void compile(const std::string& file_path, const GLenum shader_type) {
-            std::string sourceCode = io::readFile(file_path);
+            std::string sourceCode = std::move(io::readFile(file_path));
             const char* c_sourceCode = sourceCode.c_str();
 
             id = glCreateShader(shader_type);

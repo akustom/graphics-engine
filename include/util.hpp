@@ -11,11 +11,11 @@
 
 namespace util {
     template <typename T>
-    size_t bytesof(const std::vector<T>& vec) {
+    std::size_t bytesof(const std::vector<T>& vec) {
         return vec.size() * sizeof(T);
     }
     template <typename T>
-    constexpr size_t bytesof() {
+    constexpr std::size_t bytesof() {
         return sizeof(T);
     }
 
@@ -31,7 +31,7 @@ namespace util {
 
     template <typename T, typename... Args>
     void moveVec(std::vector<T>& dest, Args&... source) {
-        size_t size = (... + source.size());
+        std::size_t size = (... + source.size());
         dest.reserve(size);
 
         (moveVecHelper(dest, source), ...);

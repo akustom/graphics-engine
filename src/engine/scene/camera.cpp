@@ -15,7 +15,7 @@ namespace engine::scene {
         isViewDirty = false;
     }
 
-    void Camera::pushProjectionMatrix(int win_width, int win_height) const {
+    void Camera::pushProjectionMatrix(unsigned int win_width, unsigned int win_height) const {
         cameraUBO.pushUniform(
         util::bytesof<glm::mat4>(),
         glm::perspective(glm::radians(fieldOfView),

@@ -4,7 +4,7 @@
 
 
 namespace glw {
-    inline void drawInstances(int instance_count, const int indices_count) {
+    inline void drawInstances(unsigned int instance_count, unsigned int indices_count) {
         glDrawElementsInstanced(
         GL_TRIANGLES,
         indices_count,
@@ -13,7 +13,7 @@ namespace glw {
         instance_count);
     }
 
-    inline void drawInstancesBaseVertex(int instance_count, const int indices_count, const int ebo_offset, const int vbo_offset) {
+    inline void drawInstancesBaseVertex(const unsigned int instance_count, const unsigned int indices_count, const unsigned int ebo_offset, const unsigned int vbo_offset) {
         glDrawElementsInstancedBaseVertex(
         GL_TRIANGLES,
         indices_count,
@@ -23,7 +23,7 @@ namespace glw {
         vbo_offset);
     }
 
-    inline void drawInstancesBaseVertexBaseInstances(int instance_count, const int indices_count, const int ebo_offset, const int vbo_offset, const int instance_offset) {
+    inline void drawInstancesBaseVertexBaseInstances(const unsigned int instance_count, const unsigned int indices_count, const unsigned int ebo_offset, const unsigned int vbo_offset, const unsigned int instance_offset) {
         glDrawElementsInstancedBaseVertexBaseInstance(
             GL_TRIANGLES,
             indices_count,

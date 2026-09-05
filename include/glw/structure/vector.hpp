@@ -8,13 +8,13 @@
 
 namespace glw {
     struct IndexHeader {
-        int count;
-        int bufferOffset;
+        std::size_t count;
+        std::size_t bufferOffset;
 
-        IndexHeader(int count, int buffer_offset) : count(count), bufferOffset(buffer_offset) {}
+        IndexHeader(int count, std::size_t buffer_offset) : count(count), bufferOffset(buffer_offset) {}
     };
 
-    template <int size>
+    template <unsigned int size>
     using HeaderPair = std::array<IndexHeader, size>;
 
 
@@ -22,11 +22,11 @@ namespace glw {
     struct vector {
         std::vector<IndexHeader> indexed;
         Buffer buffer;
-        int size     = 0;
-        int capacity = 0;
+        std::size_t size     = 0;
+        std::size_t capacity = 0;
 
 
-        IndexHeader operator[](int i) const {
+        IndexHeader operator[](std::size_t i) const {
             return indexed[i];
         }
 
@@ -38,7 +38,7 @@ namespace glw {
             return buffer;
         }
 
-        void reserve(int capacity) {
+        void reserve(std::size_t capacity) {
             this->capacity = capacity;
 
             Buffer temp;
@@ -57,7 +57,7 @@ namespace glw {
                 format.attachBuffer(std::forward<Args>(args)...);
             } else {
                 if (size + obj.size() > capacity) {
-                    reserve(2 * std::max(size, static_cast<int>(obj.size())));
+                    reserve(2 * std::max(size, obj.size()));
                     format.attachBuffer(std::forward<Args>(args)...);
                 }
                 buffer.pushData(sizeof(T) * size, obj);

@@ -43,26 +43,26 @@ namespace glw {
         }
 
         /**use offsetof(struct, member) to calculate byte_offset*/
-        void formatAttribute(const int attrib_loc, const int binding_point, const int size, const GLenum type, const int byte_offset) const {
+        void formatAttribute(const GLuint attrib_loc, const GLuint binding_point, const GLuint size, const GLenum type, const GLuint byte_offset) const {
             glEnableVertexArrayAttrib(id, attrib_loc);
             glVertexArrayAttribFormat(id, attrib_loc, size, type, GL_FALSE, byte_offset);
             glVertexArrayAttribBinding(id, attrib_loc, binding_point);
         }
 
         template <typename T, typename Y>
-        void formatAttribute(int start_attrib_loc, int binding_point, GLenum type) {
+        void formatAttribute(const GLuint start_attrib_loc, const GLuint binding_point, const GLenum type) {
             auto vertexMemberSizes = util::getSizes<T>();
             auto vertexOffsets = util::getOffsets<T>();
             for (int i = 0; i < vertexOffsets.size(); i++)
                 formatAttribute(start_attrib_loc + i, binding_point, vertexMemberSizes[i] / sizeof(Y), type, vertexOffsets[i]);
         }
 
-        void setAttributeDivisor(const int binding_point, const int divisor) const {
+        void setAttributeDivisor(const GLuint binding_point, const GLuint divisor) const {
             glVertexArrayBindingDivisor(id, binding_point, divisor);
         }
 
         /**use offsetof(struct, member) to calculate byte_offset,*/
-        void attachBuffer(const VBO& vbo, const int binding_point, const int byte_offset, const int byte_stride) const {
+        void attachBuffer(const VBO& vbo, const GLuint binding_point, const GLuint byte_offset, const GLuint byte_stride) const {
             glVertexArrayVertexBuffer(id, binding_point, vbo.id, byte_offset, byte_stride);
         }
         void attachBuffer(const EBO& ebo) const {

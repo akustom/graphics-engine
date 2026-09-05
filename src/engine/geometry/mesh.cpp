@@ -13,8 +13,9 @@
 
 namespace engine::geo {
     /**turns your Mesh into a regular polygon of n-sides*/
-    void makePolygon(Mesh& mesh, float radius, int sides) {
-        if (sides < 3) return;
+    void makePolygon(Mesh& mesh, float radius, unsigned int sides) {
+        if (sides <= 3 || radius < 0)
+            return;
 
         std::vector<vertex> vertices;
         std::vector<glm::uint> indices;
@@ -46,7 +47,7 @@ namespace engine::geo {
         mesh.indices    = indices;
     }
 
-    std::vector<vertex> getPolyhedronVertices(float radius, int sides, const glm::vec3& color) {
+    std::vector<vertex> getPolyhedronVertices(float radius, unsigned int sides, const glm::vec3& color) {
         std::vector<vertex> vertices;
 
         float latitudeIncrement     = glm::radians(360.0f / static_cast<float>(sides % 2 == 0 ? sides : sides - 1));
@@ -73,7 +74,7 @@ namespace engine::geo {
         return vertices;
     }
 
-    std::vector<glm::uint> getPolyhedronIndices(int sides) {
+    std::vector<glm::uint> getPolyhedronIndices(unsigned int sides) {
         std::vector<glm::uint> indices;
 
         for (int i = 0; i < sides / 2; ++i) {
@@ -100,8 +101,8 @@ namespace engine::geo {
         }
     }
 
-    void makePolyhedron(Mesh& mesh, float radius, int sides, const glm::vec3& color) {
-        if (sides <= 3)
+    void makePolyhedron(Mesh& mesh, float radius, unsigned int sides, const glm::vec3& color) {
+        if (sides <= 3 || radius < 0)
             return;
 
         mesh.vertices   = getPolyhedronVertices(radius, sides, color);
