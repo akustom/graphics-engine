@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <glm/gtc/type_ptr.hpp>
+#include <glm/fwd.hpp>
 
 
 template <typename T>
@@ -14,3 +15,11 @@ constexpr auto getPtr(const T& data) {
     else
         throw std::invalid_argument("uniform type is currently unsupported\n");
 }
+
+template <typename T>
+    int TypeToMac = []{
+        if constexpr (std::is_same_v<T, glm::uint16_t>)
+            return GL_UNSIGNED_SHORT;
+        else if constexpr (std::is_same_v<T, glm::uint32_t> || std::is_same_v<T, glm::uint>)
+            return GL_UNSIGNED_INT;
+}();
