@@ -18,7 +18,10 @@
 
 using namespace engine;
 
-int main_test() { return 0; }
+int main_() {
+
+    return 0;
+}
 
 int main() {
     Engine::Init();
@@ -36,9 +39,6 @@ int main() {
 
     gfx::setViewport(window);
     gfx::enableDepthTest(true);
-
-    gfx::RenderBatch<geo::vertex> renderBatch = {0, 1};
-    gfx::Renderer renderer = {renderBatch};
 
     glw::ShaderProgram shaderProgram;
     shaderProgram.build(
@@ -93,6 +93,8 @@ int main() {
     }
 
 
+    gfx::RenderBatch<geo::vertex> renderBatch = {0, 1};
+
     auto squareHandle = renderBatch.index(square);
     auto cubeHandle   = renderBatch.index(cube);
     auto platformHandle = renderBatch.index(platform);
@@ -104,7 +106,7 @@ int main() {
 
     scene::Camera camera = {0};
     camera.use(window);
-    camera.setSpeed(10);
+    camera.setSpeed(100);
 
     window.setFPS(144);
 
@@ -118,9 +120,9 @@ int main() {
         camera.processKeyboard(window, dt);
         camera.sendUpdate(window);
 
-        renderer.render(squareHandle, sqrInstancesHandle);
-        renderer.render(cubeHandle,   cubeInstancesHandle);
-        renderer.render(platformHandle, platformInstancesHandle);
+        renderBatch.render(squareHandle, sqrInstancesHandle);
+        renderBatch.render(cubeHandle,   cubeInstancesHandle);
+        renderBatch.render(platformHandle, platformInstancesHandle);
 
         window.endFrame();
         FrameMark;
