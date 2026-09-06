@@ -16,7 +16,7 @@ constexpr auto getPtr(const T& data) {
 }
 
 template <typename T>
-    int TypeToMac = []{
+constexpr int TypeToMac = []{
         if constexpr (std::is_same_v<T, glm::uint16_t>)
             return GL_UNSIGNED_SHORT;
         else if constexpr (std::is_same_v<T, glm::uint32_t> || std::is_same_v<T, glm::uint>)
