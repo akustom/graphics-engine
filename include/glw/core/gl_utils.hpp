@@ -12,8 +12,7 @@ template<typename T>
 constexpr auto getPtr(const T& data) {
     if constexpr (std::is_same_v<T,glm::mat4>)
         return glm::value_ptr(data);
-    else
-        throw std::invalid_argument("uniform type is currently unsupported\n");
+    else static_assert("uniform type is currently unsupported\n");
 }
 
 template <typename T>
@@ -22,4 +21,5 @@ template <typename T>
             return GL_UNSIGNED_SHORT;
         else if constexpr (std::is_same_v<T, glm::uint32_t> || std::is_same_v<T, glm::uint>)
             return GL_UNSIGNED_INT;
+        else static_assert("unknown type\n");
 }();
