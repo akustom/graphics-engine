@@ -8,13 +8,6 @@
 template <typename T>
     concept trivially_copyable = std::is_trivially_copyable_v<T>;
 
-template<typename T>
-constexpr auto getPtr(const T& data) {
-    if constexpr (std::is_same_v<T,glm::mat4>)
-        return glm::value_ptr(data);
-    else static_assert("uniform type is currently unsupported\n");
-}
-
 template <typename T>
 constexpr int TypeToMac = []{
     if constexpr (std::is_same_v<T, glm::uint16_t>)
