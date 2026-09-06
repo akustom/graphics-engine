@@ -11,7 +11,7 @@
 
 namespace util {
     template <typename T>
-    std::size_t sizeof_v(const std::vector<T>& vec) {
+    std::size_t sizeof_vec(const std::vector<T>& vec) {
         return vec.size() * sizeof(T);
     }
 
