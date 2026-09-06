@@ -9,7 +9,7 @@ template <typename T>
     concept trivially_copyable = std::is_trivially_copyable_v<T>;
 
 template <typename T>
-constexpr int TypeToMac = []{
+constexpr int GL_MACRO = []{
     if constexpr (std::is_same_v<T, glm::uint16_t>)
         return GL_UNSIGNED_SHORT;
     else if constexpr (std::is_same_v<T, glm::uint32_t> || std::is_same_v<T, glm::uint>)
