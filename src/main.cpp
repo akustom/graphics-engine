@@ -9,21 +9,27 @@
 // just my libs
 #include "glw/core/glw.hpp"
 #include "engine/engine.hpp"
-
 #include "util.hpp"
-
+// profiler
 #include <tracy/Tracy.hpp>
 #include <tracy/TracyOpenGL.hpp>
+// windows
+#include <windows.h>
+#include <timeapi.h>
+#pragma comment(lib, "winmm.lib")
 
 
 using namespace engine;
 
 int main_() {
-
+    auto x = GL_MACRO<glm::uint>;
+    util::print(GL_UNSIGNED_INT, " ", x);
     return 0;
 }
 
 int main() {
+    timeBeginPeriod(1);
+
     Engine::Init();
 
     win::Window window = {
@@ -128,5 +134,6 @@ int main() {
         FrameMark;
     }
 
+    timeEndPeriod(1);
     return 0;
 }
