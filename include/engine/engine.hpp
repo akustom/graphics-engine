@@ -19,8 +19,6 @@
 #include "geometry/mesh.hpp"
 #include "geometry/vertex.hpp"
 
-#include "debug/debug.hpp"
-
 
 namespace engine {
     struct Engine {
