@@ -14,7 +14,7 @@ namespace engine::gfx {
         vertexHeaders.push_back(vertices, vertexFormat,
             vertexHeaders.getBuffer(),
             bindingPoint, 0,
-            util::bytesof<geo::vertex>());
+            sizeof(geo::vertex));
     }
 
     void MeshBuffer::pushIndices(std::vector<glm::uint>& indices) {

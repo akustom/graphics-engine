@@ -27,7 +27,7 @@ namespace engine::scene {
     public:
         Camera(unsigned int binding_loc) {
             cameraUBO.bind(binding_loc);
-            cameraUBO.allocateBuffer(2 * util::bytesof<glm::mat4>());
+            cameraUBO.allocateBuffer(2 * sizeof(glm::mat4));
         }
 
         void setSpeed(float speed = 5.0f);

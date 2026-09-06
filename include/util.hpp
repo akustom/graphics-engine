@@ -14,10 +14,6 @@ namespace util {
     std::size_t bytesof(const std::vector<T>& vec) {
         return vec.size() * sizeof(T);
     }
-    template <typename T>
-    constexpr std::size_t bytesof() {
-        return sizeof(T);
-    }
 
     template <typename T>
     void moveVecHelper(std::vector<T>& dest, std::vector<T>& source) {

@@ -13,8 +13,7 @@ namespace engine::gfx {
         instancesHeaders.push_back(instancesComponent, vertexFormat,
             instancesHeaders.getBuffer(),
             bindingPoint, 0,
-            util::bytesof<glm::vec4>()
-        );
+            sizeof(glm::vec4));
     }
 
     core::rHandle InstancesBuffer::index(scene::Instances& instances) {

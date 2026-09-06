@@ -17,7 +17,7 @@ namespace engine::scene {
 
     void Camera::pushProjectionMatrix(unsigned int win_width, unsigned int win_height) const {
         cameraUBO.pushUniform(
-        util::bytesof<glm::mat4>(),
+        sizeof(glm::mat4),
         glm::perspective(glm::radians(fieldOfView),
             static_cast<float>(win_width)/static_cast<float>(win_height),
             0.1f, 10000.0f)
