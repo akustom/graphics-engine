@@ -58,7 +58,7 @@ namespace glw {
         }
         template <trivially_copyable T>
         void pushData(const std::size_t byte_offset, T& data) const {
-            glNamedBufferSubData(id, byte_offset, sizeof(T), getPtr(data));
+            glNamedBufferSubData(id, byte_offset, sizeof(T), glm::value_ptr(data));
         }
 
         template <trivially_copyable T>
