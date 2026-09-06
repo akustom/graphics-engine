@@ -14,7 +14,7 @@
 namespace engine::geo {
     /**turns your Mesh into a regular polygon of n-sides*/
     void makePolygon(Mesh& mesh, float radius, unsigned int sides) {
-        if (sides <= 3 || radius < 0)
+        if (sides < 3 || radius < 0)
             return;
 
         std::vector<vertex> vertices;
