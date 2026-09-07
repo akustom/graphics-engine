@@ -79,7 +79,7 @@ int main() {
     squareParticles.createInstance({0, 0,-2});
 
     scene::Instances cubeParticles;
-    while (cubeParticles.positions.size() < 10000) {
+    while (cubeParticles.size() < 10000) {
         cubeParticles.createInstance({
             util::random(-1000.0f, 1000.0f),
             util::random(-1000.0f, 1000.0f),
@@ -90,7 +90,7 @@ int main() {
     scene::Instances platformPlace;
     platformPlace.createInstance({0, -5, 0});
 
-    while (platformPlace.positions.size() < 20000) {
+    while (platformPlace.size() < 20000) {
         platformPlace.createInstance({
             util::random(-1000.0f, 1000.0f),
             util::random(-1000.0f, 1000.0f),
@@ -116,7 +116,7 @@ int main() {
 
     window.setFPS(144);
 
-    while (!glfwWindowShouldClose(window.glfw_window)) {
+    while (!glfwWindowShouldClose(window.glfw())) {
         ZoneScopedN("Main Frame");
         window.startFrame(0.07f, 0.07f, 0.07f, 1.0f);
 

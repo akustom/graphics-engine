@@ -8,22 +8,6 @@ namespace engine::scene {
     void Camera::setMouseSensitivity(float sens) {mouseSensitivity = sens;}
     void Camera::setFieldOfView(float fov)       {fieldOfView = fov;}
 
-    void Camera::pushViewMatrix() {
-        if (!isViewDirty)
-            return;
-        cameraUBO.pushUniform(0, rawCamera.getViewMatrix());
-        isViewDirty = false;
-    }
-
-    void Camera::pushProjectionMatrix(unsigned int win_width, unsigned int win_height) const {
-        cameraUBO.pushUniform(
-        sizeof(glm::mat4),
-        glm::perspective(glm::radians(fieldOfView),
-            static_cast<float>(win_width)/static_cast<float>(win_height),
-            0.1f, 10000.0f)
-            );
-    }
-
     void Camera::use(win::Window& window) {
         int width, height;
         window.getWindowSize(&width, &height);
@@ -59,8 +43,8 @@ namespace engine::scene {
         }
     }
     void Camera::processMouse(win::Window& window, bool constrain_pitch) {
-        double x_offset = window.cursorContext.offsetX;
-        double y_offset = window.cursorContext.offsetY;
+        double x_offset = window.cursorContext().offsetX;
+        double y_offset = window.cursorContext().offsetY;
 
         if (x_offset == 0 && y_offset == 0)
             return;
@@ -90,5 +74,21 @@ namespace engine::scene {
         window.getWindowSize(&width, &height);
 
         pushProjectionMatrix(width, height);
+    }
+
+    void Camera::pushViewMatrix() {
+        if (!isViewDirty)
+            return;
+        cameraUBO.pushUniform(0, rawCamera.getViewMatrix());
+        isViewDirty = false;
+    }
+
+    void Camera::pushProjectionMatrix(unsigned int win_width, unsigned int win_height) const {
+        cameraUBO.pushUniform(
+        sizeof(glm::mat4),
+        glm::perspective(glm::radians(fieldOfView),
+            static_cast<float>(win_width)/static_cast<float>(win_height),
+            0.1f, 10000.0f)
+            );
     }
 }

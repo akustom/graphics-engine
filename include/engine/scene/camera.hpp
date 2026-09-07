@@ -10,20 +10,6 @@ namespace engine::win {
 
 namespace engine::scene {
     class Camera {
-        geo::Camera rawCamera;
-
-        float movementSpeed     = 5.0f;
-        float mouseSensitivity  = 0.1f;
-        float fieldOfView       = 45.0f;
-
-        glw::UBO cameraUBO;
-
-        bool isViewDirty = true;
-
-        void pushViewMatrix();
-
-        void pushProjectionMatrix(unsigned int win_width, unsigned int win_height) const;
-
     public:
         Camera(unsigned int binding_loc) {
             cameraUBO.bind(binding_loc);
@@ -40,5 +26,20 @@ namespace engine::scene {
         void processMouse(win::Window& window, bool constrain_pitch = true);
 
         void sendUpdate(win::Window& window);
+
+    private:
+        geo::Camera rawCamera;
+
+        float movementSpeed     = 5.0f;
+        float mouseSensitivity  = 0.1f;
+        float fieldOfView       = 45.0f;
+
+        glw::UBO cameraUBO;
+
+        bool isViewDirty = true;
+
+        void pushViewMatrix();
+
+        void pushProjectionMatrix(unsigned int win_width, unsigned int win_height) const;
     };
 }

@@ -10,6 +10,16 @@ namespace engine::gfx {
         return registry.at(handle);
     }
 
+    core::rHandle MeshBuffer::index(geo::Mesh& mesh) {
+        push(mesh);
+
+        auto handle = registry.create(glw::HeaderPair<2>{
+            vertexHeaders.back(),
+            indexHeaders.back()});
+
+        return handle;
+    }
+
     void MeshBuffer::pushVertices(std::vector<geo::vertex>& vertices) {
         vertexHeaders.push_back(vertices, vertexFormat,
             vertexHeaders.getBuffer(),
@@ -24,15 +34,5 @@ namespace engine::gfx {
     void MeshBuffer::push(geo::Mesh& mesh) {
         pushVertices(mesh.vertices);
         pushIndices(mesh.indices);
-    }
-
-    core::rHandle MeshBuffer::index(geo::Mesh& mesh) {
-        push(mesh);
-
-        auto handle = registry.create(glw::HeaderPair<2>{
-            vertexHeaders.back(),
-            indexHeaders.back()});
-
-        return handle;
     }
 }

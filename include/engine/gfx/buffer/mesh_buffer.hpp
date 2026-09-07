@@ -13,7 +13,15 @@ namespace engine::geo {
 }
 
 namespace engine::gfx {
-    struct MeshBuffer {
+    class MeshBuffer {
+    public:
+        MeshBuffer(glw::VAO& vertex_format, unsigned int binding_point) :
+            vertexFormat(vertex_format), bindingPoint(binding_point) {}
+        const glw::HeaderPair<2>& operator[](core::rHandle handle) const;
+
+        core::rHandle index(geo::Mesh& mesh);
+
+    private:
         glw::VAO& vertexFormat;
 
         glw::vector<geo::vertex> vertexHeaders;
@@ -23,14 +31,8 @@ namespace engine::gfx {
 
         unsigned int bindingPoint;
 
-        MeshBuffer(glw::VAO& vertex_format, unsigned int binding_point) : vertexFormat(vertex_format), bindingPoint(binding_point) {}
-
-        const glw::HeaderPair<2>& operator[](core::rHandle handle) const;
-
         void pushVertices(std::vector<geo::vertex>& vertices);
         void pushIndices(std::vector<glm::uint>& indices);
         void push(geo::Mesh& mesh);
-
-        core::rHandle index(geo::Mesh& mesh);
     };
 }

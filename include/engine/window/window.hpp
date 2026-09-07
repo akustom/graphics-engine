@@ -7,18 +7,8 @@
 struct GLFWwindow;
 
 namespace engine::win {
-    struct Window {
-        GLFWwindow* glfw_window = nullptr;
-
-        FrameTimer frameTimer;
-        CursorContext cursorContext;
-
-        float winFPS = 60;
-
-        static void setHints(int major_version, int minor_version);
-        void init(int width, int height, const char* window_name);
-        void destroy() const;
-
+    class Window {
+    public:
         Window() = default;
         Window(unsigned int width, unsigned int height, const char* window_name) {
             init(width, height, window_name);
@@ -33,11 +23,11 @@ namespace engine::win {
             glfw_window = other.glfw_window;
             other.glfw_window = nullptr;
 
-            frameTimer = other.frameTimer;
-            other.frameTimer = {};
+            frame_timer = other.frame_timer;
+            other.frame_timer = {};
 
-            cursorContext = other.cursorContext;
-            other.cursorContext = {};
+            cursor_context = other.cursor_context;
+            other.cursor_context = {};
 
             winFPS = other.winFPS;
             other.winFPS = 60;
@@ -51,14 +41,18 @@ namespace engine::win {
             glfw_window = other.glfw_window;
             other.glfw_window = nullptr;
 
-            frameTimer = other.frameTimer;
-            other.frameTimer = {};
+            frame_timer = other.frame_timer;
+            other.frame_timer = {};
 
-            cursorContext = other.cursorContext;
-            other.cursorContext = {};
+            cursor_context = other.cursor_context;
+            other.cursor_context = {};
 
             return *this;
         }
+
+        static void setHints(int major_version, int minor_version);
+
+        GLFWwindow* glfw() const;
 
         void use() const;
         void setVSync(bool enabled);
@@ -76,7 +70,20 @@ namespace engine::win {
         void setFPS(float fps);
         double getFrameTime();
 
+        CursorContext& cursorContext();
+
         void startFrame(float r, float g, float b, float a);
         void endFrame();
+
+    private:
+        GLFWwindow* glfw_window = nullptr;
+
+        FrameTimer frame_timer;
+        CursorContext cursor_context;
+
+        float winFPS = 60;
+
+        void init(int width, int height, const char* window_name);
+        void destroy() const;
     };
 }

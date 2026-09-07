@@ -11,17 +11,7 @@ namespace engine::win {
         glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     }
 
-    void Window::init(int width, int height, const char* window_name) {
-        glfw_window = glfwCreateWindow(width, height, window_name, nullptr, nullptr);
-        if (glfw_window == nullptr) {
-            std::cout << "failed to create GLFW window\n";
-            glfwTerminate();
-        }
-    }
-
-    void Window::destroy() const {
-        glfwDestroyWindow(glfw_window);
-    }
+    GLFWwindow* Window::glfw() const {return glfw_window;}
 
     void Window::use() const {
         glfwMakeContextCurrent(glfw_window);
@@ -70,14 +60,18 @@ namespace engine::win {
     }
 
     double Window::getFrameTime() {
-        return frameTimer.getFrameTime();
+        return frame_timer.getFrameTime();
+    }
+
+    CursorContext& Window::cursorContext() {
+        return cursor_context;
     }
 
     void Window::startFrame(float r, float g, float b, float a) {
         if (winFPS >= 0)
-            frameTimer.setFPS(winFPS);
+            frame_timer.setFPS(winFPS);
 
-        cursorContext.clearOffsets();
+        cursor_context.clearOffsets();
         glfwPollEvents();
 
         glClearColor(r, g, b, a);
@@ -86,5 +80,17 @@ namespace engine::win {
 
     void Window::endFrame() {
         glfwSwapBuffers(glfw_window);
+    }
+
+    void Window::init(int width, int height, const char* window_name) {
+        glfw_window = glfwCreateWindow(width, height, window_name, nullptr, nullptr);
+        if (glfw_window == nullptr) {
+            std::cout << "failed to create GLFW window\n";
+            glfwTerminate();
+        }
+    }
+
+    void Window::destroy() const {
+        glfwDestroyWindow(glfw_window);
     }
 }

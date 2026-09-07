@@ -11,11 +11,8 @@
 
 namespace engine::gfx {
     template <typename T>
-    struct RenderBatch {
-        glw::VAO renderFormat;
-        MeshBuffer meshBuffer;
-        InstancesBuffer instancesBuffer;
-
+    class RenderBatch {
+    public:
         RenderBatch(unsigned int vertex_loc, unsigned int instance_loc) :
             meshBuffer(renderFormat, vertex_loc),
             instancesBuffer(renderFormat, instance_loc) {
@@ -51,5 +48,10 @@ namespace engine::gfx {
                 vertexHeader.bufferOffset,
                 instancesHeader.bufferOffset);
         }
+
+    private:
+        glw::VAO renderFormat;
+        MeshBuffer meshBuffer;
+        InstancesBuffer instancesBuffer;
     };
 }
