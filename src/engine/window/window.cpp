@@ -56,7 +56,7 @@ namespace engine::win {
     }
 
     void Window::setFPS(float fps) {
-        winFPS = fps;
+        frame_timer.setTarget(fps);
     }
 
     double Window::getFrameTime() {
@@ -68,8 +68,7 @@ namespace engine::win {
     }
 
     void Window::startFrame(float r, float g, float b, float a) {
-        if (winFPS >= 0)
-            frame_timer.setFPS(winFPS);
+        frame_timer.setFPS(frame_timer.getTarget());
 
         cursor_context.clearOffsets();
         glfwPollEvents();

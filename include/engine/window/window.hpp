@@ -28,9 +28,6 @@ namespace engine::win {
 
             cursor_context = other.cursor_context;
             other.cursor_context = {};
-
-            winFPS = other.winFPS;
-            other.winFPS = 60;
         }
         Window& operator=(Window&& other) noexcept {
             if (this == &other)
@@ -80,8 +77,6 @@ namespace engine::win {
 
         FrameTimer frame_timer;
         CursorContext cursor_context;
-
-        float winFPS = 60;
 
         void init(int width, int height, const char* window_name);
         void destroy() const;
