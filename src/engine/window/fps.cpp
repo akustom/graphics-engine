@@ -5,14 +5,11 @@
 #include <chrono>
 #include <immintrin.h>
 
-#include <tracy/Tracy.hpp>
-
 
 namespace std_c = std::chrono;
 
 namespace engine::win {
     void FrameTimer::setFPS(double fps) {
-        ZoneScoped;
         double eps = target_time * 0.175;
 
         double sleep_time = target_time - (glfwGetTime() - fpsLastFrame);
