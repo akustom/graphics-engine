@@ -5,7 +5,7 @@
 
 
 namespace engine::core {
-    struct rHandle {
+    struct Handle {
         uint32_t sparse_index;
         uint32_t generation;
     };
@@ -13,7 +13,7 @@ namespace engine::core {
     template <typename T>
     class registry {
     public:
-        [[nodiscard]] const T& at(rHandle handle) const {
+        [[nodiscard]] const T& at(Handle handle) const {
             auto [sparse_index, handle_gen] = handle;
             auto [dense_index, sparse_gen] = sparse[sparse_index];
 
@@ -22,7 +22,7 @@ namespace engine::core {
             return dense[dense_index];
         }
 
-        rHandle push(T data) {
+        Handle push(T data) {
             if (!free_list.empty()) {
                 uint32_t free_id = free_list.back();
                 free_list.pop_back();
@@ -32,7 +32,7 @@ namespace engine::core {
                 dense_to_sparse.push_back(free_id);
                 dense.push_back(data);
 
-                return rHandle{free_id, sparse[free_id].generation};
+                return Handle{free_id, sparse[free_id].generation};
             }
 
             sparse.emplace_back(static_cast<uint32_t>(dense.size()), 0);
@@ -40,10 +40,10 @@ namespace engine::core {
             dense_to_sparse.push_back(sparse.size() - 1);
             dense.push_back(data);
 
-            return rHandle{static_cast<uint32_t>(sparse.size()) - 1, 0};
+            return Handle{static_cast<uint32_t>(sparse.size()) - 1, 0};
         }
 
-        void free(rHandle handle) {
+        void free(Handle handle) {
             auto& entry = sparse[handle.sparse_index];
 
             assert(handle.generation == entry.generation && "Undefined handle used!");
@@ -62,7 +62,7 @@ namespace engine::core {
             free_list.push_back(handle.sparse_index);
         }
 
-        void modify(rHandle handle, T data) {
+        void modify(Handle handle, T data) {
             auto& entry = sparse[handle.sparse_index];
             dense[entry.dense_index] = data;
         }

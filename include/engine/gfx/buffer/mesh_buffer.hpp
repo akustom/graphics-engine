@@ -17,9 +17,9 @@ namespace engine::gfx {
     public:
         MeshBuffer(glw::VAO& vertex_format, unsigned int binding_point) :
             vertexFormat(vertex_format), bindingPoint(binding_point) {}
-        const glw::HeaderPair<2>& operator[](core::rHandle handle) const;
+        const glw::HeaderPair<2>& operator[](core::Handle handle) const;
 
-        core::rHandle index(geo::Mesh& mesh);
+        core::Handle index(geo::Mesh& mesh);
 
     private:
         glw::VAO& vertexFormat;

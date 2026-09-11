@@ -23,16 +23,16 @@ namespace engine::gfx {
             renderFormat.setAttributeDivisor(instance_loc, 1);
         }
 
-        core::rHandle index(geo::Mesh& mesh) {
+        core::Handle index(geo::Mesh& mesh) {
             ZoneScopedN("RenderBatch::index, mesh");
             return meshBuffer.index(mesh);
         }
-        core::rHandle index(scene::Instances& instances) {
+        core::Handle index(scene::Instances& instances) {
             ZoneScopedN("RenderBatch::index, instances");
             return instancesBuffer.index(instances);
         }
 
-        void render(core::rHandle meshHandle, core::rHandle instancesHandle) const {
+        void render(core::Handle meshHandle, core::Handle instancesHandle) const {
             ZoneScoped;
             renderFormat.bind();
 

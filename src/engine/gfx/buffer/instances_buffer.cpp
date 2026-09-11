@@ -5,7 +5,7 @@
 
 
 namespace engine::gfx {
-    const glw::HeaderPair<1>& InstancesBuffer::operator[](core::rHandle handle) const {
+    const glw::HeaderPair<1>& InstancesBuffer::operator[](core::Handle handle) const {
         return registry.at(handle);
     }
 
@@ -16,7 +16,7 @@ namespace engine::gfx {
             sizeof(glm::vec4));
     }
 
-    core::rHandle InstancesBuffer::index(scene::Instances& instances) {
+    core::Handle InstancesBuffer::index(scene::Instances& instances) {
         push(instances.instancesPos());
 
         auto issued = registry.push(glw::HeaderPair{instancesHeaders.back()});

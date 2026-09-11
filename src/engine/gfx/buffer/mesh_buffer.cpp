@@ -6,11 +6,11 @@
 
 
 namespace engine::gfx {
-    const glw::HeaderPair<2>& MeshBuffer::operator[](core::rHandle handle) const {
+    const glw::HeaderPair<2>& MeshBuffer::operator[](core::Handle handle) const {
         return registry.at(handle);
     }
 
-    core::rHandle MeshBuffer::index(geo::Mesh& mesh) {
+    core::Handle MeshBuffer::index(geo::Mesh& mesh) {
         push(mesh);
 
         auto handle = registry.push({
