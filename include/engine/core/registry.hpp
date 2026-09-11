@@ -6,8 +6,8 @@
 
 namespace engine::core {
     struct rHandle {
-        std::size_t sparse_index;
-        std::size_t generation;
+        uint32_t sparse_index;
+        uint32_t generation;
     };
 
     template <typename T>
@@ -17,30 +17,30 @@ namespace engine::core {
             auto [sparse_index, handle_gen] = handle;
             auto [dense_index, sparse_gen] = sparse[sparse_index];
 
-            assert(handle_gen == sparse_gen && "Undefined handle used!"); // todo to be refactored off in future debug class
+            assert(handle_gen == sparse_gen && "Undefined handle used!");
 
             return dense[dense_index];
         }
 
         rHandle create(T data) {
             if (!free_list.empty()) {
-                std::size_t free_id = free_list.back();
+                uint32_t free_id = free_list.back();
                 free_list.pop_back();
 
                 sparse[free_id].dense_index = dense.size();
 
                 dense_to_sparse.push_back(free_id);
-                dense.push_back(std::move(data));
+                dense.push_back(data);
 
                 return rHandle{free_id, sparse[free_id].generation};
             }
 
-            sparse.emplace_back(dense.size(), 0);
+            sparse.emplace_back(static_cast<uint32_t>(dense.size()), 0);
 
             dense_to_sparse.push_back(sparse.size() - 1);
-            dense.push_back(std::move(data));
+            dense.push_back(data);
 
-            return rHandle{sparse.size() - 1, 0};
+            return rHandle{static_cast<uint32_t>(sparse.size()) - 1, 0};
         }
 
         void free(rHandle handle) {
@@ -64,34 +64,29 @@ namespace engine::core {
 
         void modify(rHandle handle, T data) {
             auto& entry = sparse[handle.sparse_index];
-            dense[entry.dense_index] = std::move(data);
+            dense[entry.dense_index] = data;
         }
 
     private:
         struct SparseEntry {
-            std::size_t dense_index;
-            std::size_t generation;
+            uint32_t dense_index;
+            uint32_t generation;
         };
 
         std::vector<SparseEntry> sparse;
-        std::vector<std::size_t> dense_to_sparse;
+        std::vector<uint32_t> dense_to_sparse;
         std::vector<T> dense;
 
-        std::vector<std::size_t> free_list;
-
-        void push_dense(std::size_t sparse_index, T data) {
-            dense_to_sparse.push_back(sparse_index);
-            dense.push_back(std::move(data));
-        }
+        std::vector<uint32_t> free_list;
 
         void pop_dense() {
             dense_to_sparse.pop_back();
             dense.pop_back();
         }
 
-        void modify_dense(std::size_t dense_index, size_t to_sparse_i, T dense_data) {
+        void modify_dense(uint32_t dense_index, uint32_t to_sparse_i, T dense_data) {
             dense_to_sparse[dense_index] = to_sparse_i;
-            dense[dense_index] = std::move(dense_data);
+            dense[dense_index] = dense_data;
         }
     };
 }
