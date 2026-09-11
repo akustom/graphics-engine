@@ -22,7 +22,7 @@ namespace engine::core {
             return dense[dense_index];
         }
 
-        rHandle create(T data) {
+        rHandle push(T data) {
             if (!free_list.empty()) {
                 uint32_t free_id = free_list.back();
                 free_list.pop_back();

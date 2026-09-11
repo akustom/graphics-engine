@@ -13,7 +13,7 @@ namespace engine::gfx {
     core::rHandle MeshBuffer::index(geo::Mesh& mesh) {
         push(mesh);
 
-        auto handle = registry.create({
+        auto handle = registry.push({
             vertexHeaders.back(),
             indexHeaders.back()});
 
