@@ -48,7 +48,7 @@ namespace glw {
         }
 
         template <trivially_copyable T>
-        void allocateBuffer(std::size_t size, const GLenum flag = 0) const {
+        void allocateBuffer(uint32_t size, const GLenum flag = 0) const {
             glNamedBufferStorage(id, sizeof(T) * size, nullptr, flag);
         }
 
@@ -62,7 +62,7 @@ namespace glw {
         }
 
         template <trivially_copyable T>
-        void copyData(Buffer& srcBuffer, std::size_t size) const {
+        void copyData(Buffer& srcBuffer, uint32_t size) const {
             glCopyNamedBufferSubData(srcBuffer.id, id, 0, 0, size * sizeof(T));
         }
     };
