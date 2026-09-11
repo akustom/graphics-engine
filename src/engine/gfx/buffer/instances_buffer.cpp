@@ -19,7 +19,7 @@ namespace engine::gfx {
     core::Handle InstancesBuffer::index(scene::Instances& instances) {
         push(instances.instancesPos());
 
-        auto issued = registry.push(glw::HeaderPair{instancesHeaders.back()});
+        auto issued = registry.push({instancesHeaders.back()});
 
         return issued;
     }
