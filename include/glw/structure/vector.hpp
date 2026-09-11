@@ -8,13 +8,13 @@
 
 namespace glw {
     struct IndexHeader {
-        std::size_t count;
-        std::size_t bufferOffset;
+        uint32_t count;
+        uint32_t bufferOffset;
 
-        IndexHeader(int count, std::size_t buffer_offset) : count(count), bufferOffset(buffer_offset) {}
+        IndexHeader(uint32_t count, uint32_t buffer_offset) : count(count), bufferOffset(buffer_offset) {}
     };
 
-    template <unsigned int size>
+    template <uint32_t size>
     using HeaderPair = std::array<IndexHeader, size>;
 
 
@@ -68,7 +68,9 @@ namespace glw {
         void push_back(std::vector<T>& obj, VAO& format, Args&&... args) {
             buffer_push(obj, format, std::forward<Args>(args)...);
 
-            indexed.emplace_back(obj.size(), size);
+            indexed.emplace_back(
+                static_cast<uint32_t>(obj.size()),
+                static_cast<uint32_t>(size));
             size += obj.size();
         }
     };
