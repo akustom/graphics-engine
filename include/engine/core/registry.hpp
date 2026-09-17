@@ -67,6 +67,10 @@ namespace engine::core {
             dense[entry.dense_index] = data;
         }
 
+        std::vector<T>& get_dense() {
+            return dense;
+        }
+
     private:
         struct SparseEntry {
             uint32_t dense_index;
