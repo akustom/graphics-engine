@@ -17,14 +17,17 @@ namespace engine::gfx {
     public:
         InstancesBuffer(glw::VAO& vertex_format, unsigned int binding_point) : vertexFormat(vertex_format), bindingPoint(binding_point) {}
 
-        const glw::HeaderPair<1>& operator[](core::Handle handle) const;
-        void push(std::vector<glm::vec4>& instances);
+        glw::HeaderPair<1> operator[](core::Handle handle) const;
         core::Handle index(scene::Instances& instances);
+        void modify(core::Handle instances, scene::Instances& instancesData);
+
     private:
         glw::VAO& vertexFormat;
         glw::vector<glm::vec4> instancesHeaders;
-        core::registry<glw::HeaderPair<1>> registry;
+        core::registry<uint32_t> registry;
 
         unsigned int bindingPoint;
+
+        void push(std::vector<glm::vec4>& instances);
     };
 }
