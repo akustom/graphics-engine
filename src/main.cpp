@@ -112,9 +112,9 @@ int main() {
 
     scene::Camera camera = {0};
     camera.use(window);
-    camera.setSpeed(100);
+    camera.setSpeed(20);
 
-    window.setFPS(144);
+    window.setFPS(-1);
 
     while (!glfwWindowShouldClose(window.glfw())) {
         ZoneScopedN("Main Frame");
@@ -126,9 +126,14 @@ int main() {
         camera.processKeyboard(window, dt);
         camera.sendUpdate(window);
 
+        if (window.isKeyPressed(GLFW_KEY_P))
+            squareParticles.createInstance({util::random(-10.0f, 10.0f), util::random(-10.0f, 10.0f),util::random(-10.0f, 10.0f)});
+
+        squareParticles[0].position += glm::vec4{1.0f * dt, 0.0f, 0.0f, 0.0f};
+
+        renderBatch.update(sqrInstancesHandle, squareParticles);
         renderBatch.render(squareHandle, sqrInstancesHandle);
-        renderBatch.render(cubeHandle,   cubeInstancesHandle);
-        renderBatch.render(platformHandle, platformInstancesHandle);
+        renderBatch.render(cubeHandle, cubeInstancesHandle);
 
         window.endFrame();
         FrameMark;
