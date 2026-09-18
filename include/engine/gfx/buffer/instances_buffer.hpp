@@ -16,8 +16,8 @@ namespace engine::gfx {
     class InstancesBuffer {
     public:
         InstancesBuffer(glw::VAO& vertex_format, unsigned int binding_point) : vertexFormat(vertex_format), bindingPoint(binding_point) {}
-
         glw::HeaderPair<1> operator[](core::Handle handle) const;
+
         core::Handle index(scene::Instances& instances);
         void modify(core::Handle instances, scene::Instances& instancesData);
 
