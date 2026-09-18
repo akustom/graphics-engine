@@ -62,8 +62,8 @@ namespace glw {
         }
 
         template <trivially_copyable T>
-        void copyData(Buffer& srcBuffer, uint32_t size) const {
-            glCopyNamedBufferSubData(srcBuffer.id, id, 0, 0, size * sizeof(T));
+        void copyData(Buffer& srcBuffer, uint32_t size, uint32_t read_offset = 0, uint32_t write_offset = 0) const {
+            glCopyNamedBufferSubData(srcBuffer.id, id, read_offset * sizeof(T), write_offset * sizeof(T), size * sizeof(T));
         }
     };
 
