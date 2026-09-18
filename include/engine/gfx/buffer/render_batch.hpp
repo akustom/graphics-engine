@@ -33,6 +33,7 @@ namespace engine::gfx {
         }
 
         void update(core::Handle instances, scene::Instances& instancesData) {
+            ZoneScopedN("RenderBatch::update, instances");
             instancesBuffer.modify(instances, instancesData);
         }
 
