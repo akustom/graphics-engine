@@ -79,13 +79,14 @@ int main() {
     squareParticles.createInstance({0, 0,-2});
 
     scene::Instances cubeParticles;
-    while (cubeParticles.size() < 10000) {
+    cubeParticles.createInstance();
+    /*while (cubeParticles.size() < 10000) {
         cubeParticles.createInstance({
             util::random(-1000.0f, 1000.0f),
             util::random(-1000.0f, 1000.0f),
             util::random(-1000.0f, 1000.0f)}
             );
-    }
+    }*/
 
     scene::Instances platformPlace;
     platformPlace.createInstance({0, -5, 0});
@@ -114,7 +115,7 @@ int main() {
     camera.use(window);
     camera.setSpeed(20);
 
-    window.setFPS(-1);
+    window.setFPS(144);
 
     while (!glfwWindowShouldClose(window.glfw())) {
         ZoneScopedN("Main Frame");
@@ -130,8 +131,11 @@ int main() {
             squareParticles.createInstance({util::random(-10.0f, 10.0f), util::random(-10.0f, 10.0f),util::random(-10.0f, 10.0f)});
 
         squareParticles[0].position += glm::vec4{1.0f * dt, 0.0f, 0.0f, 0.0f};
+        cubeParticles[0].position += glm::vec4{0.95f * dt, 0.0f, 0.0f, 0.0f};
 
         renderBatch.update(sqrInstancesHandle, squareParticles);
+        renderBatch.update(cubeInstancesHandle, cubeParticles);
+
         renderBatch.render(squareHandle, sqrInstancesHandle);
         renderBatch.render(cubeHandle, cubeInstancesHandle);
 
