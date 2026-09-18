@@ -80,11 +80,11 @@ namespace glw {
         template <typename... Args>
         void modify(IndexHeader header, std::vector<T>& obj, VAO& format, Args&&... args) {
             if (header.count != static_cast<uint32_t>(obj.size())) {
-                uint32_t buffer_diff = static_cast<uint32_t>(obj.size()) - header.count;
+                int32_t buffer_diff = static_cast<uint32_t>(obj.size()) - header.count;
 
-                uint32_t old_end    = header.bufferOffset + header.count;
-                uint32_t tail_count = static_cast<uint32_t>(item_size) - old_end;
-                uint32_t new_offset = header.bufferOffset + static_cast<uint32_t>(obj.size());
+                uint32_t old_end = header.bufferOffset + header.count;
+                uint32_t tail_count = static_cast<int>(item_size) - old_end;
+                uint32_t new_offset = header.bufferOffset + static_cast<int>(obj.size());
 
                 if (item_size + buffer_diff > item_capacity) {
                     reserve(2 * (item_size + buffer_diff));
