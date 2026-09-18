@@ -32,6 +32,10 @@ namespace engine::gfx {
             return instancesBuffer.index(instances);
         }
 
+        void update(core::Handle instances, scene::Instances& instancesData) {
+            instancesBuffer.modify(instances, instancesData);
+        }
+
         void render(core::Handle meshHandle, core::Handle instancesHandle) const {
             ZoneScoped;
             renderFormat.bind();
