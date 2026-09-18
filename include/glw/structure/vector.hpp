@@ -82,13 +82,27 @@ namespace glw {
             if (header.count != static_cast<uint32_t>(obj.size())) {
                 uint32_t buffer_diff = static_cast<uint32_t>(obj.size()) - header.count;
 
-                item_size += buffer_diff;
+                uint32_t old_end    = header.bufferOffset + header.count;
+                uint32_t tail_count = static_cast<uint32_t>(item_size) - old_end;
+                uint32_t new_offset = header.bufferOffset + static_cast<uint32_t>(obj.size());
 
-                buffer_push(obj, format, std::forward<Args>(args)...);
+                if (item_size + buffer_diff > item_capacity) {
+                    reserve(2 * (item_size + buffer_diff));
+                    format.attachBuffer(std::forward<Args>(args)...);
+                }
+
+                if (tail_count > 0) {
+                    Buffer temp;
+                    temp.allocateBuffer<T>(tail_count, GL_DYNAMIC_STORAGE_BIT);
+                    temp.copyData<T>(buffer, tail_count, old_end, 0);
+                    buffer.copyData<T>(temp, tail_count, 0, new_offset);
+                }
+
+                item_size += buffer_diff;
 
                 for (auto& idxH : indexed) {
                     if (idxH.bufferOffset == header.bufferOffset)
-                        idxH.count = obj.size();
+                        idxH.count = static_cast<uint32_t>(obj.size());
 
                     if (idxH.bufferOffset > header.bufferOffset)
                         idxH.bufferOffset += buffer_diff;
