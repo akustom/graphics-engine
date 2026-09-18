@@ -78,7 +78,7 @@ namespace glw {
         }
 
         template <typename... Args>
-        void modify(IndexHeader header, std::vector<T>& obj, VAO& format, Args&&... args) { // todo wip
+        void modify(IndexHeader header, std::vector<T>& obj, VAO& format, Args&&... args) {
             if (header.count != static_cast<uint32_t>(obj.size())) {
                 uint32_t buffer_diff = static_cast<uint32_t>(obj.size()) - header.count;
 
