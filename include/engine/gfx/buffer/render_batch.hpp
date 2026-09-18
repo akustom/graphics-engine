@@ -32,9 +32,14 @@ namespace engine::gfx {
             return instancesBuffer.index(instances);
         }
 
-        void update(core::Handle instances, scene::Instances& instancesData) {
+        void update(core::Handle mesh, geo::Mesh& data) {
+            ZoneScopedN("RenderBatch::update, mesh");
+            meshBuffer.modify(mesh, data);
+        }
+
+        void update(core::Handle instances, scene::Instances& data) {
             ZoneScopedN("RenderBatch::update, instances");
-            instancesBuffer.modify(instances, instancesData);
+            instancesBuffer.modify(instances, data);
         }
 
         void render(core::Handle meshHandle, core::Handle instancesHandle) const {
