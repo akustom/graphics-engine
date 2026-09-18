@@ -22,9 +22,13 @@ namespace engine::gfx {
         void modify(core::Handle instances, scene::Instances& instancesData);
 
     private:
+        struct HeaderIndex {
+            uint32_t instances_i;
+        };
+
         glw::VAO& vertexFormat;
         glw::vector<glm::vec4> instancesHeaders;
-        core::registry<uint32_t> registry;
+        core::registry<HeaderIndex> registry;
 
         unsigned int bindingPoint;
 
