@@ -57,11 +57,11 @@ namespace glw {
             if (item_size == 0) {
                 item_capacity = obj.size();
                 buffer.allocateBuffer(obj, GL_DYNAMIC_STORAGE_BIT);
-                format.attachBuffer(std::forward<Args>(args)...);
+                format.attachBuffer(buffer, std::forward<Args>(args)...);
             } else {
                 if (item_size + obj.size() > item_capacity) {
                     reserve(2 * std::max(item_size, obj.size()));
-                    format.attachBuffer(std::forward<Args>(args)...);
+                    format.attachBuffer(buffer, std::forward<Args>(args)...);
                 }
                 buffer.pushData(sizeof(T) * item_size, obj);
             }
@@ -88,7 +88,7 @@ namespace glw {
 
                 if (item_size + buffer_diff > item_capacity) {
                     reserve(2 * (item_size + buffer_diff));
-                    format.attachBuffer(std::forward<Args>(args)...);
+                    format.attachBuffer(buffer, std::forward<Args>(args)...);
                 }
 
                 if (tail_count > 0) {
