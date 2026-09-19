@@ -22,8 +22,21 @@
 using namespace engine;
 
 int main_() {
-    auto x = GL_MACRO<glm::uint>;
-    util::print(GL_UNSIGNED_INT, " ", x);
+    scene::Instances Particles;
+    Particles.createInstance({{-2,0, 0}});
+    Particles.createInstance({{2, 0, 0}});
+
+    while (Particles.size() < 1000) {
+        Particles.createInstance({{util::random(-10.0f, 10.0f), util::random(-10.0f, 10.0f),  util::random(-10.0f, 10.0f)}});
+    }
+
+    for (int i = 0; i < 2000; i++) {
+        phy::VelocityVerlet::integrate<phy::gravity>(Particles, 0.1f);
+    }
+
+    for (auto particle : Particles) {
+        util::print(particle.force);
+    }
     return 0;
 }
 
@@ -54,61 +67,23 @@ int main() {
     shaderProgram.use();
 
 
-    geo::Mesh square;
-    geo::makePolyhedron(square, 1.0f, 32, {1.0, 1.0, 1.0});
+    geo::Mesh mesh1;
+    geo::makePolyhedron(mesh1, 1.0f, 6, {1.0, 1.0, 1.0});
 
-    geo::Mesh cube;
-    geo::makePolyhedron(cube, 1.0f, 8, {1.0, 0.0, 0.0});
+    scene::Instances Particles;
 
-    geo::Mesh platform;
-    platform.vertices = {
-            {{10, 0,  10}, {1, 0, 0}},
-            {{10, 0, -10}, {0, 1, 0}},
-            {{-10, 0, 10}, {0, 0, 1}},
-            {{-10, 0,-10}, {1, 1, 1}},
-    };
-    platform.indices = {2, 0, 1, 2, 3, 1};
-
-
-    scene::Instances squareParticles;
-    squareParticles.createInstance({2, 0, 0});
-    squareParticles.createInstance({-2,0, 0});
-    squareParticles.createInstance({0, 2, 0});
-    squareParticles.createInstance({0,-2, 0});
-    squareParticles.createInstance({0, 0, 2});
-    squareParticles.createInstance({0, 0,-2});
-
-    scene::Instances cubeParticles;
-    cubeParticles.createInstance();
-    /*while (cubeParticles.size() < 10000) {
-        cubeParticles.createInstance({
-            util::random(-1000.0f, 1000.0f),
-            util::random(-1000.0f, 1000.0f),
-            util::random(-1000.0f, 1000.0f)}
-            );
-    }*/
-
-    scene::Instances platformPlace;
-    platformPlace.createInstance({0, -5, 0});
-
-    while (platformPlace.size() < 20000) {
-        platformPlace.createInstance({
-            util::random(-1000.0f, 1000.0f),
-            util::random(-1000.0f, 1000.0f),
-            util::random(-1000.0f, 1000.0f)}
-            );
-    }
+    Particles.createInstance({{-2,0, 0}});
+    Particles.createInstance({{-2,0, 0}});
+    Particles.createInstance({{0, 2, 0}});
+    Particles.createInstance({{0,-2, 0}});
+    Particles.createInstance({{0, 0, 2}});
+    Particles.createInstance({{0, 0,-2}});
 
 
     gfx::RenderBatch<geo::vertex> renderBatch = {0, 1};
 
-    auto squareHandle = renderBatch.index(square);
-    auto cubeHandle   = renderBatch.index(cube);
-    auto platformHandle = renderBatch.index(platform);
-
-    auto sqrInstancesHandle  = renderBatch.index(squareParticles);
-    auto cubeInstancesHandle = renderBatch.index(cubeParticles);
-    auto platformInstancesHandle = renderBatch.index(platformPlace);
+    auto square_h = renderBatch.index(mesh1);
+    auto particles_h  = renderBatch.index(Particles);
 
 
     scene::Camera camera = {0};
@@ -128,16 +103,18 @@ int main() {
         camera.sendUpdate(window);
 
         if (window.isKeyPressed(GLFW_KEY_P))
-            squareParticles.createInstance({util::random(-10.0f, 10.0f), util::random(-10.0f, 10.0f),util::random(-10.0f, 10.0f)});
+            Particles.createInstance({
+                .pos  = {util::random(-10.0f, 10.0f), util::random(-10.0f, 10.0f),util::random(-10.0f, 10.0f)},
+                .mass = 500.0f
+            });
 
-        squareParticles[0].position += glm::vec4{1.0f * dt, 0.0f, 0.0f, 0.0f};
-        cubeParticles[0].position += glm::vec4{0.95f * dt, 0.0f, 0.0f, 0.0f};
+        if (window.isKeyPressed(GLFW_KEY_X))
+            Particles.clear();
 
-        renderBatch.update(sqrInstancesHandle, squareParticles);
-        renderBatch.update(cubeInstancesHandle, cubeParticles);
+        phy::V_V::integrate<phy::gravity>(Particles, 1.0f/120.0f);
 
-        renderBatch.render(squareHandle, sqrInstancesHandle);
-        renderBatch.render(cubeHandle, cubeInstancesHandle);
+        renderBatch.update(particles_h, Particles);
+        renderBatch.render(square_h, particles_h);
 
         window.endFrame();
         FrameMark;
