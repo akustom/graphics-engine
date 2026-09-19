@@ -26,25 +26,22 @@ namespace engine::gfx {
         vertexHeaders.modify(
             vertexHeaders[registry.at(handle).vertex_i], mesh.vertices,
             vertexFormat,
-            vertexHeaders.getBuffer(),
             bindingPoint, 0,
             sizeof(geo::vertex));
 
         indexHeaders.modify(
             indexHeaders[registry.at(handle).index_i], mesh.indices,
-            vertexFormat,
-            indexHeaders.getBuffer());
+            vertexFormat);
     }
 
     void MeshBuffer::pushVertices(std::vector<geo::vertex>& vertices) {
         vertexHeaders.push_back(vertices, vertexFormat,
-            vertexHeaders.getBuffer(),
             bindingPoint, 0,
             sizeof(geo::vertex));
     }
 
     void MeshBuffer::pushIndices(std::vector<glm::uint>& indices) {
-        indexHeaders.push_back(indices, vertexFormat, indexHeaders.getBuffer());
+        indexHeaders.push_back(indices, vertexFormat);
     }
 
     void MeshBuffer::push(geo::Mesh& mesh) {

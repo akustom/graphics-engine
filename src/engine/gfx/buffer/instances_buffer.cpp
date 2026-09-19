@@ -21,14 +21,12 @@ namespace engine::gfx {
         instancesHeaders.modify(
             instancesHeaders[registry.at(handle).instances_i], instancesData.instancesPos(),
             vertexFormat,
-            instancesHeaders.getBuffer(),
             bindingPoint, 0,
             sizeof(glm::vec4));
     }
 
     void InstancesBuffer::push(std::vector<glm::vec4>& instancesComponent) {
         instancesHeaders.push_back(instancesComponent, vertexFormat,
-            instancesHeaders.getBuffer(),
             bindingPoint, 0,
             sizeof(glm::vec4));
     }
