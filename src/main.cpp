@@ -72,7 +72,7 @@ int main() {
 
     scene::Instances Particles;
 
-    Particles.createInstance({{-2,0, 0}});
+    Particles.createInstance({{2,0, 0}});
     Particles.createInstance({{-2,0, 0}});
     Particles.createInstance({{0, 2, 0}});
     Particles.createInstance({{0,-2, 0}});
@@ -105,7 +105,7 @@ int main() {
         if (window.isKeyPressed(GLFW_KEY_P))
             Particles.createInstance({
                 .pos  = {util::random(-10.0f, 10.0f), util::random(-10.0f, 10.0f),util::random(-10.0f, 10.0f)},
-                .mass = 500.0f
+                .mass = 23659959908.0f
             });
 
         if (window.isKeyPressed(GLFW_KEY_X))
