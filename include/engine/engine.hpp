@@ -19,6 +19,9 @@
 #include "geometry/mesh.hpp"
 #include "geometry/vertex.hpp"
 
+#include "physics/integrator.hpp"
+#include "physics/forces.hpp"
+
 
 namespace engine {
     struct Engine {
