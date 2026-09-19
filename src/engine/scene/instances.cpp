@@ -4,25 +4,41 @@
 
 
 namespace engine::scene {
-    Instances::InstanceRef Instances::operator[](std::size_t index) {
-        return InstanceRef{
+    Instances::Instance Instances::operator[](std::size_t index) {
+        return {
             positions[index],
             velocities[index],
-            accelerations[index]
+            accelerations[index],
+            forces[index],
+            masses[index]
         };
     }
 
-    void Instances::createInstance(const glm::vec3& position, const glm::vec3& velocity, const glm::vec3& acceleration) {
+    void Instances::createInstance(Parameters param) {
         instanceCount++;
 
-        positions.emplace_back(position, 0);
-        velocities.emplace_back(velocity, 0);
-        accelerations.emplace_back(acceleration, 0);
+        positions.emplace_back(param.pos, 0);
+        velocities.emplace_back(param.vel, 0);
+        accelerations.emplace_back(param.accel, 0);
+        forces.emplace_back(param.force, 0);
+        masses.emplace_back(param.mass);
+    }
+
+    void Instances::clear() {
+        instanceCount = 0;
+
+        positions.clear();
+        velocities.clear();
+        accelerations.clear();
+        forces.clear();
+        masses.clear();
     }
 
     std::vector<glm::vec4>& Instances::instancesPos()  {return positions;}
     std::vector<glm::vec4>& Instances::instancesVel()  {return velocities;}
     std::vector<glm::vec4>& Instances::instancesAccel() {return accelerations;}
+    std::vector<glm::vec4>& Instances::instancesForce() {return forces;}
+    std::vector<float>& Instances::instancesMasses()  {return masses;}
 
     std::size_t Instances::size() const {return instanceCount;}
 }
