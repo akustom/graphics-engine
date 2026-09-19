@@ -10,6 +10,11 @@
 
 
 namespace util {
+    inline std::ostream& operator<<(std::ostream& os, const glm::vec4& vec) {
+        os << "[" << vec.x << ", " << vec.y << ", " << vec.z << "]";
+        return os;
+    }
+
     template <typename T>
     std::size_t sizeof_vec(const std::vector<T>& vec) {
         return vec.size() * sizeof(T);
