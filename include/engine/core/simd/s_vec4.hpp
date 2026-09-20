@@ -15,11 +15,11 @@ namespace engine::core::simd {
     }
 
     inline __m256 _mm256_load_vec4(glm::vec4* arr_vec) {
-        return _mm256_load_ps(glm::value_ptr(*arr_vec));
+        return _mm256_loadu_ps(glm::value_ptr(*arr_vec));
     }
 
     inline void _mm256_store_vec4(glm::vec4* arr_vec, __m256 val) {
-        _mm256_store_ps(glm::value_ptr(*arr_vec), val);
+        _mm256_storeu_ps(glm::value_ptr(*arr_vec), val);
     }
 
     inline __m256 _mm256_set1_vec4(glm::vec4 vec) {
