@@ -10,24 +10,16 @@
 
 namespace engine::phy {
     struct VelocityVerlet {
-        template <glm::vec4(*...forces)(const scene::Instances::Instance&, const scene::Instances::Instance&)>
+        template <void(*...forces)(scene::Instances& instances)>
         static void apply_forces(scene::Instances& instances) {
-            auto* force_loc = instances.instancesForce().data();
-            for (int i = 0; i < instances.size(); i++) {
-                for (int j = i+1; j < instances.size(); j++) {
-                    glm::vec4 force = (glm::vec4(0) + ... + forces(instances[i],instances[j]));
-
-                    force_loc[i] += force;
-                    force_loc[j] -= force;
-                }
-            }
+            (forces(instances), ...);
         }
 
         static void clear_forces(scene::Instances& instances) {
             std::ranges::fill(instances.instancesForce(), glm::vec4(0));
         }
 
-        template <glm::vec4(*...forces)(const scene::Instances::Instance&, const scene::Instances::Instance&)>
+        template <void(*...forces)(scene::Instances& instances)>
         static void integrate(scene::Instances& instances, float dt) {
             ZoneScoped;
 
