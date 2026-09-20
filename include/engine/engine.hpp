@@ -1,6 +1,7 @@
 #pragma once
 
 #include "core/registry.hpp"
+#include "core/simd/simd.hpp"
 
 #include "window/fps.hpp"
 #include "window/cursor_ctx.hpp"
