@@ -23,7 +23,7 @@ namespace engine::core::simd {
         return simde_mm256_set_m128(_mm_set1_ps(b), _mm_set1_ps(a));
     }
 
-    inline __m256 _mm256_loadu_vec4(glm::vec4* arr_vec) {
+    inline __m256 _mm256_loadu_vec4(const glm::vec4* arr_vec) {
         return simde_mm256_loadu_ps(glm::value_ptr(*arr_vec));
     }
 
