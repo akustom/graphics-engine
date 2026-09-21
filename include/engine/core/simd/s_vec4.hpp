@@ -10,15 +10,17 @@ namespace engine::core::simd {
         constexpr static std::size_t vec4 = 32 / sizeof(glm::vec4);
     };
 
+
+
     inline __m256 _mm256_alignf_vec4(float a, float b) {
         return _mm256_set_m128(_mm_set1_ps(b), _mm_set1_ps(a));
     }
 
-    inline __m256 _mm256_load_vec4(glm::vec4* arr_vec) {
+    inline __m256 _mm256_loadu_vec4(glm::vec4* arr_vec) {
         return _mm256_loadu_ps(glm::value_ptr(*arr_vec));
     }
 
-    inline void _mm256_store_vec4(glm::vec4* arr_vec, __m256 val) {
+    inline void _mm256_storeu_vec4(glm::vec4* arr_vec, __m256 val) {
         _mm256_storeu_ps(glm::value_ptr(*arr_vec), val);
     }
 

@@ -26,8 +26,8 @@ namespace engine::phy {
             __m256 m256_self_mass = simd::_mm256_set1_vec4(self_mass);
 
             for (std::size_t j = 0; j < tail; j += simd::OFFSET_256::vec4) {
-                __m256 m256_other_pos   = simd::_mm256_load_vec4(&instances.instancesPos()[j]);
-                __m256 m256_other_force = simd::_mm256_load_vec4(&instances.instancesForce()[j]);
+                __m256 m256_other_pos   = simd::_mm256_loadu_vec4(&instances.instancesPos()[j]);
+                __m256 m256_other_force = simd::_mm256_loadu_vec4(&instances.instancesForce()[j]);
                 __m256 m256_other_mass = simd::_mm256_alignf_vec4(
                     instances.instancesMasses()[j],
                     instances.instancesMasses()[j+1]);
@@ -44,7 +44,7 @@ namespace engine::phy {
                 __m256 m256_force = simd::_mm256_div_vec4(m256_numer, m256_denom); // dir * m1 * m2 * G / mag^2
                 m256_force = simd::_mm256_add_vec4(m256_other_force, m256_force);
 
-                simd::_mm256_store_vec4(&instances.instancesForce()[j], m256_force);
+                simd::_mm256_storeu_vec4(&instances.instancesForce()[j], m256_force);
             }
 
             for (std::size_t j = tail; j < items; j++) {
