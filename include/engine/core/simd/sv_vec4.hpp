@@ -1,6 +1,5 @@
 #pragma once
 
-#include <immintrin.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <tracy/Tracy.hpp>
@@ -14,10 +13,10 @@ namespace engine::core::simd {
         const std::size_t items = a.size();
         const std::size_t tail = items - items % OFFSET_256::vec4;
 
-        __m256 zero = _mm256_setzero_ps();
+        __m256 zero = _mm256_set1_vec4(0.0f);
 
         for (std::size_t i = 0; i < tail; i += OFFSET_256::vec4) {
-            _mm256_storeu_ps(glm::value_ptr(a[i]), zero);
+            _mm256_storeu_vec4(&a[i], zero);
         }
 
         for (std::size_t i = tail; i < items; i++) {
@@ -30,11 +29,11 @@ namespace engine::core::simd {
         const std::size_t tail = items - items % OFFSET_256::vec4;
 
         for (std::size_t i = 0; i < tail; i += OFFSET_256::vec4) {
-            __m256 vec_1 = _mm256_loadu_ps(glm::value_ptr(a[i]));
-            __m256 vec_2 = _mm256_loadu_ps(glm::value_ptr(b[i]));
+            __m256 vec_1 = _mm256_loadu_vec4(&a[i]);
+            __m256 vec_2 = _mm256_loadu_vec4(&b[i]);
 
-            vec_1 = _mm256_add_ps(vec_1, vec_2);
-            _mm256_storeu_ps(glm::value_ptr(a[i]), vec_1);
+            vec_1 = _mm256_add_vec4(vec_1, vec_2);
+            _mm256_storeu_vec4(&a[i], vec_1);
         }
 
         for (std::size_t i = tail; i < items; i++)
@@ -50,10 +49,10 @@ namespace engine::core::simd {
         __m256 vec_2 = _mm256_set1_vec4(b);
 
         for (std::size_t i = 0; i < tail; i += OFFSET_256::vec4) {
-            __m256 vec_1 = _mm256_loadu_ps(glm::value_ptr(a[i]));
+            __m256 vec_1 = _mm256_loadu_vec4(&a[i]);
 
-            vec_1 = _mm256_add_ps(vec_1, vec_2);
-            _mm256_storeu_ps(glm::value_ptr(a[i]), vec_1);
+            vec_1 = _mm256_add_vec4(vec_1, vec_2);
+            _mm256_storeu_vec4(&a[i], vec_1);
         }
 
         for (std::size_t i = tail; i < items; i++)
@@ -67,11 +66,11 @@ namespace engine::core::simd {
         const std::size_t tail = items - items % OFFSET_256::vec4;
 
         for (std::size_t i = 0; i < tail; i += OFFSET_256::vec4) {
-            __m256 vec_1 = _mm256_loadu_ps(glm::value_ptr(a[i]));
-            __m256 vec_2 = _mm256_loadu_ps(glm::value_ptr(b[i]));
+            __m256 vec_1 = _mm256_loadu_vec4(&a[i]);
+            __m256 vec_2 = _mm256_loadu_vec4(&b[i]);
 
-            vec_1 = _mm256_sub_ps(vec_1, vec_2);
-            _mm256_storeu_ps(glm::value_ptr(a[i]), vec_1);
+            vec_1 = _mm256_sub_vec4(vec_1, vec_2);
+            _mm256_storeu_vec4(&a[i], vec_1);
         }
 
         for (std::size_t i = tail; i < items; i++)
@@ -87,10 +86,10 @@ namespace engine::core::simd {
         __m256 vec_2 = _mm256_set1_vec4(b);
 
         for (std::size_t i = 0; i < tail; i += OFFSET_256::vec4) {
-            __m256 vec_1 = _mm256_loadu_ps(glm::value_ptr(a[i]));
+            __m256 vec_1 = _mm256_loadu_vec4(&a[i]);
 
-            vec_1 = _mm256_sub_ps(vec_1, vec_2);
-            _mm256_storeu_ps(glm::value_ptr(a[i]), vec_1);
+            vec_1 = _mm256_sub_vec4(vec_1, vec_2);
+            _mm256_storeu_vec4(&a[i], vec_1);
         }
 
         for (std::size_t i = tail; i < items; i++)
@@ -104,11 +103,11 @@ namespace engine::core::simd {
         const std::size_t tail = items - items % OFFSET_256::vec4;
 
         for (std::size_t i = 0; i < tail; i += OFFSET_256::vec4) {
-            __m256 vec_1 = _mm256_loadu_ps(glm::value_ptr(a[i]));
-            __m256 vec_2 = _mm256_loadu_ps(glm::value_ptr(b[i]));
+            __m256 vec_1 = _mm256_loadu_vec4(&a[i]);
+            __m256 vec_2 = _mm256_loadu_vec4(&b[i]);
 
-            vec_1 = _mm256_mul_ps(vec_1, vec_2);
-            _mm256_storeu_ps(glm::value_ptr(a[i]), vec_1);
+            vec_1 = _mm256_mul_vec4(vec_1, vec_2);
+            _mm256_storeu_vec4(&a[i], vec_1);
         }
 
         for (std::size_t i = tail; i < items; i++)
@@ -124,10 +123,10 @@ namespace engine::core::simd {
         __m256 vec_2 = _mm256_set1_vec4(b);
 
         for (std::size_t i = 0; i < tail; i += OFFSET_256::vec4) {
-            __m256 vec_1 = _mm256_loadu_ps(glm::value_ptr(a[i]));
+            __m256 vec_1 = _mm256_loadu_vec4(&a[i]);
 
-            vec_1 = _mm256_mul_ps(vec_1, vec_2);
-            _mm256_storeu_ps(glm::value_ptr(a[i]), vec_1);
+            vec_1 = _mm256_mul_vec4(vec_1, vec_2);
+            _mm256_storeu_vec4(&a[i], vec_1);
         }
 
         for (std::size_t i = tail; i < items; i++)
@@ -147,11 +146,11 @@ namespace engine::core::simd {
         const std::size_t tail = items - items % OFFSET_256::vec4;
 
         for (std::size_t i = 0; i < tail; i += OFFSET_256::vec4) {
-            __m256 vec_1 = _mm256_loadu_ps(glm::value_ptr(a[i]));
-            __m256 scalars = _mm256_set_m128(_mm_set1_ps(b[i + 1]), _mm_set1_ps(b[i]));
+            __m256 vec_1 = _mm256_loadu_vec4(&a[i]);
+            __m256 scalars = _mm256_alignf_vec4(b[i], b[i + 1]);
 
-            vec_1 = _mm256_mul_ps(vec_1, scalars);
-            _mm256_storeu_ps(glm::value_ptr(a[i]), vec_1);
+            vec_1 = _mm256_mul_vec4(vec_1, scalars);
+            _mm256_storeu_vec4(&a[i], vec_1);
         }
 
         for (std::size_t i = tail; i < items; i++)
@@ -165,11 +164,11 @@ namespace engine::core::simd {
         const std::size_t tail = items - items % OFFSET_256::vec4;
 
         for (std::size_t i = 0; i < tail; i += OFFSET_256::vec4) {
-            __m256 vec_1 = _mm256_loadu_ps(glm::value_ptr(a[i]));
-            __m256 vec_2 = _mm256_loadu_ps(glm::value_ptr(b[i]));
+            __m256 vec_1 = _mm256_loadu_vec4(&a[i]);
+            __m256 vec_2 = _mm256_loadu_vec4(&b[i]);
 
-            vec_1 = _mm256_div_ps(vec_1, vec_2);
-            _mm256_storeu_ps(glm::value_ptr(a[i]), vec_1);
+            vec_1 = _mm256_div_vec4(vec_1, vec_2);
+            _mm256_storeu_vec4(&a[i], vec_1);
         }
 
         for (std::size_t i = tail; i < items; i++)
@@ -185,10 +184,10 @@ namespace engine::core::simd {
         __m256 vec_2 = _mm256_set1_vec4(b);
 
         for (std::size_t i = 0; i < tail; i += OFFSET_256::vec4) {
-            __m256 vec_1 = _mm256_loadu_ps(glm::value_ptr(a[i]));
+            __m256 vec_1 = _mm256_loadu_vec4(&a[i]);
 
-            vec_1 = _mm256_div_ps(vec_1, vec_2);
-            _mm256_storeu_ps(glm::value_ptr(a[i]), vec_1);
+            vec_1 = _mm256_div_vec4(vec_1, vec_2);
+            _mm256_storeu_vec4(&a[i], vec_1);
         }
 
         for (std::size_t i = tail; i < items; i++)
@@ -208,11 +207,11 @@ namespace engine::core::simd {
         const std::size_t tail = items - items % OFFSET_256::vec4;
 
         for (std::size_t i = 0; i < tail; i += OFFSET_256::vec4) {
-            __m256 vec_1 = _mm256_loadu_ps(glm::value_ptr(a[i]));
-            __m256 scalars = _mm256_set_m128(_mm_set1_ps(b[i + 1]), _mm_set1_ps(b[i]));
+            __m256 vec_1 = _mm256_loadu_vec4(&a[i]);
+            __m256 scalars = _mm256_alignf_vec4(b[i], b[i + 1]);
 
-            vec_1 = _mm256_div_ps(vec_1, scalars);
-            _mm256_storeu_ps(glm::value_ptr(a[i]), vec_1);
+            vec_1 = _mm256_div_vec4(vec_1, scalars);
+            _mm256_storeu_vec4(&a[i], vec_1);
         }
 
         for (std::size_t i = tail; i < items; i++)
@@ -226,12 +225,10 @@ namespace engine::core::simd {
         const std::size_t tail = items - items % OFFSET_256::vec4;
 
         for (std::size_t i = 0; i < tail; i += OFFSET_256::vec4) {
-            __m256 v = _mm256_loadu_ps(glm::value_ptr(src[i]));
-            __m256 sq = _mm256_mul_ps(v, v);
-            __m256 sum = _mm256_hadd_ps(sq, sq);
-            sum = _mm256_hadd_ps(sum, sum);
+            __m256 v = _mm256_loadu_vec4(&src[i]);
+            __m256 sq = _mm256_length2_vec4(v);
 
-            _mm256_storeu_ps(glm::value_ptr(dest[i]), sum);
+            _mm256_storeu_vec4(&dest[i], sq);
         }
 
         for (std::size_t i = tail; i < items; i++)
@@ -245,10 +242,10 @@ namespace engine::core::simd {
         const std::size_t tail = items - items % OFFSET_256::vec4;
 
         for (std::size_t i = 0; i < tail; i += OFFSET_256::vec4) {
-            __m256 v = _mm256_loadu_ps(glm::value_ptr(src[i]));
+            __m256 v = _mm256_loadu_vec4(&src[i]);
             __m256 len = _mm256_length_vec4(v);
 
-            _mm256_storeu_ps(glm::value_ptr(dest[i]), len);
+            _mm256_storeu_vec4(&dest[i], len);
         }
 
         for (std::size_t i = tail; i < items; i++)
@@ -262,11 +259,10 @@ namespace engine::core::simd {
         const std::size_t tail = items - items % OFFSET_256::vec4;
 
         for (std::size_t i = 0; i < tail; i += OFFSET_256::vec4) {
-            __m256 v = _mm256_loadu_ps(glm::value_ptr(src[i]));
-            __m256 len = _mm256_length_vec4(v);
-            __m256 result = _mm256_div_ps(v, len);
+            __m256 v = _mm256_loadu_vec4(&src[i]);
+            __m256 result = _mm256_norm_vec4(v);
 
-            _mm256_storeu_ps(glm::value_ptr(dest[i]), result);
+            _mm256_storeu_vec4(&dest[i], result);
         }
 
         for (std::size_t i = tail; i < items; i++)
