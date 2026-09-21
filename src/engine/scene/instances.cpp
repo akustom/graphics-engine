@@ -1,6 +1,7 @@
 #include "engine/scene/instances.hpp"
 
 #include <glm/glm.hpp>
+#include <tracy/Tracy.hpp>
 
 
 namespace engine::scene {
@@ -15,6 +16,7 @@ namespace engine::scene {
     }
 
     void Instances::createInstance(Parameters param) {
+        ZoneScoped;
         instanceCount++;
 
         positions.emplace_back(param.pos, 0);
