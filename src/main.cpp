@@ -23,20 +23,16 @@ using namespace engine;
 
 int main_() {
     scene::Instances Particles;
-    Particles.createInstance({{-2,0, 0}});
-    Particles.createInstance({{2, 0, 0}});
 
-    while (Particles.size() < 1000) {
-        Particles.createInstance({{util::random(-10.0f, 10.0f), util::random(-10.0f, 10.0f),  util::random(-10.0f, 10.0f)}});
-    }
+    for (int i = 0; i < 1500; i++)
+        Particles.createInstance({
+            .pos  = {util::random(-10.0f, 10.0f), util::random(-10.0f, 10.0f),util::random(-10.0f, 10.0f)},
+            .mass = 14982844642.0f
+        });
 
-    for (int i = 0; i < 2000; i++) {
-        phy::VelocityVerlet::integrate<phy::gravity>(Particles, 0.1f);
-    }
+    for (int i = 0; i < 2500; i++)
+        phy::V_V::step<phy::gravity>(Particles, 1.0f/120.0f);
 
-    for (auto particle : Particles) {
-        util::print(particle.force);
-    }
     return 0;
 }
 
@@ -68,7 +64,7 @@ int main() {
 
 
     geo::Mesh mesh1;
-    geo::makePolyhedron(mesh1, 1.0f, 6, {1.0, 1.0, 1.0});
+    geo::makePolyhedron(mesh1, 1.0f, 16, {1.0, 1.0, 1.0});
 
     scene::Instances Particles;
 
@@ -105,13 +101,13 @@ int main() {
         if (window.isKeyPressed(GLFW_KEY_P))
             Particles.createInstance({
                 .pos  = {util::random(-10.0f, 10.0f), util::random(-10.0f, 10.0f),util::random(-10.0f, 10.0f)},
-                .mass = 23659959908.0f
+                .mass = 14982844642.0f
             });
 
         if (window.isKeyPressed(GLFW_KEY_X))
             Particles.clear();
 
-        phy::V_V::integrate<phy::gravity>(Particles, 1.0f/120.0f);
+        phy::V_V::step<phy::gravity>(Particles, 1.0f/120.0f);
 
         renderBatch.update(particles_h, Particles);
         renderBatch.render(square_h, particles_h);
